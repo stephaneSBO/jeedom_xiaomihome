@@ -32,7 +32,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
         </center>
         <span style="font-size : 1.1em;position:relative; top : 23px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Configuration}}</center></span>
       </div>
-      <div class="cursor" id="bt_healthRflink" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
+      <div class="cursor" id="bt_healthxiaomihome" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
         <center>
           <i class="fa fa-medkit" style="font-size : 5em;color:#767676;"></i>
         </center>

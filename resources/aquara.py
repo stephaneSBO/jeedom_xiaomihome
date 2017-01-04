@@ -40,7 +40,7 @@ class AquaraConnector:
         """Check incoming data."""
         data, addr = self.socket.recvfrom(self.SOCKET_BUFSIZE)
         try:
-            payload = json.loads(data.decode("utf-8"))
+            payload = data.decode("utf-8")
             print('Aquara received from ' + addr[0] + ' : ' + data)
             self.handle_incoming_data(payload, addr)
 
