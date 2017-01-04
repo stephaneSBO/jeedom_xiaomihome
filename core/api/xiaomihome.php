@@ -37,8 +37,9 @@ if (init('type') == 'aquara') {
         } else {
             xiaomihome::receiveId($body['sid'], $body['model'], init('gateway'), $body['short_id']);
             //log::add('xiaomihome', 'debug', 'Recu ' . $body['sid'] . ' ' . $body['model'] . ' ' . print_r($body, true));
-            if (is_array($body['data'])) {
+            if (isset($body['data'])) {
                 $data = json_decode($body['data'], true);
+                log::add('xiaomihome', 'debug', 'Recu ' . init('type') . ' de ' . init('gateway') . ' : ' . print_r($data, true));
                 foreach ($data as $key => $value) {
                     xiaomihome::receiveData($body['sid'], $body['model'], $key, $value);
                 }
