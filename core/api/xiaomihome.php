@@ -38,7 +38,8 @@ if (init('type') == 'aquara') {
             xiaomihome::receiveId($body['sid'], $body['model'], init('gateway'), $body['short_id']);
             //log::add('xiaomihome', 'debug', 'Recu ' . $body['sid'] . ' ' . $body['model'] . ' ' . print_r($body, true));
             if (is_array($body['data'])) {
-                foreach ($body['data'] as $key => $value) {
+                $data = json_decode($body['data'], true);
+                foreach ($data as $key => $value) {
                     xiaomihome::receiveData($body['sid'], $body['model'], $key, $value);
                 }
             }
