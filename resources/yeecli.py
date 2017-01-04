@@ -31,10 +31,11 @@ elif sys.argv[2] == 'toggle':
     bulb.toggle()
 elif sys.argv[2] == 'cron':
     bulb.cron_add(CronType.off, sys.argv[3])
-elif sys.argv[3] == 'on':
-    bulb.turn_on()
-elif sys.argv[3] == 'off':
-    bulb.turn_off()
+elif sys.argv[2] == 'turn':
+    if sys.argv[3] == 'on':
+        bulb.turn_on()
+    elif sys.argv[3] == 'off':
+        bulb.turn_off()
 elif sys.argv[2] == 'stop':
     bulb.stop_flow()
 elif sys.argv[2] == 'status':
