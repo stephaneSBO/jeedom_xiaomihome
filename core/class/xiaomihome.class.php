@@ -254,7 +254,7 @@ public static function receiveData($sid, $model, $key, $value) {
                 $icone = '<i class="fa fa-thermometer-empty"></i>';
             }
         }
-        if ($key == 'status') {
+        if ($key == 'status' && $model != 'switch') {
             $value = ($value == 'close' || $value == 'on' || $value == 'motion') ? 1 : 0;
             $type = 'binary';
             switch ($model) {
