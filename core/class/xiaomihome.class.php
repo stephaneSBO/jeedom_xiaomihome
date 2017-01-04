@@ -245,40 +245,24 @@ public static function receiveData($sid, $model, $key, $value) {
         $widget = 'line';
         switch ($model) {
             case 'motion':
-                if ($value == 'motion') {
-                    $value = 1;
-                } else {
-                    $value = 0;
-                }
+                $value = ($value == 'motion') ? 1 : 0;
                 $type = 'binary';
                 $widget = 'presence';
                 break;
             case 'plug':
                 if ($key == 'status') {
-                    if ($value == 'on') {
-                        $value = 1;
-                    } else {
-                        $value = 0;
-                    }
+                    $value = ($value == 'on') ? 1 : 0;
                     $type = 'binary';
                     $widget = 'light';
                 }
                 break;
             case 'ctrl_neutral1' || 'ctrl_neutral2' :
-                if ($value == 'on') {
-                    $value = 1;
-                } else {
-                    $value = 0;
-                }
+                $value = ($value == 'on') ? 1 : 0;
                 $type = 'binary';
                 $widget = 'light';
                 break;
             case 'magnet':
-                if ($value == 'close') {
-                    $value = 0;
-                } else {
-                    $value = 1;
-                }
+                $value = ($value == 'close') ? 1 : 0;
                 $type = 'binary';
                 $widget = 'door';
                 break;
