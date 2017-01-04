@@ -236,6 +236,7 @@ $xiaomihome->save();
 }
 
 public static function receiveData($sid, $model, $key, $value) {
+    log::add('xiaomihome', 'debug', 'Capteur ' . $sid . ' de ' . $model . ' : ' . $key . ' ' . $value);
     $xiaomihome = self::byLogicalId($sid, 'xiaomihome');
     if (is_object($xiaomihome)) {
         //default
@@ -272,6 +273,7 @@ public static function receiveData($sid, $model, $key, $value) {
                     break;
             }
         }
+        log::add('xiaomihome', 'debug', 'Update de la commande ' . $key . ' ' . $value . ' ' . $widget . ' ' . $type);
         $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
         if (!is_object($xiaomihomeCmd)) {
             log::add('xiaomihome', 'debug', 'Création de la commande ' . $key);
@@ -290,7 +292,7 @@ public static function receiveData($sid, $model, $key, $value) {
             $xiaomihomeCmd->save();
         }
         $xiaomihome->checkAndUpdateCmd($key, $value);
-        log::add('xiaomihome', 'debug', 'Update de la commande ' . $key . ' ' . $value);
+        //log::add('xiaomihome', 'debug', 'Update de la commande ' . $key . ' ' . $value);
         if (($model == 'plug' && $key == 'status') || $model == 'ctrl_neutral1' || $model == 'ctrl_neutral2') {
             $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-on');
             if (!is_object($xiaomiactCmd)) {
