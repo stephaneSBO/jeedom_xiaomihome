@@ -243,40 +243,34 @@ public static function receiveData($sid, $model, $key, $value) {
         $type = 'string';
         $icone = '';
         $widget = 'line';
-        switch ($model) {
-            case 'motion':
-                $value = ($value == 'motion') ? 1 : 0;
-                $type = 'binary';
-                $widget = 'presence';
-                break;
-            case 'plug':
-                if ($key == 'status') {
-                    $value = ($value == 'on') ? 1 : 0;
-                    $type = 'binary';
+        if ($model == 'sensor_ht') {
+            $type = 'numeric';
+            $value = $value / 100;
+            if ($key == 'humidity') {
+                $unite = '%';
+                $icone = '<i class="fa fa-tint"></i>';
+            } else { #temperature
+                $unite = '°C';
+                $icone = '<i class="fa fa-thermometer-empty"></i>';
+            }
+        }
+        if ($key == 'status') {
+            $value = ($value == 'close' || $value == 'on' || $value == 'motion') ? 1 : 0;
+            $type = 'binary';
+            switch ($model) {
+                case 'motion':
+                    $widget = 'presence';
+                    break;
+                case 'plug':
                     $widget = 'light';
-                }
-                break;
-            case 'ctrl_neutral1' || 'ctrl_neutral2' :
-                $value = ($value == 'on') ? 1 : 0;
-                $type = 'binary';
-                $widget = 'light';
-                break;
-            case 'magnet':
-                $value = ($value == 'close') ? 1 : 0;
-                $type = 'binary';
-                $widget = 'door';
-                break;
-            case 'sensor_ht':
-                $type = 'numeric';
-                $value = $value / 100;
-                if ($key == 'humidity') {
-                    $unite = '%';
-                    $icone = '<i class="fa fa-tint"></i>';
-                } else { #temperature
-                    $unite = '°C';
-                    $icone = '<i class="fa fa-thermometer-empty"></i>';
-                }
-                break;
+                    break;
+                case 'ctrl_neutral1' || 'ctrl_neutral2' :
+                    $widget = 'light';
+                    break;
+                case 'magnet':
+                    $widget = 'door';
+                    break;
+            }
         }
         $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
         if (!is_object($xiaomihomeCmd)) {
