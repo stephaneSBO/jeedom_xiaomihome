@@ -262,14 +262,11 @@ public static function receiveData($sid, $model, $key, $value) {
                 case 'motion':
                     $widget = 'presence';
                     break;
-                case 'plug':
-                    $widget = 'light';
-                    break;
-                case 'ctrl_neutral1' || 'ctrl_neutral2' :
-                    $widget = 'light';
-                    break;
                 case 'magnet':
                     $widget = 'door';
+                    break;
+                default:
+                    $widget = 'light';
                     break;
             }
         }
