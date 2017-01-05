@@ -4,6 +4,7 @@ import socket
 
 from .decorator import decorator
 from .flow import Flow
+from .enums import CronType
 
 MUSIC_PORT = 37657
 

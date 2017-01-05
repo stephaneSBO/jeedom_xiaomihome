@@ -1,7 +1,7 @@
 import logging
 import sys
 import time
-from yeelight import *
+from .yeelight import *
 
 def hex_color_to_rgb(color):
     "Convert a hex color string to an RGB tuple."
