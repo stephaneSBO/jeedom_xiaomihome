@@ -22,7 +22,7 @@ elif sys.argv[2] == 'hsv':
     bulb.set_hsv(sys.argv[3], sys.argv[4])
 elif sys.argv[2] == 'flow':
     translist = sys.argv[5].split(';')
-    flow = Flow(sys.argv[3],Flow.actions.off,translist)
+    flow = Flow(int(sys.argv[3]),Flow.actions.off,translist)
     bulb.start_flow(flow)
 elif sys.argv[2] == 'rgb':
     red, green, blue = hex_color_to_rgb(sys.argv[3])
