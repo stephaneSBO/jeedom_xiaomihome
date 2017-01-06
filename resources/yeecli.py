@@ -14,10 +14,10 @@ def hex_color_to_rgb(color):
 
 bulb = Bulb(sys.argv[1], 55443, 'smooth', 500, True)
 
-DICT_MAPPING = {'sleep' : SleepTransition,\
-	'HSV' : HSVTransition, \
-	'RGB' : RGBTransition, \
-	'TEMP' : TemperatureTransition, \
+DICT_MAPPING = {'wait' : SleepTransition,\
+	'hsv' : HSVTransition, \
+	'rgb' : RGBTransition, \
+	'temp' : TemperatureTransition, \
 	}
 
 if sys.argv[2] == 'brightness':
@@ -32,15 +32,15 @@ elif sys.argv[2] == 'flow':
 	for transition in translist:
 		elements = transition.split(',')
 		if elements[0] in DICT_MAPPING:
-			effect = DICT_MAPPING(elements[0])
+			effect = DICT_MAPPING[elements[0]]
 			if elements[0] == 'hsv':
-				list.append(effect(arglist[1],arglist[2],arglist[3],arglist[4]))
+				list.append(effect(elements[1],elements[2],elements[3],elements[4]))
 			elif elements[0] == 'rgb' :
-				list.append(effect(arglist[1],arglist[2],arglist[3],arglist[4],arglist[5]))
+				list.append(effect(elements[1],elements[2],elements[3],elements[4],elements[5]))
 			elif elements[0] == 'temp' :
-				list.append(effect(arglist[1],arglist[2],arglist[3]))
+				list.append(effect(elements[1],elements[2],elements[3]))
 			else:
-				list.append(effect(arglist[1]))
+				list.append(effect(elements[1]))
 		else:
 			print "Not an effect"
 	flow = Flow(int(sys.argv[3]),Flow.actions.off,list)

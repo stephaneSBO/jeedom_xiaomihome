@@ -45,25 +45,19 @@ class xiaomihome extends eqLogic {
 
     public function yeeStatus($ip) {
         $cmd = 'yee --ip=' . $ip . ' status';
-        exec($cmd, $output, $return_var);
+        $output = shell_exec($cmd);
+        $output = json_decode($output, true);
+        log::add('xiaomihome', 'debug', 'Status ' . print_r($output,true));
 
-        $power = explode(': ',$output[5]);
-        $color_mode = explode(': ',$output[3]);
-        $bright = explode(': ',$output[9]);
-        $rgb = explode(': ',$output[8]);
-        $hue = explode(': ',$output[2]);
-        $saturation = explode(': ',$output[13]);
-        $color_temp = explode(': ',$output[12]);
-
-        $power = ($power[1] == 'off')? 0:1;
+        $power = ($output['power'] == 'off')? 0:1;
         $this->checkAndUpdateCmd('status', $power);
-        $this->checkAndUpdateCmd('brightness', $bright[1]);
+        $this->checkAndUpdateCmd('brightness', $output['bright']);
         if ($this->getConfiguration('model') != 'mono') {
-            $this->checkAndUpdateCmd('color_mode', $color_mode[1]);
-            $this->checkAndUpdateCmd('rgb', '#' . str_pad(dechex($rgb[1]), 6, "0", STR_PAD_LEFT));
-            $this->checkAndUpdateCmd('hsv', $hue[1]);
-            $this->checkAndUpdateCmd('saturation', $saturation[1]);
-            $this->checkAndUpdateCmd('temperature', $color_temp[1]);
+            $this->checkAndUpdateCmd('color_mode', $output['color_mode']);
+            $this->checkAndUpdateCmd('rgb', '#' . str_pad(dechex($output['rgb']), 6, "0", STR_PAD_LEFT));
+            $this->checkAndUpdateCmd('hsv', $output['hue']);
+            $this->checkAndUpdateCmd('saturation', $output['sat']);
+            $this->checkAndUpdateCmd('temperature', $output['ct']);
         }
         //log::add('xiaomihome', 'debug', $power . ' ' . $color_mode[1] . ' ' . $bright[1] . ' ' . '#' . str_pad(dechex($rgb[1]), 6, "0", STR_PAD_LEFT) . ' ' . $hue[1] . ' ' . $saturation[1] . ' ' . $color_temp[1]);
     }
@@ -469,7 +463,7 @@ class xiaomihomeCmd extends cmd {
                 }
                 $eqLogic->yeeStatus($eqLogic->getConfiguration('gateway'));
             } else {
-                $eqLogic->aquaraAction($request);
+                $eqLogic->aquaraAction($this->getConfiguration('request'));
             }
         }
     }
