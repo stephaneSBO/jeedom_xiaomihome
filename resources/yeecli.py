@@ -14,6 +14,12 @@ def hex_color_to_rgb(color):
 
 bulb = Bulb(sys.argv[1], 55443, 'smooth', 500, True)
 
+DICT_MAPPING = {'sleep' : SleepTransition,\
+    'HSV' : HSVTransition, \
+    'RGB' : RGBTransition, \
+    'TEMP' : TemperatureTransition, \
+    }
+
 if sys.argv[2] == 'brightness':
     bulb.set_brightness(sys.argv[3])
 elif sys.argv[2] == 'temperature':
@@ -22,7 +28,20 @@ elif sys.argv[2] == 'hsv':
     bulb.set_hsv(sys.argv[3], sys.argv[4])
 elif sys.argv[2] == 'flow':
     translist = sys.argv[5].split(';')
-    flow = Flow(int(sys.argv[3]),Flow.actions.off,translist)
+    list =[]
+    for transition in translist:
+        elements = translist.split(',')
+        if elements[0] in DICT_MAPPING:
+            class = DICT_MAPPING(elements[0])
+            if elements[0] == 'sleep':
+                list.append(class(arglist[1])
+            elif elements[0] == 'HSV':
+                list.append(class(arglist[1],arglist[2],arglist[3],arglist[4])
+            elif elements[0] == 'RGB' :
+                list.append(class(arglist[1],arglist[2],arglist[3],arglist[4],arglist[5])
+            elif elements[0] == 'TEMP' :
+                list.append(class(arglist[1],arglist[2],arglist[3])
+    flow = Flow(int(sys.argv[3]),Flow.actions.off,list)
     bulb.start_flow(flow)
 elif sys.argv[2] == 'rgb':
     red, green, blue = hex_color_to_rgb(sys.argv[3])
@@ -30,7 +49,7 @@ elif sys.argv[2] == 'rgb':
 elif sys.argv[2] == 'toggle':
     bulb.toggle()
 elif sys.argv[2] == 'cron':
-    bulb.cron_add(CronType.off, sys.argv[3])
+    bulb.cron_add(enums.CronType.off, sys.argv[3])
 elif sys.argv[2] == 'turn':
     if sys.argv[3] == 'on':
         bulb.turn_on()
