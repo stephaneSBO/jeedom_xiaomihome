@@ -27,20 +27,20 @@ elif sys.argv[2] == 'temperature':
 elif sys.argv[2] == 'hsv':
 	bulb.set_hsv(sys.argv[3], sys.argv[4])
 elif sys.argv[2] == 'flow':
-	translist = sys.argv[5].split(';')
+	translist = sys.argv[5].split('-')
 	list =[]
 	for transition in translist:
 		elements = transition.split(',')
 		if elements[0] in DICT_MAPPING:
 			effect = DICT_MAPPING[elements[0]]
 			if elements[0] == 'hsv':
-				list.append(effect(elements[1],elements[2],elements[3],elements[4]))
+				list.append(effect(int(elements[1]),int(elements[2]),int(elements[3]),int(elements[4])))
 			elif elements[0] == 'rgb' :
-				list.append(effect(elements[1],elements[2],elements[3],elements[4],elements[5]))
+				list.append(effect(int(elements[1]),int(elements[2]),int(elements[3]),int(elements[4]),int(elements[5])))
 			elif elements[0] == 'temp' :
-				list.append(effect(elements[1],elements[2],elements[3]))
+				list.append(effect(int(elements[1]),int(elements[2]),int(elements[3])))
 			else:
-				list.append(effect(elements[1]))
+				list.append(effect(int(elements[1])))
 		else:
 			print "Not an effect"
 	flow = Flow(int(sys.argv[3]),Flow.actions.off,list)
