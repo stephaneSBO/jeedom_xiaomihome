@@ -33,14 +33,14 @@ elif sys.argv[2] == 'flow':
 		elements = translist.split(',')
 		if elements[0] in DICT_MAPPING:
 			effect = DICT_MAPPING(elements[0])
-			if elements[0] == 'sleep':
-				list.append(effect(arglist[1])
-			elif elements[0] == 'hsv':
+			if elements[0] == 'hsv':
 				list.append(effect(arglist[1],arglist[2],arglist[3],arglist[4])
 			elif elements[0] == 'rgb' :
 				list.append(effect(arglist[1],arglist[2],arglist[3],arglist[4],arglist[5])
 			elif elements[0] == 'temp' :
 				list.append(effect(arglist[1],arglist[2],arglist[3])
+			else:
+				list.append(effect(arglist[1])
 	flow = Flow(int(sys.argv[3]),Flow.actions.off,list)
 	bulb.start_flow(flow)
 elif sys.argv[2] == 'rgb':
@@ -57,5 +57,5 @@ elif sys.argv[2] == 'turn':
 		bulb.turn_off()
 elif sys.argv[2] == 'stop':
 	bulb.stop_flow()
-elif sys.argv[2] == 'status':
+else:
 	print bulb.get_properties()
