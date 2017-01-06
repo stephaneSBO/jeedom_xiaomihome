@@ -1,7 +1,7 @@
 import logging
 import sys
 import time
-from .yeelight import *
+from yeelight import *
 
 def hex_color_to_rgb(color):
 	"Convert a hex color string to an RGB tuple."
@@ -30,7 +30,7 @@ elif sys.argv[2] == 'flow':
 	translist = sys.argv[5].split(';')
 	list =[]
 	for transition in translist:
-		elements = translist.split(',')
+		elements = transition.split(',')
 		if elements[0] in DICT_MAPPING:
 			effect = DICT_MAPPING(elements[0])
 			if elements[0] == 'hsv':
