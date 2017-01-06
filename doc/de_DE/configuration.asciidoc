@@ -1,6 +1,6 @@
-=== Configuration du plugin
+=== Plugin Konfiguration
 
-Le plugin ne comporte pas de configuration générale
+Das Plugin enthält keine allgemeine Konfiguration.
 
 Il y a un service qui une fois démarré récupère les informations des Aquara Gateway et également les annonces de présence des Yeelight
 
@@ -16,7 +16,7 @@ Là vous avez un numéro de version, cliquez dessus de facon répéter jusqu'à 
 
 Choisissez la première option et activer le bouton switch pour qu'il passe en vert, voilà le mode local est actif et votre gateway est accessible du réseau
 
-==== Configuration des lampes Yeelight
+==== Yeelight Lampe Konfiguration
 
 Dans l'application Yeelight vous devez activer l'option développeur également
 
