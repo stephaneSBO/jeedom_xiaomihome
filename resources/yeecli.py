@@ -41,6 +41,8 @@ elif sys.argv[2] == 'flow':
 				list.append(effect(arglist[1],arglist[2],arglist[3])
 			else:
 				list.append(effect(arglist[1])
+		else:
+			print "Not an effect"
 	flow = Flow(int(sys.argv[3]),Flow.actions.off,list)
 	bulb.start_flow(flow)
 elif sys.argv[2] == 'rgb':
