@@ -67,4 +67,5 @@ elif sys.argv[2] == 'stop':
 	bulb.stop_flow()
 else:
 	data = str(bulb.get_properties())
+	data=data.replace (": u'",": ')
 	print data
