@@ -43,7 +43,12 @@ elif sys.argv[2] == 'flow':
 				list.append(effect(int(elements[1])))
 		else:
 			print "Not an effect"
-	flow = Flow(int(sys.argv[3]),Flow.actions.off,list)
+    if sys.argv[4] == 'recover':
+        flow = Flow(int(sys.argv[3]),Flow.actions.recover,list)
+    elif sys.argv[4] == 'stay' :
+        flow = Flow(int(sys.argv[3]),Flow.actions.stay,list)
+    else:
+        flow = Flow(int(sys.argv[3]),Flow.actions.off,list)
 	bulb.start_flow(flow)
 elif sys.argv[2] == 'rgb':
 	red, green, blue = hex_color_to_rgb(sys.argv[3])
@@ -60,4 +65,5 @@ elif sys.argv[2] == 'turn':
 elif sys.argv[2] == 'stop':
 	bulb.stop_flow()
 else:
-	print bulb.get_properties()
+    data = bulb.get_properties()
+	print json.loads(data.decode("utf-8"))
