@@ -1,6 +1,7 @@
 import logging
 import sys
 import time
+import json
 from yeelight import *
 
 def hex_color_to_rgb(color):
@@ -65,5 +66,5 @@ elif sys.argv[2] == 'turn':
 elif sys.argv[2] == 'stop':
 	bulb.stop_flow()
 else:
-	data = bulb.get_properties()
-	print json.loads(data.decode("utf-8"))
+	data = str(bulb.get_properties())
+	print data
