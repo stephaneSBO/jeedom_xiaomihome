@@ -259,19 +259,21 @@ public static function receiveData($sid, $model, $key, $value) {
                 $icone = '<i class="fa fa-thermometer-empty"></i>';
             }
         }
-        if ($key == 'status' && $model != 'switch') {
-            $value = ($value == 'close' || $value == 'on' || $value == 'motion') ? 1 : 0;
+        if ($key == 'status') {
             $type = 'binary';
-            switch ($model) {
-                case 'motion':
-                    $widget = 'presence';
-                    break;
-                case 'magnet':
-                    $widget = 'door';
-                    break;
-                default:
-                    $widget = 'light';
-                    break;
+            if ($model != 'switch' && $model != 'magnet') {
+                $value = ($value == 'on' || $value == 'motion') ? 1 : 0;
+                switch ($model) {
+                    case 'motion':
+                        $widget = 'presence';
+                        break;
+                    default:
+                        $widget = 'light';
+                        break;
+                }
+            } else if ($model == 'magnet') {
+                $value = ($value == 'close') ? 0 : 1;
+                $widget = 'door';
             }
         }
         if ($key == 'battery') {
@@ -298,6 +300,10 @@ public static function receiveData($sid, $model, $key, $value) {
             }
             $xiaomihomeCmd->setTemplate("mobile",$widget );
             $xiaomihomeCmd->setTemplate("dashboard",$widget );
+            $xiaomihomeCmd->save();
+        }
+        if ($key == 'status') {
+            $xiaomihomeCmd->setConfiguration('repeatEventManagement','always');
             $xiaomihomeCmd->save();
         }
         $xiaomihome->checkAndUpdateCmd($key, $value);
