@@ -260,21 +260,20 @@ public static function receiveData($sid, $model, $key, $value) {
             }
         }
         if ($key == 'status') {
-            $type = 'binary';
-            if ($model != 'switch' && $model != 'magnet') {
-                $value = ($value == 'on' || $value == 'motion') ? 1 : 0;
+            if ($model != 'switch') {
+                $type = 'binary';
+                $value = ($value == 'close' || $value == 'on' || $value == 'motion') ? 1 : 0;
                 switch ($model) {
                     case 'motion':
                         $widget = 'presence';
+                        break;
+                    case 'magnet':
+                        $widget = 'door';
                         break;
                     default:
                         $widget = 'light';
                         break;
                 }
-            } else if ($model == 'magnet') {
-                $value = ($value == 'close') ? 0 : 1;
-                $widget = 'door';
-            }
         }
         if ($key == 'battery') {
             $type = 'numeric';
