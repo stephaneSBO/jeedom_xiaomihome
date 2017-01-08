@@ -26,10 +26,11 @@ class xiaomihome extends eqLogic {
         exec($cmd);
     }
 
-    public function aquaraAction($request) {
-        //{"cmd":"write","model":"ctrl_neutral1","sid":"158d0000123456","short_id":4343,"data":"{\"channel_0\":\"on\",\"key\":\"3EB43E37C20AFF4C5872CC0D04D81314\"}" }
-        $cmd = '{"cmd":"write","model":"' . $this->getConfiguration('model') . '","sid":"' . $this->getConfiguration('sid') . '","short_id":"' . $this->getConfiguration('short_id') . '","token":"' . config::byKey('token','xiaomihome') . '","data":"' . $request . '" }';
-        $cmd = '{"cmd":"write","model":"' . $this->getConfiguration('model') . '","sid":"' . $this->getConfiguration('sid') . '","short_id":"' . $this->getConfiguration('short_id') . '","data":"' . $request . '" }';
+    public function aquaraAction($switch, $request) {
+        $key = 'hello';
+        //'{"cmd":"write","model":"' + this.deviceModel + '","sid":"' + this.deviceSid + '","data":"{\\"' + this.switchName + '\\":\\"' + (on ? 'on' : 'off') + '\\", \\"key\\": \\"' + key + '\\"}"}'
+        $cmd = '{"cmd":"write","model":"' . $this->getConfiguration('model') . '","sid":"' . $this->getConfiguration('sid') . '","data":"{\\"' . $switch . '\\":\\"' . $request . '\\", \\"key\\": \\"' . $key . '\\"}"}';
+        //$cmd = '{"cmd":"write","model":"' . $this->getConfiguration('model') . '","sid":"' . $this->getConfiguration('sid') . '","short_id":"' . $this->getConfiguration('short_id') . '","data":"' . $request . '" }';
         $gateway = $this->getConfiguration('gateway');
         $sock = socket_create(AF_INET, SOCK_DGRAM, 0);
         // Actually write the data and send it off
@@ -310,10 +311,11 @@ public static function receiveData($sid, $model, $key, $value) {
                 $xiaomiactCmd->setTemplate("mobile",$widget );
                 $xiaomiactCmd->setTemplate("dashboard",$widget );
                 $xiaomiactCmd->setValue($xiaomihomeCmd->getId());
-                $xiaomiactCmd->setConfiguration('request', '{\" ' . $key . '\":\"on\"}');
                 $xiaomiactCmd->setIsVisible(0);
-                $xiaomiactCmd->save();
             }
+            $xiaomiactCmd->setConfiguration('request', 'on');
+            $xiaomiactCmd->setConfiguration('switch', $key);
+            $xiaomiactCmd->save();
             $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-off');
             if (!is_object($xiaomiactCmd)) {
                 log::add('xiaomihome', 'debug', 'Création de la commande ' . $key . '-off');
@@ -330,10 +332,11 @@ public static function receiveData($sid, $model, $key, $value) {
                 $xiaomiactCmd->setTemplate("mobile",$widget );
                 $xiaomiactCmd->setTemplate("dashboard",$widget );
                 $xiaomiactCmd->setValue($xiaomihomeCmd->getId());
-                $xiaomiactCmd->setConfiguration('request', '{\" ' . $key . '\":\"off\"}');
                 $xiaomiactCmd->setIsVisible(0);
-                $xiaomiactCmd->save();
             }
+            $xiaomiactCmd->setConfiguration('request', 'off');
+            $xiaomiactCmd->setConfiguration('switch', $key);
+            $xiaomiactCmd->save();
         }
     }
 }
