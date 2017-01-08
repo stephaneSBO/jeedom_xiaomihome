@@ -597,7 +597,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>C&#8217;est une commande message qui doit avoir par exemple :</p>
 </div>
 <div class="paragraph">
-<p>3 recover RGBTransition(255,0,0);SleepTransition(400)</p>
+<p>3 recover rgb,255,0,0,500,100-wait,400-rgb,255,255,0,500,100</p>
 </div>
 <div class="ulist">
 <ul>
@@ -611,16 +611,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>le troisième élément est la suite des états avec leur transition, il y en a 4 possible (attention à bien ne pas mettre d&#8217;espaces)</p>
 </li>
 <li>
-<p>HSVTransition(hue,saturation,duration=300,brightness=100)</p>
+<p>hsv : pramètres (hue,saturation,duration=300,brightness=100)</p>
 </li>
 <li>
-<p>RGBTransition(red,green,blue,duration=300,brightness=100)</p>
+<p>rgb : pramètres (red,green,blue,duration=300,brightness=100)</p>
 </li>
 <li>
-<p>TemperatureTransition(degrees,duration=300,brightness=100)</p>
+<p>temp : pramètres (degrees,duration=300,brightness=100)</p>
 </li>
 <li>
-<p>yeelight.SleepTransition(duration=300)</p>
+<p>wait(duration=300)</p>
+<div class="literalblock">
+<div class="content">
+<pre>Il faut bien entrer l'enchainement avec des - entre chaque effet. Et pour un enchainement il doit y avoir son nom et tous les paramètres séparés par des virgules</pre>
+</div>
+</div>
 </li>
 </ul>
 </div>
