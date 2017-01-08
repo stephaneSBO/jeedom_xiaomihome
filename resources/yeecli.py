@@ -67,4 +67,4 @@ elif sys.argv[2] == 'stop':
 	bulb.stop_flow()
 else:
 	for key, value in bulb.get_properties().items():
-    print key + " : " + value
+	print key + " : " + value
