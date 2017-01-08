@@ -274,6 +274,14 @@ public static function receiveData($sid, $model, $key, $value) {
                     break;
             }
         }
+        if ($key == 'battery') {
+            $type = 'numeric';
+            $unite = '%';
+            $icone = '<i class="fa fa-battery-half"></i>';
+            $xiaomihome->setConfiguration('battery',$value);
+            $xiaomihome->batteryStatus($value);
+            $xiaomihome->save();
+        }
         log::add('xiaomihome', 'debug', 'Update de la commande ' . $key . ' ' . $value . ' ' . $widget . ' ' . $type);
         $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
         if (!is_object($xiaomihomeCmd)) {
