@@ -476,7 +476,7 @@ class xiaomihomeCmd extends cmd {
                 }
                 $eqLogic->yeeStatus($eqLogic->getConfiguration('gateway'));
             } else {
-                $eqLogic->aquaraAction($this->getConfiguration('request'));
+                $eqLogic->aquaraAction($this->getConfiguration('switch'),$this->getConfiguration('request'));
             }
         }
     }
