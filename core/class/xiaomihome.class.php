@@ -48,13 +48,13 @@ class xiaomihome extends eqLogic {
         $cmd = 'python ' . realpath(dirname(__FILE__)) . '/../../resources/yeecli.py ' . $ip . ' status';
         exec($cmd, $output, $return_var);
 
-        $power = explode(': ',$output[5]);
-        $color_mode = explode(': ',$output[3]);
-        $bright = explode(': ',$output[9]);
-        $rgb = explode(': ',$output[8]);
-        $hue = explode(': ',$output[2]);
-        $saturation = explode(': ',$output[13]);
-        $color_temp = explode(': ',$output[12]);
+        $power = explode(': ',$output[3]);
+        $color_mode = explode(': ',$output[1]);
+        $bright = explode(': ',$output[7]);
+        $rgb = explode(': ',$output[6]);
+        $hue = explode(': ',$output[0]);
+        $saturation = explode(': ',$output[11]);
+        $color_temp = explode(': ',$output[10]);
 
         $power = ($power[1] == 'off')? 0:1;
         $this->checkAndUpdateCmd('status', $power);
