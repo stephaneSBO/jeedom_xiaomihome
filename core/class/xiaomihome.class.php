@@ -247,6 +247,7 @@ public static function receiveData($sid, $model, $key, $value) {
         $unite = '';
         $type = 'string';
         $icone = '';
+        $invert = '';
         $widget = 'line';
         if ($model == 'sensor_ht') {
             $type = 'numeric';
@@ -259,9 +260,9 @@ public static function receiveData($sid, $model, $key, $value) {
                 $icone = '<i class="fa fa-thermometer-empty"></i>';
             }
         }
-        if ($key == 'status') {
-            if ($model != 'switch') {
-                $type = 'binary';
+        if ($model != 'switch' && $key == 'status') {
+            $type = 'binary';
+            if ($model != 'magnet') {
                 $value = ($value == 'close' || $value == 'on' || $value == 'motion') ? 1 : 0;
                 switch ($model) {
                     case 'motion':
@@ -274,6 +275,11 @@ public static function receiveData($sid, $model, $key, $value) {
                         $widget = 'light';
                         break;
                 }
+            } else if ($model == 'magnet') {
+                $value = ($value == 'close') ? 0 : 1;
+                $widget = 'door';
+                $invert = 1;
+            }
         }
         if ($key == 'battery') {
             $type = 'numeric';
@@ -296,6 +302,9 @@ public static function receiveData($sid, $model, $key, $value) {
             $xiaomihomeCmd->setSubType($type);
             if ($icone != '') {
                 $xiaomihomeCmd->setDisplay('icon', $icone);
+            }
+            if ($invert != '') {
+                $xiaomihomeCmd->setDisplay('invertBinary', 1);
             }
             $xiaomihomeCmd->setTemplate("mobile",$widget );
             $xiaomihomeCmd->setTemplate("dashboard",$widget );
