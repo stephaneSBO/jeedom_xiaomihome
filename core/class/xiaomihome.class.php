@@ -48,8 +48,8 @@ class xiaomihome extends eqLogic {
         $cmd = 'python ' . realpath(dirname(__FILE__)) . '/../../resources/yeecli.py ' . $ip . ' status';
         $output = shell_exec($cmd);
         log::add('xiaomihome', 'debug', 'Status ' . $output);
-        $output = json_decode($output, true);
-        log::add('xiaomihome', 'debug', 'Status ' . print_r($output,true));
+        $json = json_decode($output, true);
+        log::add('xiaomihome', 'debug', 'Status ' . print_r($json,true));
 
         $power = ($output['power'] == 'off')? 0:1;
         $this->checkAndUpdateCmd('status', $power);
@@ -304,7 +304,8 @@ public static function receiveData($sid, $model, $key, $value) {
                 $xiaomiactCmd->setTemplate("mobile",$widget );
                 $xiaomiactCmd->setTemplate("dashboard",$widget );
                 $xiaomiactCmd->setValue($xiaomihomeCmd->getId());
-                $xiaomihomeCmd->setConfiguration('request', '{\" ' . $key . '\":\"on\"}');
+                $xiaomiactCmd->setConfiguration('request', '{\" ' . $key . '\":\"on\"}');
+                $xiaomiactCmd->setIsVisible(0);
                 $xiaomiactCmd->save();
             }
             $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-off');
@@ -323,7 +324,8 @@ public static function receiveData($sid, $model, $key, $value) {
                 $xiaomiactCmd->setTemplate("mobile",$widget );
                 $xiaomiactCmd->setTemplate("dashboard",$widget );
                 $xiaomiactCmd->setValue($xiaomihomeCmd->getId());
-                $xiaomihomeCmd->setConfiguration('request', '{\" ' . $key . '\":\"off\"}');
+                $xiaomiactCmd->setConfiguration('request', '{\" ' . $key . '\":\"off\"}');
+                $xiaomiactCmd->setIsVisible(0);
                 $xiaomiactCmd->save();
             }
         }

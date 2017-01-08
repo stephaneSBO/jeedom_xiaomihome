@@ -66,6 +66,5 @@ elif sys.argv[2] == 'turn':
 elif sys.argv[2] == 'stop':
 	bulb.stop_flow()
 else:
-	data = str(bulb.get_properties())
-	data=data.replace (": u'",": ')
-	print data
+	for key, value in bulb.get_properties().items():
+    print key + " : " + value
