@@ -28,7 +28,7 @@ class xiaomihome extends eqLogic {
 
     public function aquaraAction($request) {
         //{"cmd":"write","model":"ctrl_neutral1","sid":"158d0000123456","short_id":4343,"data":"{\"channel_0\":\"on\",\"key\":\"3EB43E37C20AFF4C5872CC0D04D81314\"}" }
-        $cmd = '{"cmd":"write","model":"' . $this->getConfiguration('model') . '","sid":"' . $this->getConfiguration('sid') . '","short_id":"' . $this->getConfiguration('short_id') . '","token":"' . config::byKey('token','xiaomihome') . '","data":"{' . $request . '}';
+        $cmd = '{"cmd":"write","model":"' . $this->getConfiguration('model') . '","sid":"' . $this->getConfiguration('sid') . '","short_id":"' . $this->getConfiguration('short_id') . '","token":"' . config::byKey('token','xiaomihome') . '","data":"' . $request . '"}';
         $gateway = $this->getConfiguration('gateway');
         $sock = socket_create(AF_INET, SOCK_DGRAM, 0);
         // Actually write the data and send it off
@@ -46,20 +46,25 @@ class xiaomihome extends eqLogic {
     public function yeeStatus($ip) {
         //$cmd = 'yee --ip=' . $ip . ' status';
         $cmd = 'python ' . realpath(dirname(__FILE__)) . '/../../resources/yeecli.py ' . $ip . ' status';
-        $output = shell_exec($cmd);
-        log::add('xiaomihome', 'debug', 'Status ' . $output);
-        $json = json_decode($output, true);
-        log::add('xiaomihome', 'debug', 'Status ' . print_r($json,true));
+        exec($cmd, $output, $return_var);
 
-        $power = ($output['power'] == 'off')? 0:1;
+        $power = explode(': ',$output[5]);
+        $color_mode = explode(': ',$output[3]);
+        $bright = explode(': ',$output[9]);
+        $rgb = explode(': ',$output[8]);
+        $hue = explode(': ',$output[2]);
+        $saturation = explode(': ',$output[13]);
+        $color_temp = explode(': ',$output[12]);
+
+        $power = ($power[1] == 'off')? 0:1;
         $this->checkAndUpdateCmd('status', $power);
-        $this->checkAndUpdateCmd('brightness', $output['bright']);
+        $this->checkAndUpdateCmd('brightness', $bright[1]);
         if ($this->getConfiguration('model') != 'mono') {
-            $this->checkAndUpdateCmd('color_mode', $output['color_mode']);
-            $this->checkAndUpdateCmd('rgb', '#' . str_pad(dechex($output['rgb']), 6, "0", STR_PAD_LEFT));
-            $this->checkAndUpdateCmd('hsv', $output['hue']);
-            $this->checkAndUpdateCmd('saturation', $output['sat']);
-            $this->checkAndUpdateCmd('temperature', $output['ct']);
+            $this->checkAndUpdateCmd('color_mode', $color_mode[1]);
+            $this->checkAndUpdateCmd('rgb', '#' . str_pad(dechex($rgb[1]), 6, "0", STR_PAD_LEFT));
+            $this->checkAndUpdateCmd('hsv', $hue[1]);
+            $this->checkAndUpdateCmd('saturation', $saturation[1]);
+            $this->checkAndUpdateCmd('temperature', $color_temp[1]);
         }
         //log::add('xiaomihome', 'debug', $power . ' ' . $color_mode[1] . ' ' . $bright[1] . ' ' . '#' . str_pad(dechex($rgb[1]), 6, "0", STR_PAD_LEFT) . ' ' . $hue[1] . ' ' . $saturation[1] . ' ' . $color_temp[1]);
     }
