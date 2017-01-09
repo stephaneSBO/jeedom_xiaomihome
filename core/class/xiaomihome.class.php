@@ -30,8 +30,8 @@ class xiaomihome extends eqLogic {
         $gateway = $this->getConfiguration('gateway');
         foreach (eqLogic::byType('xiaomihome') as $xiaomihome) {
           if ($gateway == $xiaomihome->getConfiguration('gateway') && $xiaomihome->getConfiguration('model') == 'gateway') {
-              $password = dec2hex($xiaomihome->getConfiguration('password'));
-              $token = dec2hex($xiaomihome->getConfiguration('token'));
+              $password = dechex($xiaomihome->getConfiguration('password'));
+              $token = dechex($xiaomihome->getConfiguration('token'));
           }
         }
         $options = 0;

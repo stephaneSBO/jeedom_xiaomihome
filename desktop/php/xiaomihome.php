@@ -137,7 +137,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
               <div class="form-group" id="passfield">
                 <label class="col-sm-3 control-label">{{Password}}</label>
                 <div class="col-sm-3">
-                    <span class="eqLogicAttr" data-l1key="configuration" data-l2key="password"></span>
+                    <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="password" placeholder="Visible sur l'app Mihome dans les options développeur"></span>
                 </div>
               </div>
 
@@ -151,7 +151,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
               <div class="form-group">
                 <label class="col-sm-3 control-label">{{Type}}</label>
                 <div class="col-sm-3">
-                    <span class="eqLogicAttr" data-l1key="configuration" data-l2key="type"></span>
+                    <span class="eqLogicAttr" data-l1key="configuration" data-l2key="type" id="typefield"></span>
                 </div>
               </div>
 
@@ -216,6 +216,19 @@ $eqLogics = eqLogic::byType('xiaomihome');
     </div>
   </div>
 </div>
+
+<script>
+
+$(function() {
+    if ($('#typefield').value() == 'gateway') {
+        $('#passfield').show();
+    } else {
+        $('#passfield').hide();
+    }
+
+});
+
+</script>
 
 <?php include_file('desktop', 'xiaomihome', 'js', 'xiaomihome'); ?>
 <?php include_file('core', 'plugin.template', 'js'); ?>
