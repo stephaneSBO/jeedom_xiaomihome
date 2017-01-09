@@ -28,12 +28,9 @@ class xiaomihome extends eqLogic {
 
     public function aquaraAction($switch, $request) {
         $gateway = $this->getConfiguration('gateway');
-        foreach (eqLogic::byType('xiaomihome') as $xiaomihome) {
-          if ($gateway == $xiaomihome->getConfiguration('gateway') && $xiaomihome->getConfiguration('model') == 'gateway') {
-              $password = $xiaomihome->getConfiguration('password');
-              $token = $xiaomihome->getConfiguration('token');
-          }
-        }
+        $xiaomihome = self::byLogicalId($gateway, 'xiaomihome');
+        $password = $xiaomihome->getConfiguration('password');
+        $token = $xiaomihome->getConfiguration('token');
         $sensor_path = realpath(dirname(__FILE__) . '/../../resources');
         $cmd = 'nodejs ' . $sensor_path . '/aquara.js ' . $password . ' ' . $gateway . ' ' . $token . ' ' . $this->getConfiguration('model') . ' ' . $this->getConfiguration('sid') . ' ' . $switch . ' ' . $request;
         $result = exec($cmd . ' >> ' . log::getPathToLog('xiaomihome_cmd') . ' 2>&1 &');
@@ -202,11 +199,16 @@ public function checkCmdOk($_id, $_name, $_type, $_subtype, $_request, $_setvalu
 }
 
 public static function receiveId($sid, $model, $gateway, $short_id) {
-    $xiaomihome = self::byLogicalId($sid, 'xiaomihome');
+    if ($model == 'gateway') {
+        $id = $gateway;
+    } else {
+        $id = $sid;
+    }
+    $xiaomihome = self::byLogicalId($id, 'xiaomihome');
     if (!is_object($xiaomihome)) {
         $xiaomihome = new xiaomihome();
         $xiaomihome->setEqType_name('xiaomihome');
-        $xiaomihome->setLogicalId($sid);
+        $xiaomihome->setLogicalId($id);
         $xiaomihome->setName($model . ' ' . $sid);
         $xiaomihome->setConfiguration('sid', $sid);
         $xiaomihome->setIsEnable(1);
