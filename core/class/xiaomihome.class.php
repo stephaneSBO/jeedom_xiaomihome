@@ -30,8 +30,8 @@ class xiaomihome extends eqLogic {
         $gateway = $this->getConfiguration('gateway');
         foreach (eqLogic::byType('xiaomihome') as $xiaomihome) {
           if ($gateway == $xiaomihome->getConfiguration('gateway') && $xiaomihome->getConfiguration('model') == 'gateway') {
-              $password = dechex($xiaomihome->getConfiguration('password'));
-              $token = dechex($xiaomihome->getConfiguration('token'));
+              $password = $xiaomihome->getConfiguration('password');
+              $token = $xiaomihome->getConfiguration('token');
           }
         }
         $sensor_path = realpath(dirname(__FILE__) . '/../../resources');
