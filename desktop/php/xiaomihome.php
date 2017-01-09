@@ -219,14 +219,14 @@ $eqLogics = eqLogic::byType('xiaomihome');
 
 <script>
 
-$(function() {
+$('#modelfield').onchange = function() {
     if ($('#modelfield').value() == 'gateway') {
         $('#passfield').show();
     } else {
         $('#passfield').hide();
     }
 
-});
+};
 
 </script>
 
