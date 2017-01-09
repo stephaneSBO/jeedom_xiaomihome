@@ -134,6 +134,13 @@ $eqLogics = eqLogic::byType('xiaomihome');
                 </div>
               </div>
 
+              <div class="form-group" id="passfield">
+                <label class="col-sm-3 control-label">{{Password}}</label>
+                <div class="col-sm-3">
+                    <span class="eqLogicAttr" data-l1key="configuration" data-l2key="password"></span>
+                </div>
+              </div>
+
               <div class="form-group">
                 <label class="col-sm-3 control-label">{{Gateway}}</label>
                 <div class="col-sm-3">

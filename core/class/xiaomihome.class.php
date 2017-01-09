@@ -28,11 +28,16 @@ class xiaomihome extends eqLogic {
 
     public function aquaraAction($switch, $request) {
         $gateway = $this->getConfiguration('gateway');
-        //$password = dec2hex($gateway->getConfiguration('password'));
-        //$token = dec2hex($gateway->getConfiguration('token'));
+        foreach (eqLogic::byType('xiaomihome') as $xiaomihome) {
+          if ($gateway == $xiaomihome->getConfiguration('gateway') && $xiaomihome->getConfiguration('model') == 'gateway') {
+              $password = dec2hex($xiaomihome->getConfiguration('password'));
+              $token = dec2hex($xiaomihome->getConfiguration('token'));
+          }
+        }
         $options = 0;
         //$iv = Buffer.from([0x17, 0x99, 0x6d, 0x09, 0x3d, 0x28, 0xdd, 0xb3, 0xba, 0x69, 0x5a, 0x2e, 0x6f, 0x58, 0x56, 0x2e]);
-        //$key = openssl_encrypt ( $token , 'aes-128-cbc' , $password , $options, $iv);
+        $iv = [0x17, 0x99, 0x6d, 0x09, 0x3d, 0x28, 0xdd, 0xb3, 0xba, 0x69, 0x5a, 0x2e, 0x6f, 0x58, 0x56, 0x2e];
+        $key = openssl_encrypt( $token , 'aes-128-cbc' , $password , $options, $iv);
         $cmd = '{"cmd":"write","model":"' . $this->getConfiguration('model') . '","sid":"' . $this->getConfiguration('sid') . '","data":"{\\"' . $switch . '\\":\\"' . $request . '\\", \\"key\\": \\"' . $key . '\\"}"}';
         $sock = socket_create(AF_INET, SOCK_DGRAM, 0);
         // Actually write the data and send it off
