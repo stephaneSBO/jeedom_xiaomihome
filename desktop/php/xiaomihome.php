@@ -151,7 +151,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
               <div class="form-group">
                 <label class="col-sm-3 control-label">{{Type}}</label>
                 <div class="col-sm-3">
-                    <span class="eqLogicAttr" data-l1key="configuration" data-l2key="type" id="typefield"></span>
+                    <span class="eqLogicAttr" data-l1key="configuration" data-l2key="type"></span>
                 </div>
               </div>
 
@@ -172,7 +172,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
               <div class="form-group">
                 <label class="col-sm-3 control-label">{{Modèle}}</label>
                 <div class="col-sm-3">
-                    <span class="eqLogicAttr" data-l1key="configuration" data-l2key="model"></span>
+                    <span class="eqLogicAttr" data-l1key="configuration" data-l2key="model" id="modelfield"></span>
                 </div>
               </div>
 
@@ -220,7 +220,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
 <script>
 
 $(function() {
-    if ($('#typefield').value() == 'gateway') {
+    if ($('#modelfield').value() == 'gateway') {
         $('#passfield').show();
     } else {
         $('#passfield').hide();
