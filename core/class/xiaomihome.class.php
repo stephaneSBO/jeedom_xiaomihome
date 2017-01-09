@@ -228,11 +228,16 @@ $xiaomihome->save();
 }
 
 public static function receiveHeartbeat($sid, $model, $ip, $gateway, $short_id) {
-    $xiaomihome = self::byLogicalId($sid, 'xiaomihome');
+    if ($model == 'gateway') {
+        $id = $gateway;
+    } else {
+        $id = $sid;
+    }
+    $xiaomihome = self::byLogicalId($id, 'xiaomihome');
     if (!is_object($xiaomihome)) {
         $xiaomihome = new xiaomihome();
         $xiaomihome->setEqType_name('xiaomihome');
-        $xiaomihome->setLogicalId($sid);
+        $xiaomihome->setLogicalId($id);
         $xiaomihome->setName($model . ' ' . $ip);
         $xiaomihome->setConfiguration('sid', $sid);
         $xiaomihome->setConfiguration('model',$model);
@@ -253,8 +258,13 @@ $xiaomihome->save();
 }
 
 public static function receiveData($sid, $model, $key, $value) {
+    if ($model == 'gateway') {
+        $id = $gateway;
+    } else {
+        $id = $sid;
+    }
     log::add('xiaomihome', 'debug', 'Capteur ' . $sid . ' de ' . $model . ' : ' . $key . ' ' . $value);
-    $xiaomihome = self::byLogicalId($sid, 'xiaomihome');
+    $xiaomihome = self::byLogicalId($id, 'xiaomihome');
     if (is_object($xiaomihome)) {
         //default
         $unite = '';
