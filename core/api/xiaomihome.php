@@ -32,7 +32,7 @@ if (init('type') == 'aquara') {
             if ($body['cmd'] == 'heartbeat') {
                 xiaomihome::receiveHeartbeat($body['sid'], $body['model'], init('gateway'), init('gateway'), $body['short_id']);
                 if (isset($body['token'])) {
-                    $xiaomihome = self::byLogicalId($gateway, 'xiaomihome');
+                    $xiaomihome = xiaomihome::byLogicalId($gateway, 'xiaomihome');
                     if ($body['token'] != $xiaomihome->getConfiguration('token')) {
                         $xiaomihome->setConfiguration('token',$body['token']);
                         $xiaomihome->save();

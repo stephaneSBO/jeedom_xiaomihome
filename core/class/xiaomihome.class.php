@@ -453,7 +453,7 @@ public static function deamon_stop() {
     }
 }
 
-public static function dependancy_info() {
+/*public static function dependancy_info() {
     $return = array();
     $return['log'] = 'xiaomihome_dep';
     $cmd = "pip list | grep yeecli";
@@ -467,11 +467,27 @@ public static function dependancy_info() {
         }
     }
     return $return;
-}
+}*/
 
-public static function dependancy_install() {
-    exec('sudo apt-get -y install python-pip && sudo pip install yeecli && sudo pip install mihome > ' . log::getPathToLog('xiaomihome_dep') . ' 2>&1 &');
-}
+public static function dependancy_info() {
+    $return = array();
+    $return['log'] = 'xiaomihome_dep';
+    $crypto = realpath(dirname(__FILE__) . '/../../resources/node_modules/crypto');
+    $dgram = realpath(dirname(__FILE__) . '/../../resources/node_modules/dgram');
+    $return['progress_file'] = '/tmp/xiaomihome_dep';
+    if (is_dir($crypto) && is_dir($dgram)) {
+      $return['state'] = 'ok';
+    } else {
+      $return['state'] = 'nok';
+    }
+    return $return;
+  }
+  
+  public static function dependancy_install() {
+    log::add('xiaomihome','info','Installation des dépéndances nodejs');
+    $resource_path = realpath(dirname(__FILE__) . '/../../resources');
+    passthru('/bin/bash ' . $resource_path . '/nodejs.sh ' . $resource_path . ' > ' . log::getPathToLog('xiaomihome_dep') . ' 2>&1 &');
+  }
 
 }
 
