@@ -23,7 +23,7 @@ if (!jeedom::apiAccess(init('apikey'), 'xiaomihome')) {
 }
 
 $body = json_decode(file_get_contents('php://input'), true);
-log::add('xiaomihome', 'debug', 'Recu ' . init('type') . ' de ' . init('gateway') . ' : ' . print_r($body, true));
+log::add('xiaomihome', 'debug', 'Recu ' . init('type') . ' de ' . init('gateway') . ' : ' . file_get_contents('php://input'));
 //log::add('xiaomihome', 'debug', 'Body non decode ' . file_get_contents('php://input'));
 
 if (init('type') == 'aquara') {
@@ -51,7 +51,7 @@ if (init('type') == 'aquara') {
             if (isset($body['data'])) {
                 $data = json_decode($body['data'], true);
                 foreach ($data as $key => $value) {
-                    log::add('xiaomihome', 'debug', 'Capteur ' . $body['sid'] . ' de ' . $body['model'] . ' : ' . $key . ' ' . $value);
+                    //log::add('xiaomihome', 'debug', 'Capteur ' . $body['sid'] . ' de ' . $body['model'] . ' : ' . $key . ' ' . $value);
                     xiaomihome::receiveData($body['sid'], $body['model'], $key, $value);
                 }
             }

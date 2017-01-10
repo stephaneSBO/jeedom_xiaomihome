@@ -22,7 +22,7 @@ class xiaomihome extends eqLogic {
     public function yeeAction($ip, $request, $option) {
         $cmd = 'python ' . realpath(dirname(__FILE__)) . '/../../resources/yeecli.py ' . $ip . ' ' . $request . ' ' . $option;
         //$cmd = 'yeecli --ip=' . $ip . ' ' . $request . ' ' . $option;
-        log::add('xiaomihome', 'debug', $cmd);
+        log::add('xiaomihome', 'debug', 'Commande Yeelight ' . $cmd);
         exec($cmd);
     }
 
@@ -34,7 +34,7 @@ class xiaomihome extends eqLogic {
         $sensor_path = realpath(dirname(__FILE__) . '/../../resources');
         $cmd = 'nodejs ' . $sensor_path . '/aquara.js ' . $password . ' ' . $gateway . ' ' . $token . ' ' . $this->getConfiguration('model') . ' ' . $this->getConfiguration('sid') . ' ' . $switch . ' ' . $request;
         $result = exec($cmd . ' >> ' . log::getPathToLog('xiaomihome_cmd') . ' 2>&1 &');
-        log::add('xiaomihome', 'debug', 'Commande ' . $cmd);
+        log::add('xiaomihome', 'debug', 'Commande Aquara ' . $cmd);
         /*$options = 0;
         //$iv = Buffer.from([0x17, 0x99, 0x6d, 0x09, 0x3d, 0x28, 0xdd, 0xb3, 0xba, 0x69, 0x5a, 0x2e, 0x6f, 0x58, 0x56, 0x2e]);
         //$iv = 0x17996d093d28ddb3ba695a2e6f58562e;
@@ -263,7 +263,7 @@ public static function receiveData($sid, $model, $key, $value) {
     } else {
         $id = $sid;
     }
-    log::add('xiaomihome', 'debug', 'Capteur ' . $sid . ' de ' . $model . ' : ' . $key . ' ' . $value);
+    //log::add('xiaomihome', 'debug', 'Capteur ' . $sid . ' de ' . $model . ' : ' . $key . ' ' . $value);
     $xiaomihome = self::byLogicalId($id, 'xiaomihome');
     if (is_object($xiaomihome)) {
         //default
@@ -312,7 +312,7 @@ public static function receiveData($sid, $model, $key, $value) {
             $xiaomihome->batteryStatus($value);
             $xiaomihome->save();
         }
-        log::add('xiaomihome', 'debug', 'Update de la commande ' . $key . ' ' . $value . ' ' . $widget . ' ' . $type);
+        //log::add('xiaomihome', 'debug', 'Update de la commande ' . $key . ' ' . $value . ' ' . $widget . ' ' . $type);
         $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
         if (!is_object($xiaomihomeCmd)) {
             log::add('xiaomihome', 'debug', 'Création de la commande ' . $key);
@@ -482,7 +482,7 @@ public static function dependancy_info() {
     }
     return $return;
   }
-  
+
   public static function dependancy_install() {
     log::add('xiaomihome','info','Installation des dépéndances nodejs');
     $resource_path = realpath(dirname(__FILE__) . '/../../resources');
