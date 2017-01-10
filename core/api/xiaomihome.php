@@ -31,6 +31,13 @@ if (init('type') == 'aquara') {
         if ($body['model'] == 'gateway') {
             if ($body['cmd'] == 'heartbeat') {
                 xiaomihome::receiveHeartbeat($body['sid'], $body['model'], init('gateway'), init('gateway'), $body['short_id']);
+                if (isset($body['token'])) {
+                    $xiaomihome = self::byLogicalId($gateway, 'xiaomihome');
+                    if ($body['token'] != $xiaomihome->getConfiguration('token')) {
+                        $xiaomihome->setConfiguration('token',$body['token']);
+                        $xiaomihome->save();
+                    }
+                }
             } else {
                 xiaomihome::receiveId($body['sid'], $body['model'], init('gateway'), $body['short_id']);
             }
@@ -45,10 +52,6 @@ if (init('type') == 'aquara') {
                 }
             }
         }
-    }
-
-    if (isset($body['token']) && ($body['token'] != config::byKey('token','xiaomihome'))) {
-        config::save('token', $body['token'],  'xiaomihome');
     }
 
 } else {
