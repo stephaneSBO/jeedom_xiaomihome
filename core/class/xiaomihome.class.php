@@ -257,12 +257,7 @@ $xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
 $xiaomihome->save();
 }
 
-public static function receiveData($sid, $model, $key, $value) {
-    if ($model == 'gateway') {
-        $id = $gateway;
-    } else {
-        $id = $sid;
-    }
+public static function receiveData($id, $model, $key, $value) {
     //log::add('xiaomihome', 'debug', 'Capteur ' . $sid . ' de ' . $model . ' : ' . $key . ' ' . $value);
     $xiaomihome = self::byLogicalId($id, 'xiaomihome');
     if (is_object($xiaomihome)) {
@@ -287,7 +282,7 @@ public static function receiveData($sid, $model, $key, $value) {
             $type = 'string';
             $value = str_pad(dechex($value), 6, "0", STR_PAD_LEFT);
         }
-        if (($model != 'switch' || $model != 'cube') && $key == 'status') {
+        if ($model != 'switch' && $model != 'cube' && $key == 'status') {
             $type = 'binary';
             if ($model != 'magnet') {
                 $value = ($value == 'close' || $value == 'on' || $value == 'motion') ? 1 : 0;
