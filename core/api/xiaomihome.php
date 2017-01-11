@@ -34,6 +34,8 @@ if (init('type') == 'aquara') {
                 $xiaomihome = xiaomihome::byLogicalId(init('gateway'), 'xiaomihome');
                 $xiaomihome->setConfiguration('token',$body['token']);
                 $xiaomihome->save();
+            } else {
+                xiaomihome::receiveId($body['sid'], $body['model'], init('gateway'), $body['short_id']);
                 if (isset($body['data'])) {
                     $data = json_decode($body['data'], true);
                     foreach ($data as $key => $value) {
@@ -41,8 +43,6 @@ if (init('type') == 'aquara') {
                         xiaomihome::receiveData(init('gateway'), $body['model'], $key, $value);
                     }
                 }
-            } else {
-                xiaomihome::receiveId($body['sid'], $body['model'], init('gateway'), $body['short_id']);
             }
         } else {
             xiaomihome::receiveId($body['sid'], $body['model'], init('gateway'), $body['short_id']);
