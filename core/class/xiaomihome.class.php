@@ -283,7 +283,11 @@ public static function receiveData($sid, $model, $key, $value) {
                 $icone = '<i class="fa fa-thermometer-empty"></i>';
             }
         }
-        if ($model != 'switch' && $key == 'status') {
+        if ($model == 'rgb') {
+            $type = 'string';
+            $value = str_pad(dechex($value), 6, "0", STR_PAD_LEFT);
+        }
+        if (($model != 'switch' || $model != 'cube') && $key == 'status') {
             $type = 'binary';
             if ($model != 'magnet') {
                 $value = ($value == 'close' || $value == 'on' || $value == 'motion') ? 1 : 0;
@@ -383,6 +387,23 @@ public static function receiveData($sid, $model, $key, $value) {
                 $xiaomiactCmd->setIsVisible(0);
             }
             $xiaomiactCmd->setConfiguration('request', 'off');
+            $xiaomiactCmd->setConfiguration('switch', $key);
+            $xiaomiactCmd->save();
+        }
+        if ($key == 'rgb') {
+            $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-set');
+            if (!is_object($xiaomiactCmd)) {
+                log::add('xiaomihome', 'debug', 'Création de la commande ' . $key . '-set');
+                $xiaomiactCmd = new xiaomihomeCmd();
+                $xiaomiactCmd->setName(__($key . '-set', __FILE__));
+                $xiaomiactCmd->setEqLogic_id($xiaomihome->id);
+                $xiaomiactCmd->setEqType('xiaomihome');
+                $xiaomiactCmd->setLogicalId($key . '-set');
+                $xiaomiactCmd->setType('action');
+                $xiaomiactCmd->setSubType('color');
+                $xiaomiactCmd->setValue($xiaomihomeCmd->getId());
+                $xiaomiactCmd->setIsVisible(0);
+            }
             $xiaomiactCmd->setConfiguration('switch', $key);
             $xiaomiactCmd->save();
         }
@@ -529,6 +550,7 @@ class xiaomihomeCmd extends cmd {
                     break;
                     default :
                     $option = '';
+                    break;
                 }
                 //log::add('xiaomihome', 'debug', $eqLogic->getConfiguration('gateway') . ' ' . $this->getConfiguration('request') . ' ' . $option);
                 if ($this->getLogicalId() != 'refresh') {
@@ -540,7 +562,15 @@ class xiaomihomeCmd extends cmd {
                 }
                 $eqLogic->yeeStatus($eqLogic->getConfiguration('gateway'));
             } else {
-                $eqLogic->aquaraAction($this->getConfiguration('switch'),$this->getConfiguration('request'));
+                switch ($this->getSubType()) {
+                    case 'color':
+                    $option = hexdec($_options['color']);
+                    $eqLogic->aquaraAction($this->getConfiguration('switch'),$option);
+                    break;
+                    default :
+                    $eqLogic->aquaraAction($this->getConfiguration('switch'),$this->getConfiguration('request'));
+                    break;
+                }
             }
         }
     }

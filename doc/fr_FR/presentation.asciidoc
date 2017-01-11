@@ -7,7 +7,7 @@ La Xiaomi Aquara Home Gateway permet d'utiliser différents capteurs Zigbee Xiao
 Liste des capteurs compatibles :
 
   * Gateway : http://www.gearbest.com/living-appliances/pp_344667.html?lkid=10269386
-  (elle est nécessaire pour les capteurs Zigbee, il faut activer le mode développeur. En revanche aujourd'hui on ne peut pas se servir de l'anneau RGB ou de l'enceinte via le plugin (non dispo dans l'API))
+  (elle est nécessaire pour les capteurs Zigbee, il faut activer le mode développeur. En revanche aujourd'hui on ne peut pas se servir de l'enceinte via le plugin (non dispo dans l'API))
 
   * Capteur de porte : http://www.gearbest.com/smart-light-bulb/pp_257677.html?lkid=10269970
 
@@ -18,18 +18,11 @@ Liste des capteurs compatibles :
   * Interrupteur : http://www.gearbest.com/smart-light-bulb/pp_257679.html?lkid=10269959
 
   * Cube : http://www.gearbest.com/living-appliances/pp_364494.html?lkid=10269960
-  (fonctionnement en cours de vérification)
+  (fonctionnement limité à une commande statut)
 
   * Prise : http://www.gearbest.com/living-appliances/pp_344666.html?lkid=10269961
-  (fonctionnement en cours de vérification)
 
 Le plugin ne prend pas en charge aujourd'hui les appareils Wifi Xiaomi suivants :
-
-  * Bandeau RGB : http://www.gearbest.com/smart-lighting/pp_424884.html?lkid=10269963
-
-  * Ampoule RGB : http://www.gearbest.com/smart-lighting/pp_361555.html?lkid=10269964
-
-  * Ampoule blanc : http://www.gearbest.com/smart-light-bulb/pp_278478.html?lkid=10269966
 
   * Capteur de qualité d'air : http://www.gearbest.com/living-appliances/pp_557543.html?lkid=10269967
 

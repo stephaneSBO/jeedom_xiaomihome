@@ -34,14 +34,13 @@ if (init('type') == 'aquara') {
                 $xiaomihome = xiaomihome::byLogicalId(init('gateway'), 'xiaomihome');
                 $xiaomihome->setConfiguration('token',$body['token']);
                 $xiaomihome->save();
-                /*if (isset($body['token'])) {
-                    log::add('xiaomihome', 'debug', 'Change token ' . $body['token']);
-                    $xiaomihome = xiaomihome::byLogicalId(init('gateway'), 'xiaomihome');
-                    if ($body['token'] != $xiaomihome->getConfiguration('token','')) {
-                        $xiaomihome->setConfiguration('token',$body['token']);
-                        $xiaomihome->save();
+                if (isset($body['data'])) {
+                    $data = json_decode($body['data'], true);
+                    foreach ($data as $key => $value) {
+                        //log::add('xiaomihome', 'debug', 'Capteur ' . $body['sid'] . ' de ' . $body['model'] . ' : ' . $key . ' ' . $value);
+                        xiaomihome::receiveData($body['sid'], $body['model'], $key, $value);
                     }
-                }*/
+                }
             } else {
                 xiaomihome::receiveId($body['sid'], $body['model'], init('gateway'), $body['short_id']);
             }
