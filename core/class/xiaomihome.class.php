@@ -278,9 +278,12 @@ public static function receiveData($id, $model, $key, $value) {
                 $icone = '<i class="fa fa-thermometer-empty"></i>';
             }
         }
-        if ($model == 'rgb') {
+        if ($key == 'rgb') {
             $type = 'string';
             $value = str_pad(dechex($value), 6, "0", STR_PAD_LEFT);
+        }
+        if ($key == 'rotate') {
+            $type = 'numeric';
         }
         if ($model != 'switch' && $model != 'cube' && $key == 'status') {
             $type = 'binary';

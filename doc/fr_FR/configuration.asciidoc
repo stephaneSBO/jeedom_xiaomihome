@@ -16,6 +16,23 @@ Là vous avez un numéro de version, cliquez dessus de facon répéter jusqu'à 
 
 Choisissez la première option et activer le bouton switch pour qu'il passe en vert, voilà le mode local est actif et votre gateway est accessible du réseau
 
+==== Equipements compatibles
+
+  - Détecteur de mouvement : commande statut de type binaire activée sur mouvement
+
+  - Détecteur d'ouverture : commande statut de type binaire activée sur ouverture
+
+  - Capteur température/humidité : commande température, commande humidité
+
+  - Bouton Switch : commande statut avec pour valeurs click, double_click, long_click_press, long_click_release
+
+  - Prise : commande statut binaire avec on et off
+
+  - Interrupteur mural : commande statut pour chaque interrupteur (click, double_click) et si double une commande qui donne l'appui simultané
+
+  - Cube : commande statut avec pour valeur move, alert, flip_90, free_fall et une commande rotate avec la valeur en degré du mouvement
+
+
 ==== Configuration des lampes Yeelight
 
 Dans l'application Yeelight vous devez activer l'option développeur également
