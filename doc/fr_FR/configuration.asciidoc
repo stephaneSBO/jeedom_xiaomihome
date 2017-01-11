@@ -30,6 +30,8 @@ Choisissez la première option et activer le bouton switch pour qu'il passe en v
 
   - Interrupteur mural : commande statut pour chaque interrupteur (click, double_click) et si double une commande qui donne l'appui simultané
 
+  - Interrupteur encastré : commande statut binaire avec on et off pour chaque interrupteur
+
   - Cube : commande statut avec pour valeur move, alert, flip_90, free_fall et une commande rotate avec la valeur en degré du mouvement
 
 

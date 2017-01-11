@@ -258,7 +258,7 @@ $xiaomihome->save();
 }
 
 public static function receiveData($id, $model, $key, $value) {
-    //log::add('xiaomihome', 'debug', 'Capteur ' . $sid . ' de ' . $model . ' : ' . $key . ' ' . $value);
+    log::add('xiaomihome', 'debug', 'Capteur ' . $id . ' de ' . $model . ' : ' . $key . ' ' . $value);
     $xiaomihome = self::byLogicalId($id, 'xiaomihome');
     if (is_object($xiaomihome)) {
         //default
@@ -279,7 +279,6 @@ public static function receiveData($id, $model, $key, $value) {
             }
         }
         if ($key == 'rgb') {
-            $type = 'string';
             $value = str_pad(dechex($value), 6, "0", STR_PAD_LEFT);
         }
         if ($key == 'rotate') {
