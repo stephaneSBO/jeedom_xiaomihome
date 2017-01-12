@@ -281,7 +281,7 @@ public static function receiveData($id, $model, $key, $value) {
         if ($key == 'rgb') {
             $value = str_pad(dechex($value), 8, "0", STR_PAD_LEFT);
             $light = substr($value, 0, 2);
-            $value = substr($value, -6);
+            $value = '#' . substr($value, -6);
         }
         if ($key == 'rotate') {
             $type = 'numeric';
@@ -597,9 +597,10 @@ class xiaomihomeCmd extends cmd {
                     if ($this->getConfiguration('switch') == 'rgb') {
                         $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'brightness');
                         $bright = str_pad($xiaomihomeCmd->execCmd(), 2, "0", STR_PAD_LEFT);
-                        $rgbcomplet = $bright . str_replace('#','',$option);
+                        $couleur = str_replace('#','',$option);
+                        $rgbcomplet = $bright . $couleur;
                         $option = hexdec($rgbcomplet);
-                        log::add('xiaomihome', 'debug', 'RGB : ' . $option . ' ' . $rgbcomplet);
+                        log::add('xiaomihome', 'debug', 'RGB : dec ' . $option . ' hex ' . $rgbcomplet . ' bright ' . $bright . ' color ' . $couleur);
                     }
                     break;
                     case 'slider':
@@ -610,7 +611,7 @@ class xiaomihomeCmd extends cmd {
                         $bright = str_pad($option, 2, "0", STR_PAD_LEFT);
                         $rgbcomplet = $bright . $couleur;
                         $option = hexdec($rgbcomplet);
-                        log::add('xiaomihome', 'debug', 'RGB : ' . $option . ' ' . $rgbcomplet);
+                        log::add('xiaomihome', 'debug', 'RGB : dec ' . $option . ' hex ' . $rgbcomplet . ' bright ' . $bright . ' color ' . $couleur);
                     }
                     break;
                     default :
