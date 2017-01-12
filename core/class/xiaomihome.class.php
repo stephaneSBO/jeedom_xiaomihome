@@ -280,6 +280,8 @@ public static function receiveData($id, $model, $key, $value) {
         }
         if ($key == 'rgb') {
             $value = str_pad(dechex($value), 8, "0", STR_PAD_LEFT);
+            $light = substr($value, 0, 2);
+            $value = substr($value, -6);
         }
         if ($key == 'rotate') {
             $type = 'numeric';
@@ -392,12 +394,42 @@ public static function receiveData($id, $model, $key, $value) {
             if (!is_object($xiaomiactCmd)) {
                 log::add('xiaomihome', 'debug', 'Création de la commande ' . $key . '-set');
                 $xiaomiactCmd = new xiaomihomeCmd();
-                $xiaomiactCmd->setName(__($key . '-set', __FILE__));
+                $xiaomiactCmd->setName(__('Définir Couleur', __FILE__));
                 $xiaomiactCmd->setEqLogic_id($xiaomihome->id);
                 $xiaomiactCmd->setEqType('xiaomihome');
                 $xiaomiactCmd->setLogicalId($key . '-set');
                 $xiaomiactCmd->setType('action');
                 $xiaomiactCmd->setSubType('color');
+                $xiaomiactCmd->setValue($xiaomihomeCmd->getId());
+                $xiaomiactCmd->setIsVisible(0);
+            }
+            $xiaomiactCmd->setConfiguration('switch', $key);
+            $xiaomiactCmd->save();
+            $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),'brightness');
+            if (!is_object($xiaomihomeCmd)) {
+                log::add('xiaomihome', 'debug', 'Création de la commande brightness');
+                $xiaomihomeCmd = new xiaomihomeCmd();
+                $xiaomihomeCmd->setName(__('Luminosité', __FILE__));
+                $xiaomihomeCmd->setEqLogic_id($xiaomihome->id);
+                $xiaomihomeCmd->setEqType('xiaomihome');
+                $xiaomihomeCmd->setLogicalId('brightness');
+                $xiaomihomeCmd->setType('info');
+                $xiaomihomeCmd->setSubType('numeric');
+                $xiaomihomeCmd->save();
+            }
+            $xiaomihome->checkAndUpdateCmd('brightness', $light);
+            $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),'brightness-set');
+            if (!is_object($xiaomiactCmd)) {
+                log::add('xiaomihome', 'debug', 'Création de la commande brightness-set');
+                $xiaomiactCmd = new xiaomihomeCmd();
+                $xiaomiactCmd->setName(__('Définir Luminosité', __FILE__));
+                $xiaomiactCmd->setEqLogic_id($xiaomihome->id);
+                $xiaomiactCmd->setEqType('xiaomihome');
+                $xiaomiactCmd->setLogicalId('brightness-set');
+                $xiaomiactCmd->setType('action');
+                $xiaomiactCmd->setSubType('slider');
+                $xiaomiactCmd->setConfiguration('minValue', 0);
+                $xiaomiactCmd->setConfiguration('maxValue', 64);
                 $xiaomiactCmd->setValue($xiaomihomeCmd->getId());
                 $xiaomiactCmd->setIsVisible(0);
             }
@@ -562,12 +594,27 @@ class xiaomihomeCmd extends cmd {
                 switch ($this->getSubType()) {
                     case 'color':
                     $option = hexdec($_options['color']);
-                    $eqLogic->aquaraAction($this->getConfiguration('switch'),$option);
+                    if ($this->getConfiguration('switch') == 'rgb') {
+                        $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'brightness');
+                        $rgbcomplet = $xiaomihomeCmd->execCmd() . $option;
+                        $option = hexdec($rgbcomplet);
+                        log::add('xiaomihome', 'debug', 'RGB : ' . $option . ' ' . $rgbcomplet);
+                    }
+                    break;
+                    case 'slider':
+                    $option = $_options['slider'];
+                    if ($this->getConfiguration('switch') == 'rgb') {
+                        $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'rgb');
+                        $rgbcomplet = $option . $xiaomihomeCmd->execCmd();
+                        $option = hexdec($rgbcomplet);
+                        log::add('xiaomihome', 'debug', 'RGB : ' . $option . ' ' . $rgbcomplet);
+                    }
                     break;
                     default :
-                    $eqLogic->aquaraAction($this->getConfiguration('switch'),$this->getConfiguration('request'));
+                    $option = $this->getConfiguration('request');
                     break;
                 }
+                $eqLogic->aquaraAction($this->getConfiguration('switch'),$option);
             }
         }
     }
