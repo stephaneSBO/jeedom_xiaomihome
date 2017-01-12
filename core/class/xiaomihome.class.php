@@ -593,7 +593,7 @@ class xiaomihomeCmd extends cmd {
             } else {
                 switch ($this->getSubType()) {
                     case 'color':
-                    $option = hexdec($_options['color']);
+                    $option = $_options['color'];
                     if ($this->getConfiguration('switch') == 'rgb') {
                         $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'brightness');
                         $bright = str_pad($xiaomihomeCmd->execCmd(), 2, "0", STR_PAD_LEFT);
