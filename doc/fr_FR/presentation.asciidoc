@@ -18,7 +18,6 @@ Liste des capteurs compatibles :
   * Interrupteur : http://www.gearbest.com/smart-light-bulb/pp_257679.html?lkid=10269959
 
   * Cube : http://www.gearbest.com/living-appliances/pp_364494.html?lkid=10269960
-  (fonctionnement limité à une commande statut)
 
   * Prise : http://www.gearbest.com/living-appliances/pp_344666.html?lkid=10269961
 
