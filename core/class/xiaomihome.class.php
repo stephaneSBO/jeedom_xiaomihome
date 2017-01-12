@@ -596,7 +596,8 @@ class xiaomihomeCmd extends cmd {
                     $option = hexdec($_options['color']);
                     if ($this->getConfiguration('switch') == 'rgb') {
                         $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'brightness');
-                        $rgbcomplet = $xiaomihomeCmd->execCmd() . $option;
+                        $bright = str_pad($xiaomihomeCmd->execCmd(), 2, "0", STR_PAD_LEFT);
+                        $rgbcomplet = $bright . str_replace('#','',$option);
                         $option = hexdec($rgbcomplet);
                         log::add('xiaomihome', 'debug', 'RGB : ' . $option . ' ' . $rgbcomplet);
                     }
@@ -605,7 +606,9 @@ class xiaomihomeCmd extends cmd {
                     $option = $_options['slider'];
                     if ($this->getConfiguration('switch') == 'rgb') {
                         $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'rgb');
-                        $rgbcomplet = $option . $xiaomihomeCmd->execCmd();
+                        $couleur = str_replace('#','',$xiaomihomeCmd->execCmd());
+                        $bright = str_pad($option, 2, "0", STR_PAD_LEFT);
+                        $rgbcomplet = $bright . $couleur;
                         $option = hexdec($rgbcomplet);
                         log::add('xiaomihome', 'debug', 'RGB : ' . $option . ' ' . $rgbcomplet);
                     }
