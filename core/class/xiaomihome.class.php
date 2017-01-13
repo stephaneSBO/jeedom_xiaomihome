@@ -32,14 +32,15 @@ class xiaomihome extends eqLogic {
         $password = $xiaomihome->getConfiguration('password');
         $token = $xiaomihome->getConfiguration('token');
         $sensor_path = realpath(dirname(__FILE__) . '/../../resources');
-        $cmd = 'nodejs ' . $sensor_path . '/aquara.js ' . $password . ' ' . $gateway . ' ' . $token . ' ' . $this->getConfiguration('model') . ' ' . $this->getConfiguration('sid') . ' ' . $switch . ' ' . $request;
+        $cmd = 'nodejs ' . $sensor_path . '/aquara.js ' . $password . ' ' . $gateway . ' ' . $token . ' ' . $this->getConfiguration('model') . ' ' . $this->getConfiguration('sid') . ' ' . $switch . ' ' . $request . ' ' . $this->getConfiguration('short_id');
         $result = exec($cmd . ' >> ' . log::getPathToLog('xiaomihome_cmd') . ' 2>&1 &');
         log::add('xiaomihome', 'debug', 'Commande Aquara ' . $cmd);
-        /*$options = 0;
+        $options = 0;
         //$iv = Buffer.from([0x17, 0x99, 0x6d, 0x09, 0x3d, 0x28, 0xdd, 0xb3, 0xba, 0x69, 0x5a, 0x2e, 0x6f, 0x58, 0x56, 0x2e]);
-        //$iv = 0x17996d093d28ddb3ba695a2e6f58562e;
-        $key = openssl_encrypt( $token , 'aes-128-cbc' , $password);
-        $cmd = '{"cmd":"write","model":"' . $this->getConfiguration('model') . '","sid":"' . $this->getConfiguration('sid') . '","data":"{\\"' . $switch . '\\":\\"' . $request . '\\", \\"key\\": \\"' . $key . '\\"}"}';
+        $iv = 0x17996d093d28ddb3ba695a2e6f58562e;
+        $key = openssl_encrypt( $token , 'aes-128-cbc' , $password, true, $iv);
+        $cmd = '{"cmd":"write","model":"' . $this->getConfiguration('model') . '","sid":"' . $this->getConfiguration('sid') . '","short_id":"' . $this->getConfiguration('short_id') . '","data":"{\\"' . $switch . '\\":\\"' . $request . '\\", \\"key\\": \\"' . $key . '\\"}"}';
+        log::add('xiaomihome', 'debug', 'Cmd ' . $cmd);
         $sock = socket_create(AF_INET, SOCK_DGRAM, 0);
         // Actually write the data and send it off
         if( ! socket_sendto($sock, $cmd , strlen($cmd) , 0 , $gateway , '9898')) {

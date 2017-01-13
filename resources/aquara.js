@@ -10,6 +10,7 @@ var model = '';
 var sid = '';
 var cmd = '';
 var state = '';
+var short_id = '';
 
 process.argv.forEach(function(val, index, array) {
 	switch ( index ) {
@@ -20,6 +21,7 @@ process.argv.forEach(function(val, index, array) {
 		case 6 : sid = val; break;
         case 7 : cmd = val; break;
         case 8 : state = val; break;
+        case 8 : short_id = val; break;
 	}
 });
 
@@ -31,6 +33,6 @@ key = cipher.update(token, "ascii", "hex");
 cipher.final('hex'); // Useless data, don't know why yet.
 }
 
-var command = '{"cmd":"write","model":"' + model + '","sid":"' + sid + '","data":"{\\"' + cmd + '\\":\\"' + state + '\\", \\"key\\": \\"' + key + '\\"}"}';
+var command = '{"cmd":"write","model":"' + model + '","sid":"' + sid + '","short_id":"' + short_id + '","data":"{\\"' + cmd + '\\":\\"' + state + '\\", \\"key\\": \\"' + key + '\\"}"}';
 console.log((new Date()).toLocaleString(), command);
 serverSocket.send(command, 0, command.length, 9898, gateway);
