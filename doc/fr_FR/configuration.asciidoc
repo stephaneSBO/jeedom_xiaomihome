@@ -34,7 +34,7 @@ Information importante : pour pouvoir envoyer des commandes (prise) vers la gate
 
   - Interrupteur encastré : commande statut binaire avec on et off pour chaque interrupteur
 
-  - Cube : commande statut avec pour valeur move, tap_twice, shake_air, alert, flip_90, flip180, free_fall et une commande rotate avec la valeur en degré du mouvement
+  - Cube : commande statut avec pour valeur move, tap_twice, shake_air, alert, flip90, flip180, free_fall et une commande rotate avec la valeur en degré du mouvement
 
 
 ==== Configuration des lampes Yeelight
