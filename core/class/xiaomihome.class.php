@@ -360,6 +360,7 @@ public static function receiveData($id, $model, $key, $value) {
                 break;
         }
         //$xiaomihome->checkAndUpdateCmd($key, $value);
+        $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
         $xiaomihomeCmd->setConfiguration('value',$value);
         $xiaomihomeCmd->save();
         $xiaomihomeCmd->event($value);
