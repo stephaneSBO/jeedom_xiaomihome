@@ -260,13 +260,17 @@ public static function receiveData($id, $model, $key, $value) {
         switch ($key) {
             case 'humidity':
                 $value = $value / 100;
-                $unite = '%';
                 $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-tint"></i>');
+                $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
+                $xiaomihomeCmd->setUnite('%');
+                $xiaomihomeCmd->save();
                 break;
             case 'temperature':
                 $value = $value / 100;
-                $unite = '°C';
                 $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-tint"></i>');
+                $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
+                $xiaomihomeCmd->setUnite('°C');
+                $xiaomihomeCmd->save();
                 break;
             case 'rotate':
                 $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '0');
@@ -289,10 +293,16 @@ public static function receiveData($id, $model, $key, $value) {
                 break;
             case 'battery':
                 $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-battery-half"></i>');
-                $unite = '%';
+                $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
+                $xiaomihomeCmd->setUnite('%');
+                $xiaomihomeCmd->save();
                 $xiaomihome->setConfiguration('battery',$value);
                 $xiaomihome->batteryStatus($value);
                 $xiaomihome->save();
+                break;
+            case 'no_motion':
+                $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','0', 'line', '0');
+                $xiaomihome->checkAndUpdateCmd('motion', 0);
                 break;
             case 'status':
                 switch ($model) {
@@ -330,7 +340,6 @@ public static function receiveData($id, $model, $key, $value) {
                 $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
                 if ($model == 'magnet') {
                     $xiaomihomeCmd->setDisplay('invertBinary', 1);
-                    $xiaomihomeCmd->save();
                 }
                 $xiaomihomeCmd->setConfiguration('repeatEventManagement','always');
                 $xiaomihomeCmd->save();
