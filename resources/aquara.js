@@ -21,7 +21,7 @@ process.argv.forEach(function(val, index, array) {
 		case 6 : sid = val; break;
         case 7 : cmd = val; break;
         case 8 : state = val; break;
-        case 8 : short_id = val; break;
+        case 9 : short_id = val; break;
 	}
 });
 
