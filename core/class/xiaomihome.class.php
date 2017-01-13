@@ -302,7 +302,7 @@ public static function receiveData($id, $model, $key, $value) {
                 break;
             case 'no_motion':
                 $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','0', 'line', '0');
-                $xiaomihome->checkAndUpdateCmd('motion', 0);
+                $xiaomihome->checkAndUpdateCmd('status', 0);
                 break;
             case 'inuse':
                 $xiaomihome->checkCmdOk($key, $key, 'info', 'binary', '0', '0','1', '0', '0');
