@@ -532,7 +532,7 @@ class xiaomihomeCmd extends cmd {
                         $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'brightness');
                         $bright = str_pad(dechex($xiaomihomeCmd->execCmd()), 2, "0", STR_PAD_LEFT);
                         $couleur = str_replace('#','',$option);
-                        $rgbcomplet = 'ff' . $couleur;
+                        $rgbcomplet = $bright . $couleur;
                         $option = hexdec($rgbcomplet);
                         log::add('xiaomihome', 'debug', 'RGB : dec ' . $option . ' hex ' . $rgbcomplet . ' bright ' . $bright . ' color ' . $couleur);
                     }
