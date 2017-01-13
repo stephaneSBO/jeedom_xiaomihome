@@ -35,7 +35,6 @@ class xiaomihome extends eqLogic {
         $cmd = 'nodejs ' . $sensor_path . '/aquara.js ' . $password . ' ' . $gateway . ' ' . $token . ' ' . $this->getConfiguration('model') . ' ' . $this->getConfiguration('sid') . ' ' . $switch . ' ' . $request . ' ' . $this->getConfiguration('short_id');
         $result = exec($cmd . ' >> ' . log::getPathToLog('xiaomihome_cmd') . ' 2>&1 &');
         log::add('xiaomihome', 'debug', 'Commande Aquara ' . $cmd);
-        $options = 0;
         //$iv = Buffer.from([0x17, 0x99, 0x6d, 0x09, 0x3d, 0x28, 0xdd, 0xb3, 0xba, 0x69, 0x5a, 0x2e, 0x6f, 0x58, 0x56, 0x2e]);
         $iv = 0x17996d093d28ddb3ba695a2e6f58562e;
         $key = openssl_encrypt( $token , 'aes-128-cbc' , $password, true, $iv);
@@ -51,7 +50,7 @@ class xiaomihome extends eqLogic {
         } else {
           log::add('xiaomihome', 'debug', 'Envoi ok ' . $cmd);
         }
-        socket_close($sock);*/
+        socket_close($sock);
     }
 
     public function yeeStatus($ip) {
