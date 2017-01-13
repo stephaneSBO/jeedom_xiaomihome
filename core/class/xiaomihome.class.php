@@ -157,17 +157,9 @@ public function checkCmdOk($_id, $_name, $_type, $_subtype, $_request, $_setvalu
         $xiaomihomeCmd->setSubType($_subtype);
         if ($_subtype == 'slider') {
             switch ($_id) {
-                case 'brightnessAct':
-                $xiaomihomeCmd->setConfiguration('minValue', 0);
-                $xiaomihomeCmd->setConfiguration('maxValue', 100);
-                break;
                 case 'hsvAct':
                 $xiaomihomeCmd->setConfiguration('minValue', 0);
                 $xiaomihomeCmd->setConfiguration('maxValue', 253);
-                break;
-                case 'saturationAct':
-                $xiaomihomeCmd->setConfiguration('minValue', 0);
-                $xiaomihomeCmd->setConfiguration('maxValue', 100);
                 break;
                 case 'temperatureAct':
                 $xiaomihomeCmd->setConfiguration('minValue', 1700);
@@ -176,6 +168,10 @@ public function checkCmdOk($_id, $_name, $_type, $_subtype, $_request, $_setvalu
                 case 'cron':
                 $xiaomihomeCmd->setConfiguration('minValue', 1);
                 $xiaomihomeCmd->setConfiguration('maxValue', 300);
+                break;
+                default :
+                $xiaomihomeCmd->setConfiguration('minValue', 0);
+                $xiaomihomeCmd->setConfiguration('maxValue', 100);
                 break;
             }
         }
@@ -261,181 +257,103 @@ public static function receiveData($id, $model, $key, $value) {
     //log::add('xiaomihome', 'debug', 'Capteur ' . $id . ' de ' . $model . ' : ' . $key . ' ' . $value);
     $xiaomihome = self::byLogicalId($id, 'xiaomihome');
     if (is_object($xiaomihome)) {
-        //default
-        $unite = '';
-        $type = 'string';
-        $icone = '';
-        $invert = '';
-        $widget = 'line';
-        if ($model == 'sensor_ht') {
-            $type = 'numeric';
-            $value = $value / 100;
-            if ($key == 'humidity') {
+        switch ($key) {
+            case 'humidity':
+                $value = $value / 100;
                 $unite = '%';
-                $icone = '<i class="fa fa-tint"></i>';
-            } else { #temperature
+                $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-tint"></i>');
+                break;
+            case 'temperature':
+                $value = $value / 100;
                 $unite = '°C';
-                $icone = '<i class="fa fa-thermometer-empty"></i>';
-            }
-        }
-        if ($key == 'rgb') {
-            $value = str_pad(dechex($value), 8, "0", STR_PAD_LEFT);
-            $light = substr($value, 0, 2);
-            $value = '#' . substr($value, -6);
-        }
-        if ($key == 'rotate') {
-            $type = 'numeric';
-        }
-        if ($model != 'switch' && $model != 'cube' && $key == 'status') {
-            $type = 'binary';
-            if ($model != 'magnet') {
-                $value = ($value == 'close' || $value == 'on' || $value == 'motion') ? 1 : 0;
+                $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-tint"></i>');
+                break;
+            case 'rotate':
+                $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '0');
+                break;
+            case 'rgb':
+                $value = str_pad(dechex($value), 8, "0", STR_PAD_LEFT);
+                $light = hexdec(substr($value, 0, 2));
+                $value = '#' . substr($value, -6);
+                $xiaomihome->checkCmdOk($key, $key, 'info', 'string', '0', '0','0', '0', '0');
+                $xiaomihome->checkCmdOk('brightness', 'Luminosité', 'info', 'numeric', '0', '0','0', '0', '0');
+                $xiaomihome->checkAndUpdateCmd('brightness', $light);
+                $xiaomihome->checkCmdOk($key . '-set', 'Définir Couleur', 'action', 'color', $key, '0','1', '0', '0');
+                $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-set');
+                $xiaomiactCmd->setConfiguration('switch', $key);
+                $xiaomiactCmd->save();
+                $xiaomihome->checkCmdOk('brightness-set', 'Définir Luminosité', 'action', 'slider', 'brightness', '0','1', '0', '0');
+                $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),'brightness-set');
+                $xiaomiactCmd->setConfiguration('switch', $key);
+                $xiaomiactCmd->save();
+                break;
+            case 'battery':
+                $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-battery-half"></i>');
+                $unite = '%';
+                $xiaomihome->setConfiguration('battery',$value);
+                $xiaomihome->batteryStatus($value);
+                $xiaomihome->save();
+                break;
+            case 'status':
                 switch ($model) {
                     case 'motion':
                         $widget = 'presence';
+                        $type = 'binary';
+                        $value = ($value == 'motion') ? 1 : 0;
                         break;
                     case 'magnet':
                         $widget = 'door';
+                        $type = 'binary';
+                        $value = ($value == 'close') ? 0 : 1;
+                        break;
+                    case 'plug':
+                        $widget = 'light';
+                        $type = 'binary';
+                        $value = ($value == 'on') ? 1 : 0;
+                        break;
+                    case 'ctrl_neutral1':
+                        $widget = 'light';
+                        $type = 'binary';
+                        $value = ($value == 'on') ? 1 : 0;
+                        break;
+                    case 'ctrl_neutral2':
+                        $widget = 'light';
+                        $type = 'binary';
+                        $value = ($value == 'on') ? 1 : 0;
                         break;
                     default:
-                        $widget = 'light';
+                        $widget = 'line';
+                        $type = 'string';
                         break;
                 }
-            } else if ($model == 'magnet') {
-                $value = ($value == 'close') ? 0 : 1;
-                $widget = 'door';
-                $invert = 1;
-            }
-        }
-        if ($key == 'battery') {
-            $type = 'numeric';
-            $unite = '%';
-            $icone = '<i class="fa fa-battery-half"></i>';
-            $xiaomihome->setConfiguration('battery',$value);
-            $xiaomihome->batteryStatus($value);
-            $xiaomihome->save();
-        }
-        //log::add('xiaomihome', 'debug', 'Update de la commande ' . $key . ' ' . $value . ' ' . $widget . ' ' . $type);
-        $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
-        if (!is_object($xiaomihomeCmd)) {
-            log::add('xiaomihome', 'debug', 'Création de la commande ' . $key);
-            $xiaomihomeCmd = new xiaomihomeCmd();
-            $xiaomihomeCmd->setName(__($key, __FILE__));
-            $xiaomihomeCmd->setEqLogic_id($xiaomihome->id);
-            $xiaomihomeCmd->setEqType('xiaomihome');
-            $xiaomihomeCmd->setLogicalId($key);
-            $xiaomihomeCmd->setType('info');
-            $xiaomihomeCmd->setSubType($type);
-            if ($icone != '') {
-                $xiaomihomeCmd->setDisplay('icon', $icone);
-            }
-            if ($invert != '') {
-                $xiaomihomeCmd->setDisplay('invertBinary', 1);
-            }
-            $xiaomihomeCmd->setTemplate("mobile",$widget );
-            $xiaomihomeCmd->setTemplate("dashboard",$widget );
-            $xiaomihomeCmd->save();
-        }
-        if ($key == 'status') {
-            $xiaomihomeCmd->setConfiguration('repeatEventManagement','always');
-            $xiaomihomeCmd->save();
+                $xiaomihome->checkCmdOk($key, $key, 'info', $type, '0', '0','1', $widget, '0');
+                $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
+                if ($model == 'magnet') {
+                    $xiaomihomeCmd->setDisplay('invertBinary', 1);
+                    $xiaomihomeCmd->save();
+                }
+                $xiaomihomeCmd->setConfiguration('repeatEventManagement','always');
+                $xiaomihomeCmd->save();
+                if ($model == 'plug' || $model == 'ctrl_neutral1' || $model == 'ctrl_neutral2') {
+                    $xiaomihome->checkCmdOk($key . '-on', $key . '-on', 'action', 'other', $key, 'on','1', $widget, '0');
+                    $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-on');
+                    $xiaomiactCmd->setConfiguration('switch', $key);
+                    $xiaomiactCmd->save();
+                    $xiaomihome->checkCmdOk($key . '-off', $key . '-off', 'action', 'other', $key, 'off','1', $widget, '0');
+                    $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-off');
+                    $xiaomiactCmd->setConfiguration('switch', $key);
+                    $xiaomiactCmd->save();
+                }
+                break;
+
+            default:
+                $xiaomihome->checkCmdOk($key, $key, 'info', 'string', '0', '0','1', 'line', '0');
+                break;
         }
         //$xiaomihome->checkAndUpdateCmd($key, $value);
         $xiaomihomeCmd->setConfiguration('value',$value);
         $xiaomihomeCmd->save();
         $xiaomihomeCmd->event($value);
-        //log::add('xiaomihome', 'debug', 'Update de la commande ' . $key . ' ' . $value);
-        if (($model == 'plug' && $key == 'status') || $model == 'ctrl_neutral1' || $model == 'ctrl_neutral2') {
-            $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-on');
-            if (!is_object($xiaomiactCmd)) {
-                log::add('xiaomihome', 'debug', 'Création de la commande ' . $key . '-on');
-                $xiaomiactCmd = new xiaomihomeCmd();
-                $xiaomiactCmd->setName(__($key . '-on', __FILE__));
-                $xiaomiactCmd->setEqLogic_id($xiaomihome->id);
-                $xiaomiactCmd->setEqType('xiaomihome');
-                $xiaomiactCmd->setLogicalId($key . '-on');
-                $xiaomiactCmd->setType('action');
-                $xiaomiactCmd->setSubType('other');
-                if ($icone != '') {
-                    $xiaomiactCmd->setDisplay('icon', $icone);
-                }
-                $xiaomiactCmd->setTemplate("mobile",$widget );
-                $xiaomiactCmd->setTemplate("dashboard",$widget );
-                $xiaomiactCmd->setValue($xiaomihomeCmd->getId());
-                $xiaomiactCmd->setIsVisible(0);
-            }
-            $xiaomiactCmd->setConfiguration('request', 'on');
-            $xiaomiactCmd->setConfiguration('switch', $key);
-            $xiaomiactCmd->save();
-            $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-off');
-            if (!is_object($xiaomiactCmd)) {
-                log::add('xiaomihome', 'debug', 'Création de la commande ' . $key . '-off');
-                $xiaomiactCmd = new xiaomihomeCmd();
-                $xiaomiactCmd->setName(__($key . '-off', __FILE__));
-                $xiaomiactCmd->setEqLogic_id($xiaomihome->id);
-                $xiaomiactCmd->setEqType('xiaomihome');
-                $xiaomiactCmd->setLogicalId($key . '-off');
-                $xiaomiactCmd->setType('action');
-                $xiaomiactCmd->setSubType('other');
-                if ($icone != '') {
-                    $xiaomiactCmd->setDisplay('icon', $icone);
-                }
-                $xiaomiactCmd->setTemplate("mobile",$widget );
-                $xiaomiactCmd->setTemplate("dashboard",$widget );
-                $xiaomiactCmd->setValue($xiaomihomeCmd->getId());
-                $xiaomiactCmd->setIsVisible(0);
-            }
-            $xiaomiactCmd->setConfiguration('request', 'off');
-            $xiaomiactCmd->setConfiguration('switch', $key);
-            $xiaomiactCmd->save();
-        }
-        if ($key == 'rgb') {
-            $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-set');
-            if (!is_object($xiaomiactCmd)) {
-                log::add('xiaomihome', 'debug', 'Création de la commande ' . $key . '-set');
-                $xiaomiactCmd = new xiaomihomeCmd();
-                $xiaomiactCmd->setName(__('Définir Couleur', __FILE__));
-                $xiaomiactCmd->setEqLogic_id($xiaomihome->id);
-                $xiaomiactCmd->setEqType('xiaomihome');
-                $xiaomiactCmd->setLogicalId($key . '-set');
-                $xiaomiactCmd->setType('action');
-                $xiaomiactCmd->setSubType('color');
-                $xiaomiactCmd->setValue($xiaomihomeCmd->getId());
-                $xiaomiactCmd->setIsVisible(0);
-            }
-            $xiaomiactCmd->setConfiguration('switch', $key);
-            $xiaomiactCmd->save();
-            $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),'brightness');
-            if (!is_object($xiaomihomeCmd)) {
-                log::add('xiaomihome', 'debug', 'Création de la commande brightness');
-                $xiaomihomeCmd = new xiaomihomeCmd();
-                $xiaomihomeCmd->setName(__('Luminosité', __FILE__));
-                $xiaomihomeCmd->setEqLogic_id($xiaomihome->id);
-                $xiaomihomeCmd->setEqType('xiaomihome');
-                $xiaomihomeCmd->setLogicalId('brightness');
-                $xiaomihomeCmd->setType('info');
-                $xiaomihomeCmd->setSubType('numeric');
-                $xiaomihomeCmd->save();
-            }
-            $xiaomihome->checkAndUpdateCmd('brightness', $light);
-            $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),'brightness-set');
-            if (!is_object($xiaomiactCmd)) {
-                log::add('xiaomihome', 'debug', 'Création de la commande brightness-set');
-                $xiaomiactCmd = new xiaomihomeCmd();
-                $xiaomiactCmd->setName(__('Définir Luminosité', __FILE__));
-                $xiaomiactCmd->setEqLogic_id($xiaomihome->id);
-                $xiaomiactCmd->setEqType('xiaomihome');
-                $xiaomiactCmd->setLogicalId('brightness-set');
-                $xiaomiactCmd->setType('action');
-                $xiaomiactCmd->setSubType('slider');
-                $xiaomiactCmd->setConfiguration('minValue', 0);
-                $xiaomiactCmd->setConfiguration('maxValue', 64);
-                $xiaomiactCmd->setValue($xiaomihomeCmd->getId());
-                $xiaomiactCmd->setIsVisible(0);
-            }
-            $xiaomiactCmd->setConfiguration('switch', $key);
-            $xiaomiactCmd->save();
-        }
     }
 }
 
@@ -596,7 +514,7 @@ class xiaomihomeCmd extends cmd {
                     $option = $_options['color'];
                     if ($this->getConfiguration('switch') == 'rgb') {
                         $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'brightness');
-                        $bright = str_pad($xiaomihomeCmd->execCmd(), 2, "0", STR_PAD_LEFT);
+                        $bright = str_pad(dechex($xiaomihomeCmd->execCmd()), 2, "0", STR_PAD_LEFT);
                         $couleur = str_replace('#','',$option);
                         $rgbcomplet = 'ff' . $couleur;
                         $option = hexdec($rgbcomplet);
@@ -604,7 +522,7 @@ class xiaomihomeCmd extends cmd {
                     }
                     break;
                     case 'slider':
-                    $option = $_options['slider'];
+                    $option = dechex($_options['slider']);
                     if ($this->getConfiguration('switch') == 'rgb') {
                         $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'rgb');
                         $couleur = str_replace('#','',$xiaomihomeCmd->execCmd());
