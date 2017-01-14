@@ -316,6 +316,7 @@ public static function receiveData($id, $model, $key, $value) {
                         $widget = 'presence';
                         $type = 'binary';
                         $value = ($value == 'motion') ? 1 : 0;
+                        $xiaomihome->checkAndUpdateCmd('no_motion', 0);
                         break;
                     case 'magnet':
                         $widget = 'door';
