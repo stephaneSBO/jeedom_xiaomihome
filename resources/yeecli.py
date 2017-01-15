@@ -22,9 +22,9 @@ DICT_MAPPING = {'wait' : SleepTransition,\
 	}
 
 if sys.argv[2] == 'brightness':
-	bulb.set_brightness(sys.argv[3])
+	bulb.set_brightness(int(sys.argv[3]))
 elif sys.argv[2] == 'temperature':
-	bulb.set_color_temp(sys.argv[3])
+	bulb.set_color_temp(int(sys.argv[3]))
 elif sys.argv[2] == 'hsv':
 	bulb.set_hsv(sys.argv[3], sys.argv[4])
 elif sys.argv[2] == 'flow':
