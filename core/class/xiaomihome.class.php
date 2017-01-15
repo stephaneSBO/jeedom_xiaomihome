@@ -20,6 +20,12 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 class xiaomihome extends eqLogic {
 
     public function yeeAction($ip, $request, $option) {
+        exec("ping -c1 " . $ip, $output, $return_var);
+        if ($return_var != 0) {
+            log::add('xiaomihome', 'debug', 'Lampe Yeelight non joignable ' . $ip);
+            $this->checkAndUpdateCmd('online', 0);
+            die();
+        }
         $cmd = 'python ' . realpath(dirname(__FILE__)) . '/../../resources/yeecli.py ' . $ip . ' ' . $request . ' ' . $option;
         //$cmd = 'yeecli --ip=' . $ip . ' ' . $request . ' ' . $option;
         log::add('xiaomihome', 'debug', 'Commande Yeelight ' . $cmd);
@@ -29,7 +35,16 @@ class xiaomihome extends eqLogic {
     public function aquaraAction($switch, $request) {
         $gateway = $this->getConfiguration('gateway');
         $xiaomihome = self::byLogicalId($gateway, 'xiaomihome');
-        $password = $xiaomihome->getConfiguration('password');
+        $password = $xiaomihome->getConfiguration('password','');
+        if ($password == '') {
+            log::add('xiaomihome', 'debug', 'Mot de passe manquant sur la gateway Aquara ' . $gateway);
+            die();
+        }
+        exec("ping -c1 " . $gateway, $output, $return_var);
+        if ($return_var != 0) {
+            log::add('xiaomihome', 'debug', 'Gateway Aquara non joignable ' . $gateway);
+            die();
+        }
         $token = $xiaomihome->getConfiguration('token');
         $sensor_path = realpath(dirname(__FILE__) . '/../../resources');
         $cmd = 'nodejs ' . $sensor_path . '/aquara.js ' . $password . ' ' . $gateway . ' ' . $token . ' ' . $this->getConfiguration('model') . ' ' . $this->getConfiguration('sid') . ' ' . $switch . ' ' . $request . ' ' . $this->getConfiguration('short_id');
@@ -54,6 +69,12 @@ class xiaomihome extends eqLogic {
     }
 
     public function yeeStatus($ip) {
+        exec("ping -c1 " . $ip, $output, $return_var);
+        if ($return_var != 0) {
+            log::add('xiaomihome', 'debug', 'Lampe Yeelight non joignable ' . $ip);
+            $this->checkAndUpdateCmd('online', 0);
+            die();
+        }
         //$cmd = 'yee --ip=' . $ip . ' status';
         $cmd = 'python ' . realpath(dirname(__FILE__)) . '/../../resources/yeecli.py ' . $ip . ' status';
         exec($cmd, $output, $return_var);
@@ -102,6 +123,8 @@ class xiaomihome extends eqLogic {
     $xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
     $xiaomihome->save();
 
+    $xiaomihome->checkCmdOk('online', 'Online', 'info', 'binary', '0', '0', '0', 'line', '0');
+    $xiaomihome->checkAndUpdateCmd('online', 1);
     $xiaomihome->checkCmdOk('status', 'Statut', 'info', 'binary', '0', '0', '0', 'light', '0');
     $power = ($power == 'off')? 0:1;
     $xiaomihome->checkAndUpdateCmd('status', $power);
