@@ -26,7 +26,7 @@ if sys.argv[2] == 'brightness':
 elif sys.argv[2] == 'temperature':
 	bulb.set_color_temp(int(sys.argv[3]))
 elif sys.argv[2] == 'hsv':
-	bulb.set_hsv(sys.argv[3], sys.argv[4])
+	bulb.set_hsv(int(sys.argv[3]), int(sys.argv[4]))
 elif sys.argv[2] == 'flow':
 	translist = sys.argv[5].split('-')
 	list =[]
@@ -57,7 +57,7 @@ elif sys.argv[2] == 'rgb':
 elif sys.argv[2] == 'toggle':
 	bulb.toggle()
 elif sys.argv[2] == 'cron':
-	bulb.cron_add(enums.CronType.off, sys.argv[3])
+	bulb.cron_add(enums.CronType.off, int(sys.argv[3]))
 elif sys.argv[2] == 'turn':
 	if sys.argv[3] == 'on':
 		bulb.turn_on()
