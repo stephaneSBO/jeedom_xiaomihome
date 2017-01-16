@@ -78,7 +78,8 @@ class xiaomihome extends eqLogic {
         //$cmd = 'yee --ip=' . $ip . ' status';
         $cmd = 'python ' . realpath(dirname(__FILE__)) . '/../../resources/yeecli.py ' . $ip . ' status';
         exec($cmd, $output, $return_var);
-        $output = shell_exec($cmd);
+        //$output = shell_exec($cmd);
+        log::add('xiaomihome', 'debug', 'Status ' . print_r($output, true));
 
         $status = explode(' : ',$output[3]);
         $color_mode = explode(' : ',$output[1]);
