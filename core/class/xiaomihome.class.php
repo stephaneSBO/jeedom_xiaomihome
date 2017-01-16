@@ -386,7 +386,19 @@ public static function receiveData($id, $model, $key, $value) {
                     $xiaomiactCmd->save();
                 }
                 break;
-
+            case 'channel_0' || 'channel_1':
+                $value = ($value == 'on') ? 1 : 0;
+                $widget = 'light';
+                $xiaomihome->checkCmdOk($key, $key, 'info', 'binary', '0', '0','1', 'light', '0');
+                $xiaomihome->checkCmdOk($key . '-on', $key . '-on', 'action', 'other', $key, 'on','1', $widget, '0');
+                $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-on');
+                $xiaomiactCmd->setConfiguration('switch', $key);
+                $xiaomiactCmd->save();
+                $xiaomihome->checkCmdOk($key . '-off', $key . '-off', 'action', 'other', $key, 'off','1', $widget, '0');
+                $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-off');
+                $xiaomiactCmd->setConfiguration('switch', $key);
+                $xiaomiactCmd->save();
+                break;
             default:
                 $xiaomihome->checkCmdOk($key, $key, 'info', 'string', '0', '0','1', 'line', '0');
                 break;
