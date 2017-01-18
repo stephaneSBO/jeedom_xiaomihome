@@ -376,11 +376,11 @@ public static function receiveData($id, $model, $key, $value) {
                 $xiaomihomeCmd->setConfiguration('repeatEventManagement','always');
                 $xiaomihomeCmd->save();
                 if ($model == 'plug' || $model == 'ctrl_neutral1' || $model == 'ctrl_neutral2') {
-                    $xiaomihome->checkCmdOk($key . '-on', $key . '-on', 'action', 'other', $key, 'on','1', $widget, '0');
+                    $xiaomihome->checkCmdOk($key . '-on', $key . '-on', 'action', 'other', 'on',$key, '1', $widget, '0');
                     $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-on');
                     $xiaomiactCmd->setConfiguration('switch', $key);
                     $xiaomiactCmd->save();
-                    $xiaomihome->checkCmdOk($key . '-off', $key . '-off', 'action', 'other', $key, 'off','1', $widget, '0');
+                    $xiaomihome->checkCmdOk($key . '-off', $key . '-off', 'action', 'other', 'off',$key, '1', $widget, '0');
                     $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-off');
                     $xiaomiactCmd->setConfiguration('switch', $key);
                     $xiaomiactCmd->save();
@@ -390,11 +390,11 @@ public static function receiveData($id, $model, $key, $value) {
                 $value = ($value == 'on') ? 1 : 0;
                 $widget = 'light';
                 $xiaomihome->checkCmdOk($key, $key, 'info', 'binary', '0', '0','1', 'light', '0');
-                $xiaomihome->checkCmdOk($key . '-on', $key . '-on', 'action', 'other', $key, 'on','1', $widget, '0');
+                $xiaomihome->checkCmdOk($key . '-on', $key . '-on', 'action', 'other', 'on',$key, '1', $widget, '0');
                 $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-on');
                 $xiaomiactCmd->setConfiguration('switch', $key);
                 $xiaomiactCmd->save();
-                $xiaomihome->checkCmdOk($key . '-off', $key . '-off', 'action', 'other', $key, 'off','1', $widget, '0');
+                $xiaomihome->checkCmdOk($key . '-off', $key . '-off', 'action', 'other', 'off',$key, '1', $widget, '0');
                 $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-off');
                 $xiaomiactCmd->setConfiguration('switch', $key);
                 $xiaomiactCmd->save();
