@@ -40,19 +40,35 @@ $eqLogics = eqLogic::byType('xiaomihome');
       </div>
     </div>
 
-    <legend><i class="fa fa-table"></i>  {{Mes xiaomihome}}</legend>
+    <legend><i class="fa fa-table"></i>  {{Mes Aquara}}</legend>
+        <?php
+        foreach ($eqLogics as $eqLogic) {
+            if ($eqLogic->getConfiguration('type') == 'aquara') {
+                if ($status == 0) {echo '<div class="eqLogicThumbnailContainer">';}
+                $status = 1;
+                $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
+                echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
+                echo "<center>";
+                echo '<img src="plugins/xiaomihome/doc/images/xiaomihome_icon.png" height="105" width="95" />';
+                echo "</center>";
+                echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
+                echo '</div>';
+            }
+        }
+        if ($status == 1) {
+            echo '</div>';
+        } else {
+            echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucun aquara détecté, démarrer un node pour ajout}}</span></center>";
+        }
+        ?>
+
+    <legend><i class="fa fa-table"></i>  {{Mes Yeelight}}</legend>
     <?php
     if (count($eqLogics) == 0) {
-      echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucun xiaomihome détecté, démarrer un node pour ajout}}</span></center>";
+      echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucune yeelight détectée, allumez une ampoule pour ajout}}</span></center>";
     } else {
       ?>
       <div class="eqLogicThumbnailContainer">
-        <div class="cursor eqLogicAction" data-action="add" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
-          <center>
-            <i class="fa fa-plus-circle" style="font-size : 7em;color:#00979c;"></i>
-          </center>
-          <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>Ajouter</center></span>
-        </div>
         <?php
         foreach ($eqLogics as $eqLogic) {
           $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
@@ -206,11 +222,6 @@ $eqLogics = eqLogic::byType('xiaomihome');
 
           </tbody>
         </table>
-
-        <div class="form-actions">
-          <a class="btn btn-success btn-sm cmdAction" id="bt_addxiaomihomeInfo"><i class="fa fa-plus-circle"></i> {{Ajouter une commande info}}</a>
-          <a class="btn btn-success btn-sm cmdAction" id="bt_addxiaomihomeAction"><i class="fa fa-plus-circle"></i> {{Ajouter une commande action}}</a>
-        </div>
 
       </div>
     </div>
