@@ -42,6 +42,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
 
     <legend><i class="fa fa-table"></i>  {{Mes Aquara}}</legend>
         <?php
+        $status = 0;
         foreach ($eqLogics as $eqLogic) {
             if ($eqLogic->getConfiguration('type') == 'aquara') {
                 if ($status == 0) {echo '<div class="eqLogicThumbnailContainer">';}
@@ -64,24 +65,27 @@ $eqLogics = eqLogic::byType('xiaomihome');
 
     <legend><i class="fa fa-table"></i>  {{Mes Yeelight}}</legend>
     <?php
-    if (count($eqLogics) == 0) {
-      echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucune yeelight détectée, allumez une ampoule pour ajout}}</span></center>";
-    } else {
-      ?>
-      <div class="eqLogicThumbnailContainer">
-        <?php
-        foreach ($eqLogics as $eqLogic) {
-          $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
-          echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
-          echo "<center>";
-          echo '<img src="plugins/xiaomihome/doc/images/xiaomihome_icon.png" height="105" width="95" />';
-          echo "</center>";
-          echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
-          echo '</div>';
+    $status = 0;
+    foreach ($eqLogics as $eqLogic) {
+        if ($eqLogic->getConfiguration('type') == 'yeelight') {
+            if ($status == 0) {echo '<div class="eqLogicThumbnailContainer">';}
+            $status = 1;
+            $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
+            echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
+            echo "<center>";
+            echo '<img src="plugins/xiaomihome/doc/images/xiaomihome_icon.png" height="105" width="95" />';
+            echo "</center>";
+            echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
+            echo '</div>';
         }
-        ?>
-      </div>
-      <?php } ?>
+    }
+    if ($status == 1) {
+        echo '</div>';
+    } else {
+        echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucun aquara détecté, démarrer un node pour ajout}}</span></center>";
+    }
+    ?>
+
     </div>
 
 <div class="col-lg-10 col-md-9 col-sm-8 eqLogic" style="border-left: solid 1px #EEE; padding-left: 25px;display: none;">
