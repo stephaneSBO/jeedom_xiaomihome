@@ -39,12 +39,15 @@ if (init('type') == 'aquara') {
                 if (isset($body['data'])) {
                     $data = json_decode($body['data'], true);
                     foreach ($data as $key => $value) {
-                        log::add('xiaomihome', 'debug', 'Capteur ' . $body['sid'] . ' de ' . $body['model'] . ' : ' . $key . ' ' . $value);
+                        //log::add('xiaomihome', 'debug', 'Capteur ' . $body['sid'] . ' de ' . $body['model'] . ' : ' . $key . ' ' . $value);
                         xiaomihome::receiveData(init('gateway'), $body['model'], $key, $value);
                     }
                 }
             }
         } else {
+            if ($body['cmd'] == 'heartbeat' && config::byKey('aquaraReport', 'xiaomihome') == '1') {
+                die();
+            }
             xiaomihome::receiveId($body['sid'], $body['model'], init('gateway'), $body['short_id']);
             //log::add('xiaomihome', 'debug', 'Recu ' . $body['sid'] . ' ' . $body['model'] . ' ' . print_r($body, true));
             if (isset($body['data'])) {

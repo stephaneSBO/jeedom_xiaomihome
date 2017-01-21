@@ -82,7 +82,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
     if ($status == 1) {
         echo '</div>';
     } else {
-        echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucun aquara détecté, démarrer un node pour ajout}}</span></center>";
+        echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucune Yeelight détectée, allumer une lampe pour ajout}}</span></center>";
     }
     ?>
 

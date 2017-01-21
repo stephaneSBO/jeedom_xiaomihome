@@ -19,6 +19,18 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
 class xiaomihome extends eqLogic {
 
+
+    public static function cron() {
+        if (config::byKey('yeeCron', 'xiaomihome') == '1') {
+            $eqLogics = eqLogic::byType('xiaomihome');
+            foreach ($eqLogics as $eqLogic) {
+                if ($eqLogic->getConfiguration('type') == 'yeelight') {
+                    $eqLogic->yeeStatus();
+                }
+            }
+        }
+    }
+
     public function yeeAction($ip, $request, $option) {
         exec("ping -c1 " . $ip, $output, $return_var);
         if ($return_var != 0) {
@@ -58,114 +70,114 @@ class xiaomihome extends eqLogic {
         $sock = socket_create(AF_INET, SOCK_DGRAM, 0);
         // Actually write the data and send it off
         if( ! socket_sendto($sock, $cmd , strlen($cmd) , 0 , $gateway , '9898')) {
-          $errorcode = socket_last_error();
-          $errormsg = socket_strerror($errorcode);
-          die("Could not send data: [$errorcode] $errormsg \n");
-          log::add('xiaomihome', 'error', 'Envoi impossible :  ' . $errorcode . ', avec message ' . $errormsg);
-        } else {
-          log::add('xiaomihome', 'debug', 'Envoi ok ' . $cmd);
-        }
-        socket_close($sock);*/
+        $errorcode = socket_last_error();
+        $errormsg = socket_strerror($errorcode);
+        die("Could not send data: [$errorcode] $errormsg \n");
+        log::add('xiaomihome', 'error', 'Envoi impossible :  ' . $errorcode . ', avec message ' . $errormsg);
+    } else {
+    log::add('xiaomihome', 'debug', 'Envoi ok ' . $cmd);
+}
+socket_close($sock);*/
+}
+
+public function yeeStatus($ip) {
+    exec("ping -c1 " . $ip, $iptest, $return_var);
+    if ($return_var != 0) {
+        log::add('xiaomihome', 'debug', 'Lampe Yeelight non joignable ' . $ip);
+        $this->checkAndUpdateCmd('online', 0);
+        die();
     }
+    //$cmd = 'yee --ip=' . $ip . ' status';
+    $cmd = 'python ' . realpath(dirname(__FILE__)) . '/../../resources/yeecli.py ' . $ip . ' status';
+    exec($cmd, $output, $return);
+    //$output = shell_exec($cmd);
+    log::add('xiaomihome', 'debug', 'Status ' . print_r($output, true));
 
-    public function yeeStatus($ip) {
-        exec("ping -c1 " . $ip, $iptest, $return_var);
-        if ($return_var != 0) {
-            log::add('xiaomihome', 'debug', 'Lampe Yeelight non joignable ' . $ip);
-            $this->checkAndUpdateCmd('online', 0);
-            die();
-        }
-        //$cmd = 'yee --ip=' . $ip . ' status';
-        $cmd = 'python ' . realpath(dirname(__FILE__)) . '/../../resources/yeecli.py ' . $ip . ' status';
-        exec($cmd, $output, $return);
-        //$output = shell_exec($cmd);
-        log::add('xiaomihome', 'debug', 'Status ' . print_r($output, true));
+    $status = explode(' : ',$output[3]);
+    $color_mode = explode(' : ',$output[1]);
+    $bright = explode(' : ',$output[7]);
+    $rgb = explode(' : ',$output[6]);
+    $hue = explode(' : ',$output[0]);
+    $saturation = explode(' : ',$output[11]);
+    $color_temp = explode(' : ',$output[10]);
 
-        $status = explode(' : ',$output[3]);
-        $color_mode = explode(' : ',$output[1]);
-        $bright = explode(' : ',$output[7]);
-        $rgb = explode(' : ',$output[6]);
-        $hue = explode(' : ',$output[0]);
-        $saturation = explode(' : ',$output[11]);
-        $color_temp = explode(' : ',$output[10]);
-
-        $power = ($status[1] == 'off')? 0:1;
-        $this->checkAndUpdateCmd('status', $power);
-        $this->checkAndUpdateCmd('brightness', $bright[1]);
-        if ($this->getConfiguration('model') != 'mono') {
-            $this->checkAndUpdateCmd('color_mode', $color_mode[1]);
-            $this->checkAndUpdateCmd('rgb', '#' . str_pad(dechex($rgb[1]), 6, "0", STR_PAD_LEFT));
-            $this->checkAndUpdateCmd('hsv', $hue[1]);
-            $this->checkAndUpdateCmd('saturation', $saturation[1]);
-            $this->checkAndUpdateCmd('temperature', $color_temp[1]);
-        }
-        //log::add('xiaomihome', 'debug', $power . ' ' . $color_mode[1] . ' ' . $bright[1] . ' ' . '#' . str_pad(dechex($rgb[1]), 6, "0", STR_PAD_LEFT) . ' ' . $hue[1] . ' ' . $saturation[1] . ' ' . $color_temp[1]);
+    $power = ($status[1] == 'off')? 0:1;
+    $this->checkAndUpdateCmd('status', $power);
+    $this->checkAndUpdateCmd('brightness', $bright[1]);
+    if ($this->getConfiguration('model') != 'mono') {
+        $this->checkAndUpdateCmd('color_mode', $color_mode[1]);
+        $this->checkAndUpdateCmd('rgb', '#' . str_pad(dechex($rgb[1]), 6, "0", STR_PAD_LEFT));
+        $this->checkAndUpdateCmd('hsv', $hue[1]);
+        $this->checkAndUpdateCmd('saturation', $saturation[1]);
+        $this->checkAndUpdateCmd('temperature', $color_temp[1]);
     }
+    //log::add('xiaomihome', 'debug', $power . ' ' . $color_mode[1] . ' ' . $bright[1] . ' ' . '#' . str_pad(dechex($rgb[1]), 6, "0", STR_PAD_LEFT) . ' ' . $hue[1] . ' ' . $saturation[1] . ' ' . $color_temp[1]);
+}
 
-    public function receiveYeelight($ip, $id, $model, $fw_ver, $power, $color_mode, $rgb, $bright, $hue, $saturation, $color_temp) {
-        $xiaomihome = self::byLogicalId($id, 'xiaomihome');
-        if (!is_object($xiaomihome)) {
-            $xiaomihome = new xiaomihome();
-            $xiaomihome->setEqType_name('xiaomihome');
-            $xiaomihome->setLogicalId($id);
-            $xiaomihome->setName($model . ' ' . $id);
-            $xiaomihome->setConfiguration('sid', $id);
-            $xiaomihome->setIsEnable(1);
-            $xiaomihome->setIsVisible(1);
-            event::add('xiaomihome::includeDevice',
-            array(
-                'state' => 1
-            )
-        );
-    }
-    $xiaomihome->setConfiguration('model',$model);
-    $xiaomihome->setConfiguration('short_id',$fw_ver);
-    $xiaomihome->setConfiguration('gateway',$ip);
-    $xiaomihome->setConfiguration('type','yeelight');
-    $xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
-    $xiaomihome->save();
+public function receiveYeelight($ip, $id, $model, $fw_ver, $power, $color_mode, $rgb, $bright, $hue, $saturation, $color_temp) {
+    $xiaomihome = self::byLogicalId($id, 'xiaomihome');
+    if (!is_object($xiaomihome)) {
+        $xiaomihome = new xiaomihome();
+        $xiaomihome->setEqType_name('xiaomihome');
+        $xiaomihome->setLogicalId($id);
+        $xiaomihome->setName($model . ' ' . $id);
+        $xiaomihome->setConfiguration('sid', $id);
+        $xiaomihome->setIsEnable(1);
+        $xiaomihome->setIsVisible(1);
+        event::add('xiaomihome::includeDevice',
+        array(
+            'state' => 1
+        )
+    );
+}
+$xiaomihome->setConfiguration('model',$model);
+$xiaomihome->setConfiguration('short_id',$fw_ver);
+$xiaomihome->setConfiguration('gateway',$ip);
+$xiaomihome->setConfiguration('type','yeelight');
+$xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
+$xiaomihome->save();
 
-    $xiaomihome->checkCmdOk('online', 'Online', 'info', 'binary', '0', '0', '0', 'line', '0');
-    $xiaomihome->checkAndUpdateCmd('online', 1);
-    $xiaomihome->checkCmdOk('status', 'Statut', 'info', 'binary', '0', '0', '0', 'light', '0');
-    $power = ($power == 'off')? 0:1;
-    $xiaomihome->checkAndUpdateCmd('status', $power);
-    $xiaomihome->checkCmdOk('toggle', 'Toggle', 'action', 'other', 'toggle', '0', '0', '0', '<i class="fa fa-toggle-on"></i>');
-    $xiaomihome->checkCmdOk('refresh', 'Raffraichir', 'action', 'other', 'refresh', '0', '0', '0', '<i class="fa fa-refresh"></i>');
-    $xiaomihome->checkCmdOk('on', 'Allumer', 'action', 'other', 'turn on', 'status', '0', 'light', '<i class="fa fa-sun-o"></i>');
-    $xiaomihome->checkCmdOk('off', 'Eteindre', 'action', 'other', 'turn off', 'status', '0', 'light', '<i class="fa fa-power-off"></i>');
-    $xiaomihome->checkCmdOk('cron', 'Extinction programmée', 'action', 'slider', 'cron', '0', '0', '0', '<i class="fa fa-power-off"></i>');
-    $xiaomihome->checkCmdOk('flow', 'Enchainement', 'action', 'message', 'flow', '0', '0', '0', '0');
-    $xiaomihome->checkCmdOk('stop', 'Stop Enchainement', 'action', 'other', 'stop', '0', '0', '0', '0');
+$xiaomihome->checkCmdOk('online', 'Online', 'info', 'binary', '0', '0', '0', 'line', '0');
+$xiaomihome->checkAndUpdateCmd('online', 1);
+$xiaomihome->checkCmdOk('status', 'Statut', 'info', 'binary', '0', '0', '0', 'light', '0');
+$power = ($power == 'off')? 0:1;
+$xiaomihome->checkAndUpdateCmd('status', $power);
+$xiaomihome->checkCmdOk('toggle', 'Toggle', 'action', 'other', 'toggle', '0', '0', '0', '<i class="fa fa-toggle-on"></i>');
+$xiaomihome->checkCmdOk('refresh', 'Raffraichir', 'action', 'other', 'refresh', '0', '0', '0', '<i class="fa fa-refresh"></i>');
+$xiaomihome->checkCmdOk('on', 'Allumer', 'action', 'other', 'turn on', 'status', '0', 'light', '<i class="fa fa-sun-o"></i>');
+$xiaomihome->checkCmdOk('off', 'Eteindre', 'action', 'other', 'turn off', 'status', '0', 'light', '<i class="fa fa-power-off"></i>');
+$xiaomihome->checkCmdOk('cron', 'Extinction programmée', 'action', 'slider', 'cron', '0', '0', '0', '<i class="fa fa-power-off"></i>');
+$xiaomihome->checkCmdOk('flow', 'Enchainement', 'action', 'message', 'flow', '0', '0', '0', '0');
+$xiaomihome->checkCmdOk('stop', 'Stop Enchainement', 'action', 'other', 'stop', '0', '0', '0', '0');
 
-    //brightness 0-100
-    $xiaomihome->checkCmdOk('brightness', 'Luminosité', 'info', 'numeric', '0', '0', '0', 'light', '0');
-    $xiaomihome->checkAndUpdateCmd('brightness', $bright);
-    $xiaomihome->checkCmdOk('brightnessAct', 'Définir Luminosité', 'action', 'slider', 'brightness', 'brightness', '1', 'light', '0');
+//brightness 0-100
+$xiaomihome->checkCmdOk('brightness', 'Luminosité', 'info', 'numeric', '0', '0', '0', 'light', '0');
+$xiaomihome->checkAndUpdateCmd('brightness', $bright);
+$xiaomihome->checkCmdOk('brightnessAct', 'Définir Luminosité', 'action', 'slider', 'brightness', 'brightness', '1', 'light', '0');
 
-    if ($model != 'mono') {
-        $xiaomihome->checkCmdOk('colormode', 'Mode', 'info', 'numeric', '0', '0', '0', 'line', '0');
-        $xiaomihome->checkAndUpdateCmd('color_mode', $color_mode);
+if ($model != 'mono') {
+    $xiaomihome->checkCmdOk('colormode', 'Mode', 'info', 'numeric', '0', '0', '0', 'line', '0');
+    $xiaomihome->checkAndUpdateCmd('color_mode', $color_mode);
 
-        //RGB
-        $xiaomihome->checkCmdOk('rgb', 'Couleur RGB', 'info', 'string', '0', '0', '0', 'line', '0');
-        $xiaomihome->checkAndUpdateCmd('rgb', '#' . str_pad(dechex($rgb), 6, "0", STR_PAD_LEFT));
-        $xiaomihome->checkCmdOk('rgbAct', 'Définir Couleur RGB', 'action', 'color', 'rgb', 'rgb', '1', '0', '0');
+    //RGB
+    $xiaomihome->checkCmdOk('rgb', 'Couleur RGB', 'info', 'string', '0', '0', '0', 'line', '0');
+    $xiaomihome->checkAndUpdateCmd('rgb', '#' . str_pad(dechex($rgb), 6, "0", STR_PAD_LEFT));
+    $xiaomihome->checkCmdOk('rgbAct', 'Définir Couleur RGB', 'action', 'color', 'rgb', 'rgb', '1', '0', '0');
 
-        //HSV 0-253 + Saturation 0-100
-        $xiaomihome->checkCmdOk('hsv', 'Couleur HSV', 'info', 'numeric', '0', '0', '0', 'line', '0');
-        $xiaomihome->checkAndUpdateCmd('hsv', $hue);
-        $xiaomihome->checkCmdOk('hsvAct', 'Définir Couleur HSV', 'action', 'slider', 'hsv', 'hsv', '0', '0', '0');
-        $xiaomihome->checkCmdOk('saturation', 'Intensité HSV', 'info', 'numeric', '0', '0', '0', 'line', '0');
-        $xiaomihome->checkAndUpdateCmd('saturation', $saturation);
-        $xiaomihome->checkCmdOk('saturationAct', 'Définir Intensité HSV', 'action', 'slider', 'saturation', 'saturation', '0', '0', '0');
+    //HSV 0-253 + Saturation 0-100
+    $xiaomihome->checkCmdOk('hsv', 'Couleur HSV', 'info', 'numeric', '0', '0', '0', 'line', '0');
+    $xiaomihome->checkAndUpdateCmd('hsv', $hue);
+    $xiaomihome->checkCmdOk('hsvAct', 'Définir Couleur HSV', 'action', 'slider', 'hsv', 'hsv', '0', '0', '0');
+    $xiaomihome->checkCmdOk('saturation', 'Intensité HSV', 'info', 'numeric', '0', '0', '0', 'line', '0');
+    $xiaomihome->checkAndUpdateCmd('saturation', $saturation);
+    $xiaomihome->checkCmdOk('saturationAct', 'Définir Intensité HSV', 'action', 'slider', 'saturation', 'saturation', '0', '0', '0');
 
 
-        //Température en Kelvin 1700-6500
-        $xiaomihome->checkCmdOk('temperature', 'Température Blanc', 'info', 'numeric', '0', '0', '0', 'line', '0');
-        $xiaomihome->checkAndUpdateCmd('temperature', $color_temp);
-        $xiaomihome->checkCmdOk('temperatureAct', 'Définir Température Blanc', 'action', 'slider', 'temperature', 'temperature', '1', '0', '0');
-    }
+    //Température en Kelvin 1700-6500
+    $xiaomihome->checkCmdOk('temperature', 'Température Blanc', 'info', 'numeric', '0', '0', '0', 'line', '0');
+    $xiaomihome->checkAndUpdateCmd('temperature', $color_temp);
+    $xiaomihome->checkCmdOk('temperatureAct', 'Définir Température Blanc', 'action', 'slider', 'temperature', 'temperature', '1', '0', '0');
+}
 }
 
 public function checkCmdOk($_id, $_name, $_type, $_subtype, $_request, $_setvalue,$_visible, $_template, $_icon) {
@@ -284,112 +296,103 @@ public static function receiveData($id, $model, $key, $value) {
     if (is_object($xiaomihome)) {
         switch ($key) {
             case 'humidity':
-                $value = $value / 100;
-                $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-tint"></i>');
-                $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
-                $xiaomihomeCmd->setUnite('%');
-                $xiaomihomeCmd->save();
-                break;
+            $value = $value / 100;
+            $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-tint"></i>');
+            $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
+            $xiaomihomeCmd->setUnite('%');
+            $xiaomihomeCmd->save();
+            break;
             case 'temperature':
-                $value = $value / 100;
-                $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-tint"></i>');
-                $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
-                $xiaomihomeCmd->setUnite('°C');
-                $xiaomihomeCmd->save();
-                break;
+            $value = $value / 100;
+            $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-tint"></i>');
+            $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
+            $xiaomihomeCmd->setUnite('°C');
+            $xiaomihomeCmd->save();
+            break;
             case 'rotate':
-                $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '0');
-                break;
+            $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '0');
+            break;
             case 'rgb':
-                $value = str_pad(dechex($value), 8, "0", STR_PAD_LEFT);
-                $light = hexdec(substr($value, 0, 2));
-                $value = '#' . substr($value, -6);
-                $xiaomihome->checkCmdOk($key, $key, 'info', 'string', '0', '0','0', '0', '0');
-                $xiaomihome->checkCmdOk('brightness', 'Luminosité', 'info', 'numeric', '0', '0','0', '0', '0');
-                $xiaomihome->checkAndUpdateCmd('brightness', $light);
-                $xiaomihome->checkCmdOk($key . '-set', 'Définir Couleur', 'action', 'color', $key, '0','1', '0', '0');
-                $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-set');
-                $xiaomiactCmd->setConfiguration('switch', $key);
-                $xiaomiactCmd->save();
-                $xiaomihome->checkCmdOk('brightness-set', 'Définir Luminosité', 'action', 'slider', 'brightness', '0','1', '0', '0');
-                $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),'brightness-set');
-                $xiaomiactCmd->setConfiguration('switch', $key);
-                $xiaomiactCmd->save();
-                break;
+            $value = str_pad(dechex($value), 8, "0", STR_PAD_LEFT);
+            $light = hexdec(substr($value, 0, 2));
+            $value = '#' . substr($value, -6);
+            $xiaomihome->checkCmdOk($key, $key, 'info', 'string', '0', '0','0', '0', '0');
+            $xiaomihome->checkCmdOk('brightness', 'Luminosité', 'info', 'numeric', '0', '0','0', '0', '0');
+            $xiaomihome->checkAndUpdateCmd('brightness', $light);
+            $xiaomihome->checkCmdOk($key . '-set', 'Définir Couleur', 'action', 'color', $key, '0','1', '0', '0');
+            $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-set');
+            $xiaomiactCmd->setConfiguration('switch', $key);
+            $xiaomiactCmd->save();
+            $xiaomihome->checkCmdOk('brightness-set', 'Définir Luminosité', 'action', 'slider', 'brightness', '0','1', '0', '0');
+            $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),'brightness-set');
+            $xiaomiactCmd->setConfiguration('switch', $key);
+            $xiaomiactCmd->save();
+            break;
             case 'battery':
-                $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-battery-half"></i>');
-                $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
-                $xiaomihomeCmd->setUnite('%');
-                $xiaomihomeCmd->save();
-                $xiaomihome->setConfiguration('battery',$value);
-                $xiaomihome->batteryStatus($value);
-                $xiaomihome->save();
-                break;
+            $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-battery-half"></i>');
+            $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
+            $xiaomihomeCmd->setUnite('%');
+            $xiaomihomeCmd->save();
+            $xiaomihome->setConfiguration('battery',$value);
+            $xiaomihome->batteryStatus($value);
+            $xiaomihome->save();
+            break;
             case 'no_motion':
-                $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','0', 'line', '0');
-                $xiaomihome->checkAndUpdateCmd('status', 0);
-                break;
+            $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','0', 'line', '0');
+            $xiaomihome->checkAndUpdateCmd('status', 0);
+            break;
+            case 'no_close':
+            $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','0', 'line', '0');
+            $xiaomihome->checkAndUpdateCmd('status', 1);
+            break;
             case 'inuse':
-                $xiaomihome->checkCmdOk($key, $key, 'info', 'binary', '0', '0','1', '0', '0');
-                break;
+            $xiaomihome->checkCmdOk($key, $key, 'info', 'binary', '0', '0','1', '0', '0');
+            break;
             case 'rotate':
-                $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '0');
-                break;
+            $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '0');
+            break;
             case 'status':
-                switch ($model) {
-                    case 'motion':
-                        $widget = 'presence';
-                        $type = 'binary';
-                        $value = ($value == 'motion') ? 1 : 0;
-                        $xiaomihome->checkAndUpdateCmd('no_motion', 0);
-                        break;
-                    case 'magnet':
-                        $widget = 'door';
-                        $type = 'binary';
-                        $value = ($value == 'close') ? 0 : 1;
-                        break;
-                    case 'plug':
-                        $widget = 'light';
-                        $type = 'binary';
-                        $value = ($value == 'on') ? 1 : 0;
-                        break;
-                    case 'ctrl_neutral1':
-                        $widget = 'light';
-                        $type = 'binary';
-                        $value = ($value == 'on') ? 1 : 0;
-                        break;
-                    case 'ctrl_neutral2':
-                        $widget = 'light';
-                        $type = 'binary';
-                        $value = ($value == 'on') ? 1 : 0;
-                        break;
-                    default:
-                        $widget = 'line';
-                        $type = 'string';
-                        break;
-                }
-                $xiaomihome->checkCmdOk($key, $key, 'info', $type, '0', '0','1', $widget, '0');
-                $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
-                if ($model == 'magnet') {
-                    $xiaomihomeCmd->setDisplay('invertBinary', 1);
-                }
-                $xiaomihomeCmd->setConfiguration('repeatEventManagement','always');
-                $xiaomihomeCmd->save();
-                if ($model == 'plug' || $model == 'ctrl_neutral1' || $model == 'ctrl_neutral2') {
-                    $xiaomihome->checkCmdOk($key . '-on', $key . '-on', 'action', 'other', 'on',$key, '1', $widget, '0');
-                    $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-on');
-                    $xiaomiactCmd->setConfiguration('switch', $key);
-                    $xiaomiactCmd->save();
-                    $xiaomihome->checkCmdOk($key . '-off', $key . '-off', 'action', 'other', 'off',$key, '1', $widget, '0');
-                    $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-off');
-                    $xiaomiactCmd->setConfiguration('switch', $key);
-                    $xiaomiactCmd->save();
-                }
+            switch ($model) {
+                case 'motion':
+                $widget = 'presence';
+                $type = 'binary';
+                $value = ($value == 'motion') ? 1 : 0;
+                $xiaomihome->checkAndUpdateCmd('no_motion', 0);
                 break;
-            case 'channel_0' || 'channel_1':
-                $value = ($value == 'on') ? 1 : 0;
+                case 'magnet':
+                $widget = 'door';
+                $type = 'binary';
+                $value = ($value == 'close') ? 0 : 1;
+                $xiaomihome->checkAndUpdateCmd('no_close', 0);
+                break;
+                case 'plug':
                 $widget = 'light';
-                $xiaomihome->checkCmdOk($key, $key, 'info', 'binary', '0', '0','1', 'light', '0');
+                $type = 'binary';
+                $value = ($value == 'on') ? 1 : 0;
+                break;
+                case 'ctrl_neutral1':
+                $widget = 'light';
+                $type = 'binary';
+                $value = ($value == 'on') ? 1 : 0;
+                break;
+                case 'ctrl_neutral2':
+                $widget = 'light';
+                $type = 'binary';
+                $value = ($value == 'on') ? 1 : 0;
+                break;
+                default:
+                $widget = 'line';
+                $type = 'string';
+                break;
+            }
+            $xiaomihome->checkCmdOk($key, $key, 'info', $type, '0', '0','1', $widget, '0');
+            $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
+            if ($model == 'magnet') {
+                $xiaomihomeCmd->setDisplay('invertBinary', 1);
+            }
+            $xiaomihomeCmd->setConfiguration('repeatEventManagement','always');
+            $xiaomihomeCmd->save();
+            if ($model == 'plug' || $model == 'ctrl_neutral1' || $model == 'ctrl_neutral2') {
                 $xiaomihome->checkCmdOk($key . '-on', $key . '-on', 'action', 'other', 'on',$key, '1', $widget, '0');
                 $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-on');
                 $xiaomiactCmd->setConfiguration('switch', $key);
@@ -398,10 +401,24 @@ public static function receiveData($id, $model, $key, $value) {
                 $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-off');
                 $xiaomiactCmd->setConfiguration('switch', $key);
                 $xiaomiactCmd->save();
-                break;
+            }
+            break;
+            case 'channel_0' || 'channel_1':
+            $value = ($value == 'on') ? 1 : 0;
+            $widget = 'light';
+            $xiaomihome->checkCmdOk($key, $key, 'info', 'binary', '0', '0','1', 'light', '0');
+            $xiaomihome->checkCmdOk($key . '-on', $key . '-on', 'action', 'other', 'on',$key, '1', $widget, '0');
+            $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-on');
+            $xiaomiactCmd->setConfiguration('switch', $key);
+            $xiaomiactCmd->save();
+            $xiaomihome->checkCmdOk($key . '-off', $key . '-off', 'action', 'other', 'off',$key, '1', $widget, '0');
+            $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-off');
+            $xiaomiactCmd->setConfiguration('switch', $key);
+            $xiaomiactCmd->save();
+            break;
             default:
-                $xiaomihome->checkCmdOk($key, $key, 'info', 'string', '0', '0','1', 'line', '0');
-                break;
+            $xiaomihome->checkCmdOk($key, $key, 'info', 'string', '0', '0','1', 'line', '0');
+            break;
         }
         //$xiaomihome->checkAndUpdateCmd($key, $value);
         $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
@@ -479,19 +496,19 @@ public static function deamon_stop() {
 }
 
 /*public static function dependancy_info() {
-    $return = array();
-    $return['log'] = 'xiaomihome_dep';
-    $cmd = "pip list | grep yeecli";
-    exec($cmd, $output, $return_var);
-    $cmd2 = "pip list | grep mihome";
-    exec($cmd2, $output2, $return_var2);
-    $return['state'] = 'nok';
-    if (array_key_exists(0,$output)) {
-        if ($output[0] != "" && $output2[0] != "") {
-            $return['state'] = 'ok';
-        }
-    }
-    return $return;
+$return = array();
+$return['log'] = 'xiaomihome_dep';
+$cmd = "pip list | grep yeecli";
+exec($cmd, $output, $return_var);
+$cmd2 = "pip list | grep mihome";
+exec($cmd2, $output2, $return_var2);
+$return['state'] = 'nok';
+if (array_key_exists(0,$output)) {
+if ($output[0] != "" && $output2[0] != "") {
+$return['state'] = 'ok';
+}
+}
+return $return;
 }*/
 
 public static function dependancy_info() {
@@ -501,18 +518,18 @@ public static function dependancy_info() {
     $dgram = realpath(dirname(__FILE__) . '/../../resources/node_modules/dgram');
     $return['progress_file'] = '/tmp/xiaomihome_dep';
     if (is_dir($crypto) && is_dir($dgram)) {
-      $return['state'] = 'ok';
+        $return['state'] = 'ok';
     } else {
-      $return['state'] = 'nok';
+        $return['state'] = 'nok';
     }
     return $return;
-  }
+}
 
-  public static function dependancy_install() {
+public static function dependancy_install() {
     log::add('xiaomihome','info','Installation des dépéndances nodejs');
     $resource_path = realpath(dirname(__FILE__) . '/../../resources');
     passthru('/bin/bash ' . $resource_path . '/nodejs.sh ' . $resource_path . ' > ' . log::getPathToLog('xiaomihome_dep') . ' 2>&1 &');
-  }
+}
 
 }
 
