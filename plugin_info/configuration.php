@@ -32,14 +32,14 @@ if (!isConnect()) {
         <div class="form-group">
                 <label class="col-lg-4 control-label">{{Activer un check des Yeelights toutes les minutes}}</label>
                 <div class="col-lg-3">
-                  <span><label class="checkbox-inline"><input type="checkbox" class="configKey" data-l1key="yeeCron" checked/>{{Activer}}</label></span>
+                  <span><label class="checkbox-inline"><input type="checkbox" class="configKey" data-l1key="yeeCron"/>{{Activer}}</label></span>
                 </div>
   </div>
 
   <div class="form-group">
           <label class="col-lg-4 control-label">{{N'utiliser que les reports pour les capteurs Aquara}}</label>
           <div class="col-lg-3">
-            <span><label class="checkbox-inline"><input type="checkbox" class="configKey" data-l1key="aquaraReport" checked/>{{Activer}}</label></span>
+            <span><label class="checkbox-inline"><input type="checkbox" class="configKey" data-l1key="aquaraReport"/>{{Activer}}</label></span>
           </div>
 </div>
     </fieldset>
