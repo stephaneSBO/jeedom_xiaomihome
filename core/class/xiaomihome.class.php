@@ -25,7 +25,7 @@ class xiaomihome extends eqLogic {
             $eqLogics = eqLogic::byType('xiaomihome');
             foreach ($eqLogics as $eqLogic) {
                 if ($eqLogic->getConfiguration('type') == 'yeelight') {
-                    $eqLogic->yeeStatus();
+                    $eqLogic->yeeStatus($eqLogic->getConfiguration('gateway'));
                 }
             }
         }
