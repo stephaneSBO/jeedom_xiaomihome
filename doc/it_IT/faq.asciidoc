@@ -5,6 +5,18 @@ La "Aquara" pour le Zigbee qu'il faut bien paramétrer en mode développeur pour
 --
 
 [panel,primary]
+.Je n'arrive pas à passer ma gateway Aquara en mode local ?
+--
+Sur iOS il semble que ce soit assez capricieux, vous pouvez utiliser un Android en VM
+--
+
+[panel,primary]
+.Une information de mes capteurs ne remonte pas ?
+--
+Si vous n'avez pas de commande équivalente créée dans Jeedom, c'est que l'API n'expose pas cette information. Il faut attendre peut être une mise à jour du firmware (exemple les piles ou la charge de la prise)
+--
+
+[panel,primary]
 .Quelles ampoules sont supportées ?
 --
 Les Yeelight Wifi uniquement

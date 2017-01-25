@@ -1,6 +1,10 @@
 === Configuration du plugin
 
-Le plugin ne comporte pas de configuration générale
+Le plugin comporte deux options de configuration :
+
+  - Ne pas prendre en compte les heartbeat des capteurs Aquara : cette option permet d'éviter un bug rencontré par certaines personnes où les capteurs de porte envoient qu'ils sont ouverts alors que c'est pas le cas, ca permet également d'alléger le poids du plugin (mais si l'on perd la trame de report, on ne pourra avoir la sécurité du heartbeat)
+
+  - Activer un cron pour les Yeelight : permet de s'assurer qu'elles restent réveillées (pas nécessaire pour tous les utilisateurs, mais chez certains elles se mettent en veille après quelques minutes)
 
 Il y a un service qui une fois démarré récupère les informations des Aquara Gateway et également les annonces de présence des Yeelight
 
@@ -15,6 +19,27 @@ Ensuite cliquer dessus pour la sélectionner, là cliquer sur les "..." et enfin
 Là vous avez un numéro de version, cliquez dessus de facon répéter jusqu'à un message (oui en chinois ca aide pas :)) et 2 nouvelles options apparaissent
 
 Choisissez la première option et activer le bouton switch pour qu'il passe en vert, voilà le mode local est actif et votre gateway est accessible du réseau
+
+Information importante : pour pouvoir envoyer des commandes (prise) vers la gateway, vous devez renseigner son mot de passe sur la page équipement. Ce mot de passe est visible sur la page où l'on active le mode développeur
+
+==== Equipements compatibles
+
+  - Détecteur de mouvement : commande statut de type binaire activée sur mouvement
+
+  - Détecteur d'ouverture : commande statut de type binaire activée sur ouverture
+
+  - Capteur température/humidité : commande température, commande humidité
+
+  - Bouton Switch : commande statut avec pour valeurs click, double_click, long_click_press, long_click_release
+
+  - Prise : commande statut binaire avec on et off
+
+  - Interrupteur mural : commande statut pour chaque interrupteur (click, double_click) et si double une commande qui donne l'appui simultané
+
+  - Interrupteur encastré : commande statut binaire avec on et off pour chaque interrupteur
+
+  - Cube : commande statut avec pour valeur move, tap_twice, shake_air, alert, flip90, flip180, free_fall et une commande rotate avec la valeur en degré du mouvement
+
 
 ==== Configuration des lampes Yeelight
 
