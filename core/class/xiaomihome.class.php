@@ -387,9 +387,6 @@ public static function receiveData($id, $model, $key, $value) {
             }
             $xiaomihome->checkCmdOk($key, $key, 'info', $type, '0', '0','1', $widget, '0');
             $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
-            if ($model == 'magnet') {
-                $xiaomihomeCmd->setDisplay('invertBinary', 1);
-            }
             $xiaomihomeCmd->setConfiguration('repeatEventManagement','always');
             $xiaomihomeCmd->save();
             if ($model == 'plug' || $model == 'ctrl_neutral1' || $model == 'ctrl_neutral2') {
