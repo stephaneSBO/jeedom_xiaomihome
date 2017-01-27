@@ -52,15 +52,14 @@ $eqLogics = eqLogic::byType('xiaomihome');
                 $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
                 echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
                 echo "<center>";
-                if (strrpos($eqLogic->getConfiguration('model'),'86') !== false) {
-                    $test = 'aquara_86.jpg';
-                } else  {
-                    $test = 'aquara_' . $eqLogic->getConfiguration('model') . '.jpg';
-                }
+
                   if (in_array($test, $files)) {
                     $path = 'aquara_' . $eqLogic->getConfiguration('model') . '.jpg';
                   } else {
                     $path = 'xiaomihome_icon.png';
+                  }
+                  if (strrpos($eqLogic->getConfiguration('model'),'86') !== false) {
+                      $path = 'aquara_86.jpg';
                   }
                   echo '<img src="plugins/xiaomihome/doc/images/' . $path . '" height="105" width="95" />';
                   echo "</center>";
