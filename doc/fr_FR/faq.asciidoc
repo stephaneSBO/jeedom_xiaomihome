@@ -8,6 +8,8 @@ La "Aquara" pour le Zigbee qu'il faut bien paramétrer en mode développeur pour
 .Je n'arrive pas à passer ma gateway Aquara en mode local ?
 --
 Sur iOS il semble que ce soit assez capricieux, vous pouvez utiliser un Android en VM
+
+Il faut également bien utilisé Mi Home en anglais et sur China Mainland si on rencontre des problèmes d'inclusion
 --
 
 [panel,primary]

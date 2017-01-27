@@ -42,6 +42,8 @@ $eqLogics = eqLogic::byType('xiaomihome');
 
     <legend><i class="fa fa-table"></i>  {{Mes Aquara}}</legend>
         <?php
+        $dir = dirname(__FILE__) . '/../../doc/images/';
+        $files = scandir($dir);
         $status = 0;
         foreach ($eqLogics as $eqLogic) {
             if ($eqLogic->getConfiguration('type') == 'aquara') {
@@ -50,8 +52,18 @@ $eqLogics = eqLogic::byType('xiaomihome');
                 $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
                 echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
                 echo "<center>";
-                echo '<img src="plugins/xiaomihome/doc/images/xiaomihome_icon.png" height="105" width="95" />';
-                echo "</center>";
+                if (strrpos($eqLogic->getConfiguration('model'),'86') !== false) {
+                    $test = 'aquara_86.png';
+                } else  {
+                    $test = 'aquara_' . $eqLogic->getConfiguration('model') . '.png';
+                }
+                  if (in_array($test, $files)) {
+                    $path = 'aquara_' . $eqLogic->getConfiguration('model');
+                  } else {
+                    $path = 'xiaomihome_icon';
+                  }
+                  echo '<img src="plugins/xiaomihome/doc/images/' . $path . '" height="105" width="95" />';
+                  echo "</center>";
                 echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
                 echo '</div>';
             }
@@ -65,6 +77,8 @@ $eqLogics = eqLogic::byType('xiaomihome');
 
     <legend><i class="fa fa-table"></i>  {{Mes Yeelight}}</legend>
     <?php
+    $dir = dirname(__FILE__) . '/../../doc/images/';
+    $files = scandir($dir);
     $status = 0;
     foreach ($eqLogics as $eqLogic) {
         if ($eqLogic->getConfiguration('type') == 'yeelight') {
@@ -73,7 +87,13 @@ $eqLogics = eqLogic::byType('xiaomihome');
             $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
             echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
             echo "<center>";
-            echo '<img src="plugins/xiaomihome/doc/images/xiaomihome_icon.png" height="105" width="95" />';
+            $test = 'yeelight_' . $eqLogic->getConfiguration('model') . '.png';
+              if (in_array($test, $files)) {
+                $path = 'yeelight_' . $eqLogic->getConfiguration('model');
+              } else {
+                $path = 'xiaomihome_icon';
+              }
+            echo '<img src="plugins/xiaomihome/doc/images/' . $path . '" height="105" width="95" />';
             echo "</center>";
             echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
             echo '</div>';

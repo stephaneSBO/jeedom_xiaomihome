@@ -32,7 +32,7 @@ class xiaomihome extends eqLogic {
     }
 
     public function yeeAction($ip, $request, $option) {
-        exec("ping -c1 " . $ip, $output, $return_var);
+        exec("sudo ping -c1 " . $ip, $output, $return_var);
         if ($return_var != 0) {
             log::add('xiaomihome', 'debug', 'Lampe Yeelight non joignable ' . $ip);
             $this->checkAndUpdateCmd('online', 0);
@@ -52,7 +52,7 @@ class xiaomihome extends eqLogic {
             log::add('xiaomihome', 'debug', 'Mot de passe manquant sur la gateway Aquara ' . $gateway);
             die();
         }
-        exec("ping -c1 " . $gateway, $output, $return_var);
+        exec("sudo ping -c1 " . $gateway, $output, $return_var);
         if ($return_var != 0) {
             log::add('xiaomihome', 'debug', 'Gateway Aquara non joignable ' . $gateway);
             die();
@@ -81,7 +81,7 @@ socket_close($sock);*/
 }
 
 public function yeeStatus($ip) {
-    exec("ping -c1 " . $ip, $iptest, $return_var);
+    exec("sudo ping -c1 " . $ip, $iptest, $return_var);
     if ($return_var != 0) {
         log::add('xiaomihome', 'debug', 'Lampe Yeelight non joignable ' . $ip);
         $this->checkAndUpdateCmd('online', 0);
