@@ -58,7 +58,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
                     $test = 'aquara_' . $eqLogic->getConfiguration('model') . '.jpg';
                 }
                   if (in_array($test, $files)) {
-                    $path = 'aquara_' . $eqLogic->getConfiguration('model');
+                    $path = 'aquara_' . $eqLogic->getConfiguration('model') . '.jpg';
                   } else {
                     $path = 'xiaomihome_icon.png';
                   }
@@ -89,7 +89,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
             echo "<center>";
             $test = 'yeelight_' . $eqLogic->getConfiguration('model') . '.jpg';
               if (in_array($test, $files)) {
-                $path = 'yeelight_' . $eqLogic->getConfiguration('model');
+                $path = 'yeelight_' . $eqLogic->getConfiguration('model') . '.jpg';
               } else {
                 $path = 'xiaomihome_icon.png';
               }
