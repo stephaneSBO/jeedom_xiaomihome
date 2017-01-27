@@ -53,14 +53,14 @@ $eqLogics = eqLogic::byType('xiaomihome');
                 echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
                 echo "<center>";
                 if (strrpos($eqLogic->getConfiguration('model'),'86') !== false) {
-                    $test = 'aquara_86.png';
+                    $test = 'aquara_86.jpg';
                 } else  {
-                    $test = 'aquara_' . $eqLogic->getConfiguration('model') . '.png';
+                    $test = 'aquara_' . $eqLogic->getConfiguration('model') . '.jpg';
                 }
                   if (in_array($test, $files)) {
                     $path = 'aquara_' . $eqLogic->getConfiguration('model');
                   } else {
-                    $path = 'xiaomihome_icon';
+                    $path = 'xiaomihome_icon.png';
                   }
                   echo '<img src="plugins/xiaomihome/doc/images/' . $path . '" height="105" width="95" />';
                   echo "</center>";
@@ -87,11 +87,11 @@ $eqLogics = eqLogic::byType('xiaomihome');
             $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
             echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
             echo "<center>";
-            $test = 'yeelight_' . $eqLogic->getConfiguration('model') . '.png';
+            $test = 'yeelight_' . $eqLogic->getConfiguration('model') . '.jpg';
               if (in_array($test, $files)) {
                 $path = 'yeelight_' . $eqLogic->getConfiguration('model');
               } else {
-                $path = 'xiaomihome_icon';
+                $path = 'xiaomihome_icon.png';
               }
             echo '<img src="plugins/xiaomihome/doc/images/' . $path . '" height="105" width="95" />';
             echo "</center>";
