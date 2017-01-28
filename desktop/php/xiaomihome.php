@@ -52,14 +52,14 @@ $eqLogics = eqLogic::byType('xiaomihome');
                 $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
                 echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
                 echo "<center>";
-                $test = 'aquara_' . $eqLogic->getConfiguration('model') . '.jpg';
+                $test = 'aquara_' . $eqLogic->getConfiguration('model') . '.png';
                 if (in_array($test, $files)) {
-                    $path = 'aquara_' . $eqLogic->getConfiguration('model') . '.jpg';
+                    $path = 'aquara_' . $eqLogic->getConfiguration('model') . '.png';
                 } else {
                     $path = 'xiaomihome_icon.png';
                 }
                 if (strrpos($eqLogic->getConfiguration('model'),'86') !== false) {
-                    $path = 'aquara_86.jpg';
+                    $path = 'aquara_86.png';
                 }
                 echo '<img src="plugins/xiaomihome/doc/images/' . $path . '" height="105" width="95" />';
                 echo "</center>";
@@ -86,9 +86,9 @@ $eqLogics = eqLogic::byType('xiaomihome');
                 $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
                 echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
                 echo "<center>";
-                $test = 'yeelight_' . $eqLogic->getConfiguration('model') . '.jpg';
+                $test = 'yeelight_' . $eqLogic->getConfiguration('model') . '.png';
                 if (in_array($test, $files)) {
-                    $path = 'yeelight_' . $eqLogic->getConfiguration('model') . '.jpg';
+                    $path = 'yeelight_' . $eqLogic->getConfiguration('model') . '.png';
                 } else {
                     $path = 'xiaomihome_icon.png';
                 }
