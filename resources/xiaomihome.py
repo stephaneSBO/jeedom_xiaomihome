@@ -27,14 +27,20 @@ class myThread (threading.Thread):
 def xiaomiconnector() :
     connector = AquaraConnector(data_callback=cb)
     while True:
-        connector.check_incoming()
-        time.sleep(0.05)
+        try:
+            connector.check_incoming()
+            time.sleep(0.05)
+        except Exception:
+            pass
 
 def yeelightconnector() :
     yeelight = YeelightConnector(data_callback=cb)
     while True:
-        yeelight.check_incoming()
-        time.sleep(0.05)
+        try:
+            yeelight.check_incoming()
+            time.sleep(0.05)
+        except Exception:
+            pass
 
 # Create new threads
 thread1 = myThread(1, "Xiaomi")
