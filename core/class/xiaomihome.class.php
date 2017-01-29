@@ -104,11 +104,13 @@ public function yeeStatus($ip) {
     $power = ($status[1] == 'off')? 0:1;
     $this->checkAndUpdateCmd('status', $power);
     $this->checkAndUpdateCmd('brightness', $bright[1]);
-    if ($this->getConfiguration('model') != 'mono') {
+    if ($this->getConfiguration('model') != 'mono' && $this->getConfiguration('model') != 'ceiling') {
         $this->checkAndUpdateCmd('color_mode', $color_mode[1]);
         $this->checkAndUpdateCmd('rgb', '#' . str_pad(dechex($rgb[1]), 6, "0", STR_PAD_LEFT));
         $this->checkAndUpdateCmd('hsv', $hue[1]);
         $this->checkAndUpdateCmd('saturation', $saturation[1]);
+    }
+    if ($this->getConfiguration('model') != 'mono') {
         $this->checkAndUpdateCmd('temperature', $color_temp[1]);
     }
     //log::add('xiaomihome', 'debug', $power . ' ' . $color_mode[1] . ' ' . $bright[1] . ' ' . '#' . str_pad(dechex($rgb[1]), 6, "0", STR_PAD_LEFT) . ' ' . $hue[1] . ' ' . $saturation[1] . ' ' . $color_temp[1]);
@@ -155,7 +157,7 @@ $xiaomihome->checkCmdOk('brightness', 'Luminosité', 'info', 'numeric', '0', '0'
 $xiaomihome->checkAndUpdateCmd('brightness', $bright);
 $xiaomihome->checkCmdOk('brightnessAct', 'Définir Luminosité', 'action', 'slider', 'brightness', 'brightness', '1', 'light', '0');
 
-if ($model != 'mono') {
+if ($model != 'mono' && $model != 'ceiling') {
     $xiaomihome->checkCmdOk('colormode', 'Mode', 'info', 'numeric', '0', '0', '0', 'line', '0');
     $xiaomihome->checkAndUpdateCmd('color_mode', $color_mode);
 
@@ -171,8 +173,9 @@ if ($model != 'mono') {
     $xiaomihome->checkCmdOk('saturation', 'Intensité HSV', 'info', 'numeric', '0', '0', '0', 'line', '0');
     $xiaomihome->checkAndUpdateCmd('saturation', $saturation);
     $xiaomihome->checkCmdOk('saturationAct', 'Définir Intensité HSV', 'action', 'slider', 'saturation', 'saturation', '0', '0', '0');
+}
 
-
+if ($model != 'mono') {
     //Température en Kelvin 1700-6500
     $xiaomihome->checkCmdOk('temperature', 'Température Blanc', 'info', 'numeric', '0', '0', '0', 'line', '0');
     $xiaomihome->checkAndUpdateCmd('temperature', $color_temp);
