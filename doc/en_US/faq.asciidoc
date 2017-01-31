@@ -23,3 +23,9 @@ Si vous n'avez pas de commande équivalente créée dans Jeedom, c'est que l'API
 --
 Les Yeelight Wifi uniquement
 --
+
+[panel,primary]
+.Certaines Yeelight ne remontent pas ?
+--
+Les Yeelight Wifi doivent toutes être paramétrées avec le mode développeur pour être joignable sur le réseau local
+--
