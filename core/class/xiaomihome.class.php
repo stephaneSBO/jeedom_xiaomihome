@@ -59,7 +59,12 @@ class xiaomihome extends eqLogic {
         }
         $token = $xiaomihome->getConfiguration('token');
         $sensor_path = realpath(dirname(__FILE__) . '/../../resources');
-        $cmd = 'nodejs ' . $sensor_path . '/aquara.js ' . $password . ' ' . $gateway . ' ' . $token . ' ' . $this->getConfiguration('model') . ' ' . $this->getConfiguration('sid') . ' ' . $switch . ' ' . $request . ' ' . $this->getConfiguration('short_id') . ' ' . config::byKey('nodejs','xiaomihome');;
+        if (config::byKey('nodejs','xiaomihome') >= 5) {
+            $script = 'aquara.js';
+        } else {
+            $script = 'aquara_legacy.js';
+        }
+        $cmd = 'nodejs ' . $sensor_path . '/' . $script . ' ' . $password . ' ' . $gateway . ' ' . $token . ' ' . $this->getConfiguration('model') . ' ' . $this->getConfiguration('sid') . ' ' . $switch . ' ' . $request . ' ' . $this->getConfiguration('short_id');
         $result = exec($cmd . ' >> ' . log::getPathToLog('xiaomihome_cmd') . ' 2>&1 &');
         log::add('xiaomihome', 'debug', 'Commande Aquara ' . $cmd);
         //$iv = Buffer.from([0x17, 0x99, 0x6d, 0x09, 0x3d, 0x28, 0xdd, 0xb3, 0xba, 0x69, 0x5a, 0x2e, 0x6f, 0x58, 0x56, 0x2e]);
