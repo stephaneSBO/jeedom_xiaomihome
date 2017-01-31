@@ -464,6 +464,11 @@ public static function deamon_start() {
     }
     log::add('xiaomihome', 'info', 'Lancement du démon xiaomihome');
 
+    if (filter_var(network::getNetworkAccess('internal'), FILTER_VALIDATE_URL) === FALSE) {
+        log::add('xiaomihome', 'error', 'Adresse réseau invalide, merci de vérifier votre configuration');
+        die();
+    }
+
     $url = network::getNetworkAccess('internal') . '/plugins/xiaomihome/core/api/xiaomihome.php?apikey=' . jeedom::getApiKey('xiaomihome');
     $log = log::convertLogLevel(log::getLogLevel('xiaomihome'));
     $sensor_path = realpath(dirname(__FILE__) . '/../../resources');
