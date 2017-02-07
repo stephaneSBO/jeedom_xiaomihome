@@ -19,6 +19,12 @@ Si vous n'avez pas de commande équivalente créée dans Jeedom, c'est que l'API
 --
 
 [panel,primary]
+.Combien de capteurs au maximum sur une Gateway Aquara ?
+--
+Les remontées utilisateurs indiquent 31 capteurs + la Gateway. Au delà il faut supprimer l'appairage d'un capteur pour en remettre un. Le plugin supporte plusieurs gateways.
+--
+
+[panel,primary]
 .Quelles ampoules sont supportées ?
 --
 Les Yeelight Wifi uniquement
