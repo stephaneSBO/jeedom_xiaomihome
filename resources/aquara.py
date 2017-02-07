@@ -41,12 +41,12 @@ class AquaraConnector:
         data, addr = self.socket.recvfrom(self.SOCKET_BUFSIZE)
         try:
             payload = json.loads(data.decode("utf-8"))
-            print time.strftime("%Y-%m-%d %H:%M") + " - Aquara received from " + addr[0] + " : " + data
+            print('Aquara received from ' + addr[0] + ' : ' + data)
             self.handle_incoming_data(payload, addr)
 
         except Exception as e:
             raise
-            print(time.strftime("%Y-%m-%d %H:%M") + "Can't handle message %r (%r)" % (data, e))
+            print("Can't handle message %r (%r)" % (data, e))
 
     def handle_incoming_data(self, payload, addr):
         """Handle an incoming payload, save related data if needed,
