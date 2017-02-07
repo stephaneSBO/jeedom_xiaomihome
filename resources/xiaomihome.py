@@ -17,12 +17,12 @@ class myThread (threading.Thread):
         self.threadID = threadID
         self.name = name
     def run(self):
-        print "Starting thread " + self.name
+        print time.strftime("%Y-%m-%d %H:%M") + " - Starting thread " + self.name
         if self.name == 'Xiaomi' :
             xiaomiconnector()
         else :
             yeelightconnector()
-        print "Exiting thread " + self.name
+        print time.strftime("%Y-%m-%d %H:%M") + " - Exiting thread " + self.name
 
 def xiaomiconnector() :
     connector = AquaraConnector(data_callback=cb)

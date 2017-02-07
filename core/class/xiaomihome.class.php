@@ -472,7 +472,7 @@ public static function deamon_start() {
     $url = network::getNetworkAccess('internal') . '/plugins/xiaomihome/core/api/xiaomihome.php?apikey=' . jeedom::getApiKey('xiaomihome');
     $log = log::convertLogLevel(log::getLogLevel('xiaomihome'));
     $sensor_path = realpath(dirname(__FILE__) . '/../../resources');
-    $cmd = 'nice -n 19 python -u ' . $sensor_path . '/xiaomihome.py ' . $url;
+    $cmd = 'nice -n 19 python -u ' . $sensor_path . '/xiaomihome.py ' . $url . ' ' . $log;
 
     log::add('xiaomihome', 'debug', 'Lancement démon xiaomihome : ' . $cmd);
 

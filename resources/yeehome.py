@@ -53,11 +53,11 @@ class YeelightConnector:
                         report[args[0]] = args[1]
 
             self.handle_incoming_data(report, addr)
-            print('Yeelight received from ' + addr[0] + ' : ' + json.dumps(report))
+            print time.strftime("%Y-%m-%d %H:%M") + " - Yeelight received from " + addr[0] + " : " + json.dumps(report))
 
         except Exception as e:
             raise
-            print("Can't handle message %r (%r)" % (data, e))
+            print(time.strftime("%Y-%m-%d %H:%M") + "Can't handle message %r (%r)" % (data, e))
 
     def handle_incoming_data(self, data, addr):
         """Handle an incoming payload, save related data if needed,
