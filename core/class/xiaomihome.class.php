@@ -507,6 +507,7 @@ public static function deamon_start() {
 
 public static function deamon_stop() {
     exec('kill $(ps aux | grep "xiaomihome.py" | awk \'{print $2}\')');
+    exec('kill $(ps aux | grep "aquara.js" | awk \'{print $2}\')');
     log::add('xiaomihome', 'info', 'Arrêt du service xiaomihome');
     $deamon_info = self::deamon_info();
     if ($deamon_info['state'] == 'ok') {
