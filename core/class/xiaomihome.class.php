@@ -36,7 +36,7 @@ class xiaomihome extends eqLogic {
         if ($return_var != 0) {
             log::add('xiaomihome', 'debug', 'Lampe Yeelight non joignable ' . $ip);
             $this->checkAndUpdateCmd('online', 0);
-            die();
+            exit();
         }
         $cmd = 'python ' . realpath(dirname(__FILE__)) . '/../../resources/yeecli.py ' . $ip . ' ' . $request . ' ' . $option;
         //$cmd = 'yeecli --ip=' . $ip . ' ' . $request . ' ' . $option;
@@ -90,7 +90,7 @@ public function yeeStatus($ip) {
     if ($return_var != 0) {
         log::add('xiaomihome', 'debug', 'Lampe Yeelight non joignable ' . $ip);
         $this->checkAndUpdateCmd('online', 0);
-        die();
+        exit();
     }
     //$cmd = 'yee --ip=' . $ip . ' status';
     $cmd = 'python ' . realpath(dirname(__FILE__)) . '/../../resources/yeecli.py ' . $ip . ' status';
