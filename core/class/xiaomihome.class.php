@@ -353,7 +353,7 @@ public static function receiveData($id, $model, $key, $value) {
             $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
             $xiaomihomeCmd->setUnite('V');
             $xiaomihomeCmd->save();
-            $battery = ($value > 2800) 100:10;
+            $battery = ($value > 2800) ? 100:10;
             $value = $value / 1000;
             $xiaomihome->setConfiguration('battery',$battery);
             $xiaomihome->batteryStatus($battery);
