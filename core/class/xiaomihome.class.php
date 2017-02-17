@@ -320,6 +320,9 @@ public static function receiveData($id, $model, $key, $value) {
             $xiaomihomeCmd->setUnite('°C');
             $xiaomihomeCmd->save();
             break;
+            case 'illumination':
+            $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-sun-o"></i>', '0');
+            break;
             case 'rgb':
             $value = str_pad(dechex($value), 8, "0", STR_PAD_LEFT);
             $light = hexdec(substr($value, 0, 2));
@@ -343,6 +346,17 @@ public static function receiveData($id, $model, $key, $value) {
             $xiaomihomeCmd->save();
             $xiaomihome->setConfiguration('battery',$value);
             $xiaomihome->batteryStatus($value);
+            $xiaomihome->save();
+            break;
+            case 'voltage':
+            $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-battery-half"></i>', '0');
+            $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
+            $xiaomihomeCmd->setUnite('V');
+            $xiaomihomeCmd->save();
+            $battery = ($value > 2800) 100:10;
+            $value = $value / 1000;
+            $xiaomihome->setConfiguration('battery',$battery);
+            $xiaomihome->batteryStatus($battery);
             $xiaomihome->save();
             break;
             case 'no_motion':
