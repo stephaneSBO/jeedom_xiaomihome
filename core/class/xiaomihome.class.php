@@ -339,6 +339,7 @@ public static function receiveData($id, $model, $key, $value) {
             $xiaomiactCmd->setConfiguration('switch', $key);
             $xiaomiactCmd->save();
             break;
+            /*
             case 'battery':
             $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-battery-half"></i>', '0');
             $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
@@ -348,12 +349,13 @@ public static function receiveData($id, $model, $key, $value) {
             $xiaomihome->batteryStatus($value);
             $xiaomihome->save();
             break;
+            */
             case 'voltage':
             $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-battery-half"></i>', '0');
             $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
             $xiaomihomeCmd->setUnite('V');
             $xiaomihomeCmd->save();
-            $battery = ($value > 2800) ? 100:10;
+            $battery = ($value-2800) / 5;
             $value = $value / 1000;
             $xiaomihome->setConfiguration('battery',$battery);
             $xiaomihome->batteryStatus($battery);
