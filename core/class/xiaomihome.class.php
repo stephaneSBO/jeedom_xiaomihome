@@ -593,12 +593,14 @@ public static function dependancy_info() {
     $return = array();
     $return['log'] = 'xiaomihome_dep';
     $crypto = realpath(dirname(__FILE__) . '/../../resources/node_modules/crypto');
-    $dgram = realpath(dirname(__FILE__) . '/../../resources/node_modules/dgram');
+    $cmd = "pip list | grep yeecli";
+    exec($cmd, $output, $return_var);
     $return['progress_file'] = '/tmp/xiaomihome_dep';
-    if (is_dir($crypto) && is_dir($dgram)) {
-        $return['state'] = 'ok';
-    } else {
-        $return['state'] = 'nok';
+    $return['state'] = 'nok';
+    if (array_key_exists(0,$output)) {
+        if (is_dir($crypto) && $output[0] != "") {
+            $return['state'] = 'ok';
+        }
     }
     return $return;
 }

@@ -56,6 +56,7 @@ echo 70 > /tmp/xiaomihome_dep
 sudo apt-get -y install python-pip
 sudo pip install yeecli
 sudo pip install mihome
+sudo pip install future
 
 echo 80 > /tmp/xiaomihome_dep
 npm install dgram
