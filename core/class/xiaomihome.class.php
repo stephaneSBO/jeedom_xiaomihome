@@ -299,6 +299,23 @@ $xiaomihome->setConfiguration('short_id',$short_id);
 $xiaomihome->setConfiguration('type','aquara');
 $xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
 $xiaomihome->save();
+
+$xiaomihome->checkCmdOk('illumination', 'Lumière ambiante', 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-sun-o"></i>', '0');
+$xiaomihome->checkCmdOk('rgb', 'RGB anneau', 'info', 'string', '0', '0','0', '0', '0', 'LIGHT_COLOR');
+$xiaomihome->checkCmdOk('brightness', 'Luminosité anneau', 'info', 'numeric', '0', '0','0', '0', '0', 'LIGHT_STATE');
+$xiaomihome->checkCmdOk('rgb-set', 'Définir Couleur anneau', 'action', 'color', 'rgb', '0','1', '0', '0', 'LIGHT_SET_COLOR');
+$xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),'rgb-set');
+$xiaomiactCmd->setConfiguration('switch', 'rgb');
+$xiaomiactCmd->save();
+$xiaomihome->checkCmdOk('brightness-set', 'Définir Luminosité anneau', 'action', 'slider', 'brightness', '0','1', '0', '0', 'LIGHT_SLIDER');
+$xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),'brightness-set');
+$xiaomiactCmd->setConfiguration('switch', 'rgb');
+$xiaomiactCmd->save();
+$xiaomihome->checkCmdOk('mid-set', 'Jouer une sonnerie', 'action', 'message', '0', '0','1', '0', '0', '0');
+$xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),'mid-set');
+$xiaomiactCmd->setConfiguration('switch', 'mid');
+$xiaomiactCmd->save();
+
 }
 
 public static function receiveData($id, $model, $key, $value) {
@@ -318,6 +335,24 @@ public static function receiveData($id, $model, $key, $value) {
             $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-tint"></i>', 'TEMPERATURE');
             $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
             $xiaomihomeCmd->setUnite('°C');
+            $xiaomihomeCmd->save();
+            break;
+            case 'load_voltage':
+            $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-plug"></i>', '0');
+            $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
+            $xiaomihomeCmd->setUnite('mV');
+            $xiaomihomeCmd->save();
+            break;
+            case 'load_power':
+            $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-plug"></i>', '0');
+            $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
+            $xiaomihomeCmd->setUnite('W');
+            $xiaomihomeCmd->save();
+            break;
+            case 'power_consumed':
+            $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-plug"></i>', '0');
+            $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
+            $xiaomihomeCmd->setUnite('kWh');
             $xiaomihomeCmd->save();
             break;
             case 'illumination':
@@ -645,6 +680,9 @@ class xiaomihomeCmd extends cmd {
                         $option = hexdec($rgbcomplet);
                         log::add('xiaomihome', 'debug', 'RGB : dec ' . $option . ' hex ' . $rgbcomplet . ' bright ' . $bright . ' color ' . $couleur);
                     }
+                    break;
+                    case 'message':
+                    $option = $_options['title'];
                     break;
                     default :
                     $option = $this->getConfiguration('request');
