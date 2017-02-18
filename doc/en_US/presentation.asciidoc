@@ -9,7 +9,6 @@ La Xiaomi Aquara Home Gateway permet d'utiliser différents capteurs Zigbee Xiao
 Liste des capteurs compatibles :
 
   * Gateway : http://www.gearbest.com/living-appliances/pp_344667.html?lkid=10269386[Gateway]
-  (elle est nécessaire pour les capteurs Zigbee, il faut activer le mode développeur. En revanche aujourd'hui on ne peut pas se servir de l'enceinte via le plugin (non dispo dans l'API))
 
   * Capteur de porte : http://www.gearbest.com/smart-light-bulb/pp_257677.html?lkid=10269970[Capteur porte et fenêtre]
 

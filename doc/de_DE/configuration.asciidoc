@@ -24,21 +24,23 @@ Information importante : pour pouvoir envoyer des commandes (prise) vers la gate
 
 ==== Equipements compatibles
 
-  - Détecteur de mouvement : commande statut de type binaire activée sur mouvement
+  - Gateway : anneau RGB (avec couleur et intensité, pour éteindre il faut absolument mettre l'intensité à 0), capteur de luminosité, jouer les sons enregistrés (10000 pour éteindre, 10001 et plus pour les sons)
 
-  - Détecteur d'ouverture : commande statut de type binaire activée sur ouverture
+  - Détecteur de mouvement : commande statut de type binaire activée sur mouvement, batterie et voltage
 
-  - Capteur température/humidité : commande température, commande humidité
+  - Détecteur d'ouverture : commande statut de type binaire activée sur ouverture, batterie et voltage
 
-  - Bouton Switch : commande statut avec pour valeurs click, double_click, long_click_press, long_click_release
+  - Capteur température/humidité : commande température, commande humidité, batterie et voltage
 
-  - Prise : commande statut binaire avec on et off
+  - Bouton Switch : commande statut avec pour valeurs click, double_click, long_click_press, long_click_release, batterie et voltage
 
-  - Interrupteur mural : commande statut pour chaque interrupteur (click, double_click) et si double une commande qui donne l'appui simultané
+  - Prise : commande statut binaire avec on et off, état d'utilisation et consommation
+
+  - Interrupteur mural : commande statut pour chaque interrupteur (click, double_click) et si double une commande qui donne l'appui simultané, batterie et voltage
 
   - Interrupteur encastré : commande statut binaire avec on et off pour chaque interrupteur
 
-  - Cube : commande statut avec pour valeur move, tap_twice, shake_air, alert, flip90, flip180, free_fall et une commande rotate avec la valeur en degré du mouvement
+  - Cube : commande statut avec pour valeur move, tap_twice, shake_air, alert, flip90, flip180, free_fall et une commande rotate avec la valeur en degré du mouvement, batterie et voltage
 
 
 ==== Yeelight Lampe Konfiguration
