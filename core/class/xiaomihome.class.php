@@ -189,7 +189,7 @@ if ($model != 'mono') {
 }
 
 public function checkCmdOk($_id, $_name, $_type, $_subtype, $_request, $_setvalue,$_visible, $_template, $_icon, $_generic) {
-    log::add('xiaomihome', 'debug', $_id . ' ' . $_name . ' ' . $_type . ' ' . $_subtype . ' ' . $_request . ' ' . $_setvalue . ' ' . $_visible . ' ' . $_template . ' ' . $_icon);
+    //log::add('xiaomihome', 'debug', $_id . ' ' . $_name . ' ' . $_type . ' ' . $_subtype . ' ' . $_request . ' ' . $_setvalue . ' ' . $_visible . ' ' . $_template . ' ' . $_icon);
     $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($this->getId(),$_id);
     if (!is_object($xiaomihomeCmd)) {
         log::add('xiaomihome', 'debug', 'Création de la commande ' . $_id);
@@ -386,7 +386,7 @@ public static function receiveData($id, $model, $key, $value) {
             break;
             */
             case 'voltage':
-            $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '<i class="fa fa-battery-half"></i>', '0');
+            $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','0', 'line', '<i class="fa fa-battery-half"></i>', '0');
             $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
             $xiaomihomeCmd->setUnite('V');
             $xiaomihomeCmd->save();
@@ -409,6 +409,19 @@ public static function receiveData($id, $model, $key, $value) {
             break;
             case 'rotate':
             $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '0', '0');
+            break;
+            case 'channel_0' || 'channel_1':
+            $value = ($value == 'on') ? 1 : 0;
+            $widget = 'light';
+            $xiaomihome->checkCmdOk($key, $key, 'info', 'binary', '0', '0','1', 'light', '0', 'LIGHT_STATE');
+            $xiaomihome->checkCmdOk($key . '-on', $key . '-on', 'action', 'other', 'on',$key, '1', $widget, '0', 'LIGHT_ON');
+            $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-on');
+            $xiaomiactCmd->setConfiguration('switch', $key);
+            $xiaomiactCmd->save();
+            $xiaomihome->checkCmdOk($key . '-off', $key . '-off', 'action', 'other', 'off',$key, '1', $widget, '0', 'LIGHT_OFF');
+            $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-off');
+            $xiaomiactCmd->setConfiguration('switch', $key);
+            $xiaomiactCmd->save();
             break;
             case 'status':
             switch ($model) {
@@ -469,19 +482,6 @@ public static function receiveData($id, $model, $key, $value) {
                 $xiaomiactCmd->setConfiguration('switch', $key);
                 $xiaomiactCmd->save();
             }
-            break;
-            case 'channel_0' || 'channel_1':
-            $value = ($value == 'on') ? 1 : 0;
-            $widget = 'light';
-            $xiaomihome->checkCmdOk($key, $key, 'info', 'binary', '0', '0','1', 'light', '0', 'LIGHT_STATE');
-            $xiaomihome->checkCmdOk($key . '-on', $key . '-on', 'action', 'other', 'on',$key, '1', $widget, '0', 'LIGHT_ON');
-            $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-on');
-            $xiaomiactCmd->setConfiguration('switch', $key);
-            $xiaomiactCmd->save();
-            $xiaomihome->checkCmdOk($key . '-off', $key . '-off', 'action', 'other', 'off',$key, '1', $widget, '0', 'LIGHT_OFF');
-            $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-off');
-            $xiaomiactCmd->setConfiguration('switch', $key);
-            $xiaomiactCmd->save();
             break;
             default:
             $xiaomihome->checkCmdOk($key, $key, 'info', 'string', '0', '0','1', 'line', '0', '0');
