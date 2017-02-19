@@ -314,7 +314,7 @@ foreach ($device['commands'] as $command) {
         $xiaomihomeCmd = new xiaomihomeCmd();
         $xiaomihomeCmd->setEqLogic_id($xiaomihome->id);
         $xiaomihomeCmd->setEqType('xiaomihome');
-        $xiaomihomeCmd->setLogicalId($_id);
+        $xiaomihomeCmd->setLogicalId($command['logicalId']);
         utils::a2o($xiaomihomeCmd, $command);
         $xiaomihomeCmd->save();
     }
