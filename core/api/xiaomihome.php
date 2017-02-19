@@ -31,17 +31,16 @@ if (init('type') == 'aquara') {
         xiaomihome::receiveAquaraId($body['sid'], $body['model'], init('gateway'), $body['short_id']);
         if ($body['cmd'] == 'heartbeat') {
             if ($body['model'] != 'gateway' && config::byKey('aquaraReport', 'xiaomihome') == '1') {
-                log::add('xiaomihome', 'debug', 'Avoid');
                 die();
             }
             if ($body['model'] == 'gateway'){
                 $xiaomihome = xiaomihome::byLogicalId(init('gateway'), 'xiaomihome');
                 $xiaomihome->setConfiguration('token',$body['token']);
                 $xiaomihome->save();
-                log::add('xiaomihome', 'debug', 'Token');
             }
         }
         if (isset($body['data'])) {
+            log::add('xiaomihome', 'debug', 'Dump ' . var_dump($body['data'], true););
             $data = json_decode($body['data'], true);
             foreach ($data as $key => $value) {
                 xiaomihome::receiveAquaraData($body['sid'], $body['model'], $key, $value);
