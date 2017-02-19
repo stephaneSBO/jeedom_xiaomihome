@@ -554,6 +554,7 @@ class xiaomihomeCmd extends cmd {
                         $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'brightness');
                         $bright = str_pad(dechex($xiaomihomeCmd->execCmd()), 2, "0", STR_PAD_LEFT);
                         $couleur = str_replace('#','',$option);
+                        $eqLogic->checkAndUpdateCmd('rgb', $option);
                         $rgbcomplet = $bright . $couleur;
                         $option = hexdec($rgbcomplet);
                         log::add('xiaomihome', 'debug', 'RGB : dec ' . $option . ' hex ' . $rgbcomplet . ' bright ' . $bright . ' color ' . $couleur);
@@ -565,6 +566,7 @@ class xiaomihomeCmd extends cmd {
                         $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'rgb');
                         $couleur = str_replace('#','',$xiaomihomeCmd->execCmd());
                         $bright = str_pad($option, 2, "0", STR_PAD_LEFT);
+                        $eqLogic->checkAndUpdateCmd('brightness', $bright);
                         $rgbcomplet = $bright . $couleur;
                         $option = hexdec($rgbcomplet);
                         log::add('xiaomihome', 'debug', 'RGB : dec ' . $option . ' hex ' . $rgbcomplet . ' bright ' . $bright . ' color ' . $couleur);
