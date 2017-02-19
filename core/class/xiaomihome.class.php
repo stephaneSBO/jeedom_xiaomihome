@@ -373,7 +373,7 @@ public static function receiveAquaraData($id, $model, $key, $value) {
                 $value = ($value == 'on') ? 1 : 0;
             }
         }
-        log::add('xiaomihome', 'debug', 'Capteur ' . $id . ' de ' . $model . ' : ' . $key . ' ' . $value);
+        //log::add('xiaomihome', 'debug', 'Capteur ' . $id . ' de ' . $model . ' : ' . $key . ' ' . $value);
         //$xiaomihome->checkAndUpdateCmd($key, $value);
         $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
         $xiaomihomeCmd->setConfiguration('value',$value);

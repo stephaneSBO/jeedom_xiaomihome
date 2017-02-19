@@ -30,13 +30,15 @@ if (init('type') == 'aquara') {
     if ($body['sid'] !== null && $body['model'] !== null) {
         xiaomihome::receiveAquaraId($body['sid'], $body['model'], init('gateway'), $body['short_id']);
         if ($body['cmd'] == 'heartbeat') {
-            if ($body['model'] == 'gateway' && config::byKey('aquaraReport', 'xiaomihome') == '1') {
+            if ($body['model'] != 'gateway' && config::byKey('aquaraReport', 'xiaomihome') == '1') {
+                log::add('xiaomihome', 'debug', 'Avoid');
                 die();
             }
             if ($body['model'] == 'gateway'){
                 $xiaomihome = xiaomihome::byLogicalId(init('gateway'), 'xiaomihome');
                 $xiaomihome->setConfiguration('token',$body['token']);
                 $xiaomihome->save();
+                log::add('xiaomihome', 'debug', 'Token');
             }
         }
         if (isset($body['data'])) {
