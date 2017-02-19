@@ -244,8 +244,8 @@ public function checkCmdOk($_id, $_name, $_type, $_subtype, $_request, $_setvalu
 
 public static function devicesParameters($_device = '') {
 		$return = array();
-		foreach (ls(dirname(__FILE__) . '/../config/devices', '*') as $dir) {
-			$path = dirname(__FILE__) . '/../config/devices/' . $dir;
+		foreach (ls(dirname(__FILE__) . '/../config', '*') as $dir) {
+			$path = dirname(__FILE__) . '/../config/' . $dir;
 			if (!is_dir($path)) {
 				continue;
 			}
@@ -295,6 +295,8 @@ public static function receiveAquaraId($sid, $model, $gateway, $short_id) {
         $xiaomihome->setConfiguration('sid', $sid);
         $xiaomihome->setIsEnable(1);
         $xiaomihome->setIsVisible(1);
+        $xiaomihome->setConfiguration('type','aquara');
+        $xiaomihome->setConfiguration('model',$model);
         $xiaomihome->setConfiguration('short_id',$short_id);
         $xiaomihome->setConfiguration('gateway',$gateway);
         event::add('xiaomihome::includeDevice',
