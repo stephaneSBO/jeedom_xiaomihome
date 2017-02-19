@@ -287,17 +287,10 @@ public static function receiveAquaraId($sid, $model, $gateway, $short_id) {
         $xiaomihome = new xiaomihome();
         $xiaomihome->setEqType_name('xiaomihome');
         $xiaomihome->setLogicalId($id);
-        if (isset($device['configuration'])) {
-            foreach ($device['configuration'] as $key => $value) {
-                $xiaomihome->setConfiguration($key, $value);
-            }
-        }
         $xiaomihome->setName($device['name'] . ' ' . $sid);
         $xiaomihome->setConfiguration('sid', $sid);
         $xiaomihome->setIsEnable(1);
         $xiaomihome->setIsVisible(1);
-        $xiaomihome->setConfiguration('type','aquara');
-        $xiaomihome->setConfiguration('model',$model);
         $xiaomihome->setConfiguration('short_id',$short_id);
         $xiaomihome->setConfiguration('gateway',$gateway);
         event::add('xiaomihome::includeDevice',
@@ -307,6 +300,11 @@ public static function receiveAquaraId($sid, $model, $gateway, $short_id) {
     );
 }
 
+if (isset($device['configuration'])) {
+    foreach ($device['configuration'] as $key => $value) {
+        $xiaomihome->setConfiguration($key, $value);
+    }
+}
 $xiaomihome->setConfiguration('short_id',$short_id);
 $xiaomihome->setConfiguration('gateway',$gateway);
 $xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
@@ -316,7 +314,7 @@ foreach ($device['commands'] as $command) {
     $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($this->getId(),$command['logicalId']);
     if (!is_object($xiaomihomeCmd)) {
         $xiaomihomeCmd = new xiaomihomeCmd();
-        $xiaomihomeCmd->setEqLogic_id($this->id);
+        $xiaomihomeCmd->setEqLogic_id($xiaomihome->id);
         $xiaomihomeCmd->setEqType('xiaomihome');
         $xiaomihomeCmd->setLogicalId($_id);
         utils::a2o($xiaomihomeCmd, $command);
