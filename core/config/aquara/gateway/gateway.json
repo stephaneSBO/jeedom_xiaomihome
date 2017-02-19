@@ -6,7 +6,18 @@
             "type" : "aquara"
 		},
         "commands": [
-			{
+            {
+                "name": "IP Gateway",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "ip"
+            },
+            {
                 "name": "Couleur Anneau",
                 "type": "info",
                 "subtype": "string",
