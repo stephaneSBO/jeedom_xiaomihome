@@ -323,7 +323,7 @@ foreach ($device['commands'] as $command) {
 }
 
 public static function receiveAquaraData($id, $model, $key, $value) {
-    //log::add('xiaomihome', 'debug', 'Capteur ' . $id . ' de ' . $model . ' : ' . $key . ' ' . $value);
+    log::add('xiaomihome', 'debug', 'Capteur ' . $id . ' de ' . $model . ' : ' . $key . ' ' . $value);
     $xiaomihome = self::byLogicalId($id, 'xiaomihome');
     if (is_object($xiaomihome)) {
         switch ($key) {
@@ -369,6 +369,7 @@ public static function receiveAquaraData($id, $model, $key, $value) {
                 }
                 break;
         }
+        log::add('xiaomihome', 'debug', 'Capteur ' . $id . ' de ' . $model . ' : ' . $key . ' ' . $value);
         //$xiaomihome->checkAndUpdateCmd($key, $value);
         $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
         $xiaomihomeCmd->setConfiguration('value',$value);
