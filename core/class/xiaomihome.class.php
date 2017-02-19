@@ -246,7 +246,6 @@ public static function devicesParameters($_device = '') {
 		$return = array();
         foreach (ls(dirname(__FILE__) . '/../config/aquara', '*') as $dir) {
 			$path = dirname(__FILE__) . '/../config/aquara/' . $dir;
-            log::add('xiaomihome', 'debug', 'Fichier ' . $path);
 			if (!is_dir($path)) {
 				continue;
 			}
@@ -254,7 +253,6 @@ public static function devicesParameters($_device = '') {
     		foreach ($files as $file) {
     			try {
     				$content = file_get_contents($path . '/' . $file);
-                    log::add('xiaomihome', 'debug', 'Fichier ' . $path . '/' . $file);
     				if (is_json($content)) {
     					$return += json_decode($content, true);
     				}
