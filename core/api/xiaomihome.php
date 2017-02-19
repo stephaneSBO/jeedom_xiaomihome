@@ -40,7 +40,7 @@ if (init('type') == 'aquara') {
             }
         }
         if (isset($body['data'])) {
-            log::add('xiaomihome', 'debug', 'Dump ' . var_dump($body['data'], true););
+            log::add('xiaomihome', 'debug', 'Dump ' . var_dump($body['data'], true));
             $data = json_decode($body['data'], true);
             foreach ($data as $key => $value) {
                 xiaomihome::receiveAquaraData($body['sid'], $body['model'], $key, $value);
