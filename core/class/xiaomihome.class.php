@@ -309,7 +309,7 @@ $xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
 $xiaomihome->save();
 
 foreach ($device['commands'] as $command) {
-    $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($this->getId(),$command['logicalId']);
+    $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$command['logicalId']);
     if (!is_object($xiaomihomeCmd)) {
         $xiaomihomeCmd = new xiaomihomeCmd();
         $xiaomihomeCmd->setEqLogic_id($xiaomihome->id);
