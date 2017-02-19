@@ -356,14 +356,14 @@ public static function receiveAquaraData($id, $model, $key, $value) {
             case 'status':
                 switch ($model) {
                     case 'motion':
-                        $value = ($value == 'motion' || $value == 'open' || $value == 'on') ? 1 : 0;
+                        $value = ($value == 'motion') ? 0 : 1;
                         $xiaomihome->checkAndUpdateCmd('no_motion', 0);
                         break;
                     case 'magnet':
                         $value = ($value == 'close') ? 0 : 1;
                         $xiaomihome->checkAndUpdateCmd('no_close', 0);
                         break;
-                    default:
+                    case 'ctrl_neutral1' || 'ctrl_neutral2' || 'plug':
                         $value = ($value == 'on') ? 1 : 0;
                         break;
                 }
