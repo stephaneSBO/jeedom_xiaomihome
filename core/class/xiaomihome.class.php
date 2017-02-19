@@ -323,51 +323,55 @@ foreach ($device['commands'] as $command) {
 }
 
 public static function receiveAquaraData($id, $model, $key, $value) {
-    log::add('xiaomihome', 'debug', 'Capteur ' . $id . ' de ' . $model . ' : ' . $key . ' ' . $value);
+    //log::add('xiaomihome', 'debug', 'Capteur ' . $id . ' de ' . $model . ' : ' . $key . ' ' . $value);
     $xiaomihome = self::byLogicalId($id, 'xiaomihome');
     if (is_object($xiaomihome)) {
-        switch ($key) {
-            case 'humidity' || 'temperature':
-                $value = $value / 100;
-                break;
-            case 'rgb':
-                $value = str_pad(dechex($value), 8, "0", STR_PAD_LEFT);
-                $light = hexdec(substr($value, 0, 2));
-                $value = '#' . substr($value, -6);
-                $xiaomihome->checkAndUpdateCmd('brightness', $light);
-                break;
-            case 'voltage':
-                $battery = ($value-2800) / 5;
-                $value = $value / 1000;
-                $xiaomihome->checkAndUpdateCmd('battery', $battery);
-                $xiaomihome->setConfiguration('battery',$battery);
-                $xiaomihome->batteryStatus($battery);
-                $xiaomihome->save();
-                break;
-            case 'no_motion':
-                $xiaomihome->checkAndUpdateCmd('status', 0);
-                break;
-            case 'no_close':
-                $xiaomihome->checkAndUpdateCmd('status', 1);
-                break;
-            case 'channel_0' || 'channel_1':
-                $value = ($value == 'on') ? 1 : 0;
-                break;
-            case 'status':
-                switch ($model) {
-                    case 'motion':
-                        $value = ($value == 'motion') ? 0 : 1;
-                        $xiaomihome->checkAndUpdateCmd('no_motion', 0);
-                        break;
-                    case 'magnet':
-                        $value = ($value == 'close') ? 0 : 1;
-                        $xiaomihome->checkAndUpdateCmd('no_close', 0);
-                        break;
-                    case 'ctrl_neutral1' || 'ctrl_neutral2' || 'plug':
-                        $value = ($value == 'on') ? 1 : 0;
-                        break;
+        if ($key == 'humidity' || $key == 'temperature') {
+            $value = $value / 100;
+        }
+        if ($key == 'rgb') {
+            $value = str_pad(dechex($value), 8, "0", STR_PAD_LEFT);
+            $light = hexdec(substr($value, 0, 2));
+            $value = '#' . substr($value, -6);
+            $xiaomihome->checkAndUpdateCmd('brightness', $light);
+        }
+        if ($key == 'voltage') {
+            $battery = ($value-2800) / 5;
+            $value = $value / 1000;
+            $xiaomihome->checkAndUpdateCmd('battery', $battery);
+            $xiaomihome->setConfiguration('battery',$battery);
+            $xiaomihome->batteryStatus($battery);
+            $xiaomihome->save();
+        }
+        if ($key == 'no_motion') {
+            $xiaomihome->checkAndUpdateCmd('status', 0);
+        }
+        if ($key == 'no_close') {
+            $xiaomihome->checkAndUpdateCmd('status', 1);
+        }
+        if ($key == 'channel_0' || $key == 'channel_1') {
+            $value = ($value == 'on') ? 1 : 0;
+        }
+        if ($key == 'status') {
+            if ($model == 'motion') {
+                if ($value == 'motion') {
+                    $xiaomihome->checkAndUpdateCmd('no_motion', 0);
+                    $value = 1;
+                } else {
+                    $value = 0;
                 }
-                break;
+            }
+            if ($model == 'magnet') {
+                if ($value == 'open') {
+                    $value = 1;
+                } else {
+                    $value = 0;
+                    $xiaomihome->checkAndUpdateCmd('no_close', 0);
+                }
+            }
+            if ($model == 'plug') {
+                $value = ($value == 'on') ? 1 : 0;
+            }
         }
         log::add('xiaomihome', 'debug', 'Capteur ' . $id . ' de ' . $model . ' : ' . $key . ' ' . $value);
         //$xiaomihome->checkAndUpdateCmd($key, $value);
