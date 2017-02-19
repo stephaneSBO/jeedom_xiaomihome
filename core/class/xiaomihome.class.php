@@ -356,7 +356,7 @@ public static function receiveAquaraData($id, $model, $key, $value) {
             case 'status':
                 switch ($model) {
                     case 'motion':
-                        $value = ($value == 'motion') ? 1 : 0;
+                        $value = ($value == 'motion' || $value == 'open' || $value == 'on') ? 1 : 0;
                         $xiaomihome->checkAndUpdateCmd('no_motion', 0);
                         break;
                     case 'magnet':
