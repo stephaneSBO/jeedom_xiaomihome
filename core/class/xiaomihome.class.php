@@ -278,13 +278,12 @@ public static function receiveAquaraId($sid, $model, $gateway, $short_id) {
     } else {
         $id = $sid;
     }
+    $device = self::devicesParameters($model);
+    if (!is_array($device)) {
+        return true;
+    }
     $xiaomihome = self::byLogicalId($id, 'xiaomihome');
     if (!is_object($xiaomihome)) {
-        $device = self::devicesParameters($model);
-        if (!is_array($device)) {
-            return true;
-        }
-
         $xiaomihome = new xiaomihome();
         $xiaomihome->setEqType_name('xiaomihome');
         $xiaomihome->setLogicalId($id);
