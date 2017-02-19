@@ -253,6 +253,7 @@ public static function devicesParameters($_device = '') {
 			foreach ($files as $file) {
 				try {
 					$content = file_get_contents($path . '/' . $file);
+                    log::add('xiaomihome', 'debug', 'Fichier ' . $path . '/' . $file);
 					if (is_json($content)) {
 						$return += json_decode($content, true);
 					}
