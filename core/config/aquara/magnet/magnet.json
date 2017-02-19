@@ -1,0 +1,76 @@
+{
+    "magnet": {
+        "name": "Détecteur Ouverture",
+		"configuration" : {
+			"model" : "magnet",
+            "type" : "aquara",
+			"battery_type" : "1x3V CR1632"
+		},
+        "commands": [
+			{
+                "name": "Ouverture",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+					"generic_type": "OPENING"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "status",
+				"template": {
+					"dashboard": "door",
+					"mobile": "door"
+				}
+            },
+            {
+                "name": "Absence de fermeture",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "no_close",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "battery",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Pile Voltage",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "V",
+                "logicalId": "batteryvoltage",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            }
+        ]
+    }
+}

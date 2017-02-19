@@ -28,43 +28,27 @@ log::add('xiaomihome', 'debug', 'Recu ' . init('type') . ' de ' . init('gateway'
 
 if (init('type') == 'aquara') {
     if ($body['sid'] !== null && $body['model'] !== null) {
-        if ($body['model'] == 'gateway') {
-            if ($body['cmd'] == 'heartbeat') {
-                xiaomihome::receiveHeartbeat($body['sid'], $body['model'], init('gateway'), init('gateway'), $body['short_id']);
+        xiaomihome::receiveAquaraId($body['sid'], $body['model'], init('gateway'), $body['short_id']);
+        if ($body['cmd'] == 'heartbeat') {
+            if ($body['model'] == 'gateway' && config::byKey('aquaraReport', 'xiaomihome') == '1') {
+                die();
+            }
+            if ($body['model'] == 'gateway'{
                 $xiaomihome = xiaomihome::byLogicalId(init('gateway'), 'xiaomihome');
                 $xiaomihome->setConfiguration('token',$body['token']);
                 $xiaomihome->save();
-            } else {
-                xiaomihome::receiveId($body['sid'], $body['model'], init('gateway'), $body['short_id']);
-                if (isset($body['data'])) {
-                    $data = json_decode($body['data'], true);
-                    foreach ($data as $key => $value) {
-                        //log::add('xiaomihome', 'debug', 'Capteur ' . $body['sid'] . ' de ' . $body['model'] . ' : ' . $key . ' ' . $value);
-                        xiaomihome::receiveData(init('gateway'), $body['model'], $key, $value);
-                    }
-                }
             }
-        } else {
-            if ($body['cmd'] == 'heartbeat' && config::byKey('aquaraReport', 'xiaomihome') == '1') {
-                die();
-            }
-            xiaomihome::receiveId($body['sid'], $body['model'], init('gateway'), $body['short_id']);
-            //log::add('xiaomihome', 'debug', 'Recu ' . $body['sid'] . ' ' . $body['model'] . ' ' . print_r($body, true));
-            if (isset($body['data'])) {
-                $data = json_decode($body['data'], true);
-                foreach ($data as $key => $value) {
-                    //log::add('xiaomihome', 'debug', 'Capteur ' . $body['sid'] . ' de ' . $body['model'] . ' : ' . $key . ' ' . $value);
-                    xiaomihome::receiveData($body['sid'], $body['model'], $key, $value);
-                }
+        }
+        if (isset($body['data'])) {
+            $data = json_decode($body['data'], true);
+            foreach ($data as $key => $value) {
+                xiaomihome::receiveAquaraData($body['sid'], $body['model'], $key, $value);
             }
         }
     }
-
 } else {
-    //log::add('xiaomihome', 'debug', 'Yeelight recu ' . init('gateway') . ' ' . $body['id'] . ' ' . $body['model'] . ' ' . $body['fw_ver'] . ' ' . $body['power'] . ' ' . $body['color_mode'] . ' ' . $body['rgb'] . ' ' . $body['bright'] . ' ' . $body['hue'] . ' ' . $body['sat'] . ' ' . $body['ct']);
-    xiaomihome::receiveYeelight(init('gateway'), $body['id'], $body['model'], $body['fw_ver'], $body['power'], $body['color_mode'], $body['rgb'], $body['bright'], $body['hue'], $body['sat'], $body['ct']);
+        xiaomihome::receiveYeelight(init('gateway'), $body['id'], $body['model'], $body['fw_ver'], $body['power'], $body['color_mode'], $body['rgb'], $body['bright'], $body['hue'], $body['sat'], $body['ct']);
 }
 
 return true;
-
 ?>

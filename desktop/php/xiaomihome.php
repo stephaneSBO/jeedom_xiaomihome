@@ -166,12 +166,6 @@ $eqLogics = eqLogic::byType('xiaomihome');
                                 <input class="eqLogicAttr form-control" data-l1key="timeout" placeholder="Délai maximum autorisé entre 2 messages (en mn)"/>
                             </div>
                         </div>
-                        <div class="form-group expertModeVisible">
-                            <label class="col-sm-3 control-label">{{Type de piles}}</label>
-                            <div class="col-sm-3">
-                                <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="battery_type" placeholder="Doit être indiqué sous la forme : 3x AA"/>
-                            </div>
-                        </div>
 
                         <div class="form-group" id="passfield">
                             <label class="col-sm-3 control-label">{{Password}}</label>

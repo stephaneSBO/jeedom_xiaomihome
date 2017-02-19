@@ -1,0 +1,92 @@
+{
+    "gateway": {
+        "name": "Gateway",
+		"configuration" : {
+			"model" : "gateway",
+            "type" : "aquara"
+		},
+        "commands": [
+			{
+                "name": "Couleur Anneau",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "LIGHT_COLOR"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "rgb"
+            },
+            {
+                "name": "Définir Couleur",
+                "type": "action",
+                "subtype": "color",
+                "display": {
+					"generic_type": "LIGHT_SET_COLOR"
+                },
+                "configuration" : {
+        			"switch" : "rgb",
+                    "request" : "rgb"
+        		},
+                "isVisible": 1,
+                "logicalId": "rgb-set"
+            },
+            {
+                "name": "Luminosité Anneau",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "LIGHT_STATE"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "brightness",
+            },
+            {
+                "name": "Définir Luminosité",
+                "type": "action",
+                "subtype": "slider",
+                "display": {
+					"generic_type": "LIGHT_SLIDER"
+                },
+                "configuration" : {
+        			"switch" : "rgb",
+                    "request" : "brightness",
+                    "minValue" : 0,
+                    "maxValue" : 100
+        		},
+                "isVisible": 1,
+                "logicalId": "brightness-set"
+            },
+            {
+                "name": "Jouer un son",
+                "type": "action",
+                "subtype": "message",
+                "display": {
+					"generic_type": "GENERIC"
+                },
+                "configuration" : {
+        			"switch" : "mid",
+        		},
+                "isVisible": 1,
+                "logicalId": "mid-set"
+            },
+			{
+                "name": "Capteur Luminosité",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-sun-o\"><\/i>",
+					"generic_type": "GENERIC"
+				},
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "illumination",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            }
+        ]
+    }
+}
