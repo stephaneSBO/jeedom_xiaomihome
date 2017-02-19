@@ -33,7 +33,7 @@ if (init('type') == 'aquara') {
             if ($body['model'] == 'gateway' && config::byKey('aquaraReport', 'xiaomihome') == '1') {
                 die();
             }
-            if ($body['model'] == 'gateway'{
+            if ($body['model'] == 'gateway'){
                 $xiaomihome = xiaomihome::byLogicalId(init('gateway'), 'xiaomihome');
                 $xiaomihome->setConfiguration('token',$body['token']);
                 $xiaomihome->save();
