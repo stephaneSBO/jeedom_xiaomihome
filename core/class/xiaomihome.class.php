@@ -399,7 +399,20 @@ public static function receiveData($id, $model, $key, $value) {
             case 'rotate':
                 $xiaomihome->checkCmdOk($key, $key, 'info', 'numeric', '0', '0','1', 'line', '0', '0');
                 break;
-            case 'channel_0' || 'channel_1':
+            case 'channel_0':
+                $value = ($value == 'on') ? 1 : 0;
+                $widget = 'light';
+                $xiaomihome->checkCmdOk($key, $key, 'info', 'binary', '0', '0','1', 'light', '0', 'LIGHT_STATE');
+                $xiaomihome->checkCmdOk($key . '-on', $key . '-on', 'action', 'other', 'on',$key, '1', $widget, '0', 'LIGHT_ON');
+                $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-on');
+                $xiaomiactCmd->setConfiguration('switch', $key);
+                $xiaomiactCmd->save();
+                $xiaomihome->checkCmdOk($key . '-off', $key . '-off', 'action', 'other', 'off',$key, '1', $widget, '0', 'LIGHT_OFF');
+                $xiaomiactCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key . '-off');
+                $xiaomiactCmd->setConfiguration('switch', $key);
+                $xiaomiactCmd->save();
+                break;
+            case 'channel_1':
                 $value = ($value == 'on') ? 1 : 0;
                 $widget = 'light';
                 $xiaomihome->checkCmdOk($key, $key, 'info', 'binary', '0', '0','1', 'light', '0', 'LIGHT_STATE');
@@ -451,7 +464,13 @@ public static function receiveStatus($id, $model, $key, $value) {
                 $generic = 'ENERGY_STATE';
                 $value = ($value == 'on') ? 1 : 0;
                 break;
-            case 'ctrl_neutral1' || 'ctrl_neutral2':
+            case 'ctrl_neutral1':
+                $widget = 'light';
+                $type = 'binary';
+                $generic = 'LIGHT_STATE';
+                $value = ($value == 'on') ? 1 : 0;
+                break;
+            case 'ctrl_neutral2':
                 $widget = 'light';
                 $type = 'binary';
                 $generic = 'LIGHT_STATE';
