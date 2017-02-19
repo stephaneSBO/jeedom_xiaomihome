@@ -244,22 +244,17 @@ public function checkCmdOk($_id, $_name, $_type, $_subtype, $_request, $_setvalu
 
 public static function devicesParameters($_device = '') {
 		$return = array();
-		foreach (ls(dirname(__FILE__) . '/../config', '*') as $dir) {
-			$path = dirname(__FILE__) . '/../config/' . $dir;
-			if (!is_dir($path)) {
-				continue;
-			}
-			$files = ls($path, '*.json', false, array('files', 'quiet'));
-			foreach ($files as $file) {
-				try {
-					$content = file_get_contents($path . '/' . $file);
-                    log::add('xiaomihome', 'debug', 'Fichier ' . $path . '/' . $file);
-					if (is_json($content)) {
-						$return += json_decode($content, true);
-					}
-				} catch (Exception $e) {
-
+		$path = dirname(__FILE__) . '/../config/aquara/';
+		$files = ls($path, '*.json', false, array('files', 'quiet'));
+		foreach ($files as $file) {
+			try {
+				$content = file_get_contents($path . '/' . $file);
+                log::add('xiaomihome', 'debug', 'Fichier ' . $path . '/' . $file);
+				if (is_json($content)) {
+					$return += json_decode($content, true);
 				}
+			} catch (Exception $e) {
+
 			}
 		}
 		if (isset($_device) && $_device != '') {
