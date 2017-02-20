@@ -376,9 +376,11 @@ public static function receiveAquaraData($id, $model, $key, $value) {
         //log::add('xiaomihome', 'debug', 'Capteur ' . $id . ' de ' . $model . ' : ' . $key . ' ' . $value);
         //$xiaomihome->checkAndUpdateCmd($key, $value);
         $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
-        $xiaomihomeCmd->setConfiguration('value',$value);
-        $xiaomihomeCmd->save();
-        $xiaomihomeCmd->event($value);
+        if (is_object($xiaomihomeCmd)) {
+            $xiaomihomeCmd->setConfiguration('value',$value);
+            $xiaomihomeCmd->save();
+            $xiaomihomeCmd->event($value);
+        }
     }
 }
 
@@ -554,6 +556,9 @@ class xiaomihomeCmd extends cmd {
                         $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'brightness');
                         $bright = str_pad(dechex($xiaomihomeCmd->execCmd()), 2, "0", STR_PAD_LEFT);
                         $couleur = str_replace('#','',$option);
+                        if ($couleur == '000000') {
+                            $bright = '00';
+                        }
                         $eqLogic->checkAndUpdateCmd('rgb', $option);
                         $rgbcomplet = $bright . $couleur;
                         $option = hexdec($rgbcomplet);
