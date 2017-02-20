@@ -24,7 +24,7 @@ Information importante : pour pouvoir envoyer des commandes (prise) vers la gate
 
 ==== Equipements compatibles
 
-  - Gateway : anneau RGB (avec couleur et intensité, pour éteindre il faut absolument mettre l'intensité à 0), capteur de luminosité, jouer les sons enregistrés (10000 pour éteindre, 10001 et plus pour les sons)
+  - Gateway : anneau RGB (avec couleur et intensité, pour éteindre il faut absolument mettre l'intensité à 0), capteur de luminosité, jouer les sons enregistrés (0 à 8, 10 à 13, 20+ correspondent aux sons par défaut dans Mihome, 10000 pour éteindre, 10001 et plus pour les sons personnalisés)
 
   - Détecteur de mouvement : commande statut de type binaire activée sur mouvement, batterie et voltage
 
