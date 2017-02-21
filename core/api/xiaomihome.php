@@ -29,15 +29,10 @@ log::add('xiaomihome', 'debug', 'Recu ' . init('type') . ' de ' . init('gateway'
 if (init('type') == 'aquara') {
     if ($body['sid'] !== null && $body['model'] !== null) {
         xiaomihome::receiveAquaraId($body['sid'], $body['model'], init('gateway'), $body['short_id']);
-        if ($body['cmd'] == 'heartbeat') {
-            if ($body['model'] != 'gateway' && config::byKey('aquaraReport', 'xiaomihome') == '1') {
-                die();
-            }
-            if ($body['model'] == 'gateway'){
-                $xiaomihome = xiaomihome::byLogicalId(init('gateway'), 'xiaomihome');
-                $xiaomihome->setConfiguration('token',$body['token']);
-                $xiaomihome->save();
-            }
+        if ($body['cmd'] == 'heartbeat' && $body['model'] == 'gateway') {
+            $xiaomihome = xiaomihome::byLogicalId(init('gateway'), 'xiaomihome');
+            $xiaomihome->setConfiguration('token',$body['token']);
+            $xiaomihome->save();
         }
         if (isset($body['data'])) {
             //log::add('xiaomihome', 'debug', 'Dump ' . print_r($body['data'], true));

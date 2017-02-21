@@ -36,12 +36,6 @@ if (!isConnect()) {
                 </div>
   </div>
 
-  <div class="form-group">
-          <label class="col-lg-4 control-label">{{N'utiliser que les reports pour les capteurs Aquara}}</label>
-          <div class="col-lg-3">
-            <span><label class="checkbox-inline"><input type="checkbox" class="configKey" data-l1key="aquaraReport"/>{{Activer}}</label></span>
-          </div>
-</div>
     </fieldset>
   </div>
 </form>
