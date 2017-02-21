@@ -36,7 +36,7 @@ class xiaomihome extends eqLogic {
         if ($return_var != 0) {
             log::add('xiaomihome', 'debug', 'Lampe Yeelight non joignable ' . $ip);
             $this->checkAndUpdateCmd('online', 0);
-            exit();
+            return;
         }
         $cmd = 'python ' . realpath(dirname(__FILE__)) . '/../../resources/yeecli.py ' . $ip . ' ' . $request . ' ' . $option;
         //$cmd = 'yeecli --ip=' . $ip . ' ' . $request . ' ' . $option;
@@ -50,12 +50,12 @@ class xiaomihome extends eqLogic {
         $password = $xiaomihome->getConfiguration('password','');
         if ($password == '') {
             log::add('xiaomihome', 'debug', 'Mot de passe manquant sur la gateway Aquara ' . $gateway);
-            die();
+            return;
         }
         exec("sudo ping -c1 " . $gateway, $output, $return_var);
         if ($return_var != 0) {
             log::add('xiaomihome', 'debug', 'Gateway Aquara non joignable ' . $gateway);
-            die();
+            return;
         }
         $token = $xiaomihome->getConfiguration('token');
         $sensor_path = realpath(dirname(__FILE__) . '/../../resources');
