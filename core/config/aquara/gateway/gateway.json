@@ -70,6 +70,33 @@
                 "logicalId": "brightness-set"
             },
             {
+                "name": "Volume son",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "vol"
+            },
+            {
+                "name": "Définir volume",
+                "type": "action",
+                "subtype": "slider",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "configuration" : {
+        			"switch" : "vol",
+                    "request" : "vol",
+                    "minValue" : 0,
+                    "maxValue" : 100
+        		},
+                "isVisible": 1,
+                "logicalId": "vol-set"
+            },
+            {
                 "name": "Jouer un son",
                 "type": "action",
                 "subtype": "message",

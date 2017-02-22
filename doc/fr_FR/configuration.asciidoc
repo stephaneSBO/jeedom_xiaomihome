@@ -57,7 +57,7 @@ Pour les interrupteurs et boutons Aquara, il peut être nécessaire de les activ
 
 Pour les Yeelight, elles sont reconnues par le plugin quand elles s'annoncent, elles font une annonce par heure et quand elles sont branchées/allumées
 
-==== Commande Ecnhainement des Yeelight
+==== Commande enhainement des Yeelight
 
 Pour les Yeelight, une commande spéciale est créée qui a vocation à être utilisée en scénario seulement car on doit envoyer un contenu précis à la commande.
 
