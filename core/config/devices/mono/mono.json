@@ -1,0 +1,165 @@
+{
+    "mono": {
+        "name": "E27 Blanc",
+		"configuration" : {
+			"model" : "mono",
+            "type" : "yeelight"
+		},
+        "commands": [
+            {
+                "name": "Online",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "online",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Statut",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "status"
+            },
+            {
+                "name": "Toggle",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-toggle-o\"><\/i>"
+                },
+                "configuration" : {
+        			"switch" : "toggle"
+        		},
+                "isVisible": 1,
+                "logicalId": "toggle"
+            },
+            {
+                "name": "Allumer",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-sun-o\"><\/i>"
+                },
+                "configuration" : {
+        			"switch" : "on"
+        		},
+                "isVisible": 1,
+                "logicalId": "on"
+            },
+            {
+                "name": "Eteindre",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-power-off\"><\/i>"
+                },
+                "configuration" : {
+        			"switch" : "off"
+        		},
+                "isVisible": 1,
+                "logicalId": "off"
+            },
+            {
+                "name": "Rafraichir",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-refresh\"><\/i>"
+                },
+                "configuration" : {
+        			"switch" : "refresh"
+        		},
+                "isVisible": 0,
+                "logicalId": "refresh"
+            },
+            {
+                "name": "Extinction programmée",
+                "type": "action",
+                "subtype": "slider",
+                "display": {
+					"icon": "<i class=\"fa fa-power-off\"><\/i>"
+                },
+                "configuration" : {
+        			"switch" : "cron",
+                    "minValue" : 1,
+                    "maxValue" : 300
+        		},
+                "isVisible": 0,
+                "logicalId": "cron"
+            },
+            {
+                "name": "Enchainement",
+                "type": "action",
+                "subtype": "message",
+                "display": {
+					"icon": "<i class=\"fa fa-refresh\"><\/i>"
+                },
+                "configuration" : {
+        			"switch" : "flow"
+        		},
+                "isVisible": 0,
+                "logicalId": "flow"
+            },
+            {
+                "name": "Stop Enchainement",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-refresh\"><\/i>"
+                },
+                "configuration" : {
+        			"switch" : "stop"
+        		},
+                "isVisible": 0,
+                "logicalId": "stop"
+            },
+            {
+                "name": "Extinction programmée",
+                "type": "action",
+                "subtype": "slider",
+                "display": {
+					"generic_type": "LIGHT_SLIDER"
+                },
+                "configuration" : {
+        			"switch" : "brightness",
+                    "minValue" : 0,
+                    "maxValue" : 100
+        		},
+                "value": "brightness",
+                "isVisible": 1,
+                "logicalId": "brightnessAct",
+                "template": {
+					"dashboard": "light",
+					"mobile": "light"
+				}
+            },
+            {
+                "name": "Luminosité",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "LIGHT_SLIDER"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "brightness",
+                "template": {
+					"dashboard": "light",
+					"mobile": "light"
+				}
+            }
+        ]
+    }
+}

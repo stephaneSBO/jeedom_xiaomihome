@@ -122,6 +122,11 @@ public function yeeStatus($ip) {
 }
 
 public function receiveYeelight($ip, $id, $model, $fw_ver, $power, $color_mode, $rgb, $bright, $hue, $saturation, $color_temp) {
+    $device = self::devicesParameters($model);
+    if (!is_array($device)) {
+        return true;
+    }
+
     $xiaomihome = self::byLogicalId($id, 'xiaomihome');
     if (!is_object($xiaomihome)) {
         $xiaomihome = new xiaomihome();
@@ -144,108 +149,39 @@ $xiaomihome->setConfiguration('type','yeelight');
 $xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
 $xiaomihome->save();
 
-$xiaomihome->checkCmdOk('online', 'Online', 'info', 'binary', '0', '0', '0', 'line', '0', '0');
-$xiaomihome->checkAndUpdateCmd('online', 1);
-$xiaomihome->checkCmdOk('status', 'Statut', 'info', 'binary', '0', '0', '0', 'light', '0', 'LIGHT_STATE');
-$power = ($power == 'off')? 0:1;
-$xiaomihome->checkAndUpdateCmd('status', $power);
-$xiaomihome->checkCmdOk('toggle', 'Toggle', 'action', 'other', 'toggle', '0', '0', '0', '<i class="fa fa-toggle-on"></i>', '0');
-$xiaomihome->checkCmdOk('refresh', 'Rafraichir', 'action', 'other', 'refresh', '0', '0', '0', '<i class="fa fa-refresh"></i>', '0');
-$xiaomihome->checkCmdOk('on', 'Allumer', 'action', 'other', 'turn on', 'status', '0', 'light', '<i class="fa fa-sun-o"></i>', 'LIGHT_ON');
-$xiaomihome->checkCmdOk('off', 'Eteindre', 'action', 'other', 'turn off', 'status', '0', 'light', '<i class="fa fa-power-off"></i>', 'LIGHT_OFF');
-$xiaomihome->checkCmdOk('cron', 'Extinction programmée', 'action', 'slider', 'cron', '0', '0', '0', '<i class="fa fa-power-off"></i>', '0');
-$xiaomihome->checkCmdOk('flow', 'Enchainement', 'action', 'message', 'flow', '0', '0', '0', '0', '0');
-$xiaomihome->checkCmdOk('stop', 'Stop Enchainement', 'action', 'other', 'stop', '0', '0', '0', '0', '0');
-
-//brightness 0-100
-$xiaomihome->checkCmdOk('brightness', 'Luminosité', 'info', 'numeric', '0', '0', '0', 'light', '0', 'LIGHT_SLIDER');
-$xiaomihome->checkAndUpdateCmd('brightness', $bright);
-$xiaomihome->checkCmdOk('brightnessAct', 'Définir Luminosité', 'action', 'slider', 'brightness', 'brightness', '1', 'light', '0', 'LIGHT_SLIDER');
-
-if ($model != 'mono' && $model != 'ceiling') {
-    $xiaomihome->checkCmdOk('colormode', 'Mode', 'info', 'numeric', '0', '0', '0', 'line', '0', '0');
-    $xiaomihome->checkAndUpdateCmd('color_mode', $color_mode);
-
-    //RGB
-    $xiaomihome->checkCmdOk('rgb', 'Couleur RGB', 'info', 'string', '0', '0', '0', 'line', '0', 'LIGHT_COLOR');
-    $xiaomihome->checkAndUpdateCmd('rgb', '#' . str_pad(dechex($rgb), 6, "0", STR_PAD_LEFT));
-    $xiaomihome->checkCmdOk('rgbAct', 'Définir Couleur RGB', 'action', 'color', 'rgb', 'rgb', '1', '0', '0', 'LIGHT_SET_COLOR');
-
-    //HSV 0-253 + Saturation 0-100
-    $xiaomihome->checkCmdOk('hsv', 'Couleur HSV', 'info', 'numeric', '0', '0', '0', 'line', '0', '0');
-    $xiaomihome->checkAndUpdateCmd('hsv', $hue);
-    $xiaomihome->checkCmdOk('hsvAct', 'Définir Couleur HSV', 'action', 'slider', 'hsv', 'hsv', '0', '0', '0', '0');
-    $xiaomihome->checkCmdOk('saturation', 'Intensité HSV', 'info', 'numeric', '0', '0', '0', 'line', '0', '0');
-    $xiaomihome->checkAndUpdateCmd('saturation', $saturation);
-    $xiaomihome->checkCmdOk('saturationAct', 'Définir Intensité HSV', 'action', 'slider', 'saturation', 'saturation', '0', '0', '0', '0');
-}
-
-if ($model != 'mono') {
-    //Température en Kelvin 1700-6500
-    $xiaomihome->checkCmdOk('temperature', 'Température Blanc', 'info', 'numeric', '0', '0', '0', 'line', '0', '0');
-    $xiaomihome->checkAndUpdateCmd('temperature', $color_temp);
-    $xiaomihome->checkCmdOk('temperatureAct', 'Définir Température Blanc', 'action', 'slider', 'temperature', 'temperature', '1', '0', '0', '0');
-}
-}
-
-public function checkCmdOk($_id, $_name, $_type, $_subtype, $_request, $_setvalue,$_visible, $_template, $_icon, $_generic) {
-    //log::add('xiaomihome', 'debug', $_id . ' ' . $_name . ' ' . $_type . ' ' . $_subtype . ' ' . $_request . ' ' . $_setvalue . ' ' . $_visible . ' ' . $_template . ' ' . $_icon);
-    $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($this->getId(),$_id);
+foreach ($device['commands'] as $command) {
+    $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$command['logicalId']);
     if (!is_object($xiaomihomeCmd)) {
-        log::add('xiaomihome', 'debug', 'Création de la commande ' . $_id);
         $xiaomihomeCmd = new xiaomihomeCmd();
-        $xiaomihomeCmd->setName(__($_name, __FILE__));
-        $xiaomihomeCmd->setEqLogic_id($this->id);
+        $xiaomihomeCmd->setEqLogic_id($xiaomihome->id);
         $xiaomihomeCmd->setEqType('xiaomihome');
-        $xiaomihomeCmd->setLogicalId($_id);
-        $xiaomihomeCmd->setType($_type);
-        $xiaomihomeCmd->setSubType($_subtype);
-        if ($_subtype == 'slider') {
-            switch ($_id) {
-                case 'hsvAct':
-                $xiaomihomeCmd->setConfiguration('minValue', 0);
-                $xiaomihomeCmd->setConfiguration('maxValue', 253);
-                break;
-                case 'temperatureAct':
-                $xiaomihomeCmd->setConfiguration('minValue', 1700);
-                $xiaomihomeCmd->setConfiguration('maxValue', 6500);
-                break;
-                case 'cron':
-                $xiaomihomeCmd->setConfiguration('minValue', 1);
-                $xiaomihomeCmd->setConfiguration('maxValue', 300);
-                break;
-                default :
-                $xiaomihomeCmd->setConfiguration('minValue', 0);
-                $xiaomihomeCmd->setConfiguration('maxValue', 100);
-                break;
-            }
-        }
-        $xiaomihomeCmd->setIsVisible($_visible);
-        if ($_request != '0') {
-            $xiaomihomeCmd->setConfiguration('request', $_request);
-        }
-        if ($_setvalue != '0') {
-            $cmdlogic = xiaomihomeCmd::byEqLogicIdAndLogicalId($this->getId(),$_setvalue);
-            $xiaomihomeCmd->setValue($cmdlogic->getId());
-        }
-        if ($_template != '0') {
-            $xiaomihomeCmd->setTemplate("mobile",$_template );
-            $xiaomihomeCmd->setTemplate("dashboard",$_template );
-        }
-        if ($_icon != '0') {
-            $xiaomihomeCmd->setDisplay('icon', $_icon);
-        }
-        if ($_generic != '0') {
-            $xiaomihomeCmd->setDisplay('generic_type', $_generic);
-        }
+        $xiaomihomeCmd->setLogicalId($command['logicalId']);
+        utils::a2o($xiaomihomeCmd, $command);
         $xiaomihomeCmd->save();
     }
 }
 
+$xiaomihome->checkAndUpdateCmd('online', 1);
+$power = ($power == 'off')? 0:1;
+$xiaomihome->checkAndUpdateCmd('status', $power);
+$xiaomihome->checkAndUpdateCmd('brightness', $bright);
+
+if ($model != 'mono') {
+    $xiaomihome->checkAndUpdateCmd('temperature', $color_temp);
+    if ($model != 'ceiling') {
+        $xiaomihome->checkAndUpdateCmd('color_mode', $color_mode);
+        $xiaomihome->checkAndUpdateCmd('rgb', '#' . str_pad(dechex($rgb), 6, "0", STR_PAD_LEFT));
+        $xiaomihome->checkAndUpdateCmd('hsv', $hue);
+        $xiaomihome->checkAndUpdateCmd('saturation', $saturation);
+    }
+}
+
+}
+
 public static function devicesParameters($_device = '') {
 		$return = array();
-        foreach (ls(dirname(__FILE__) . '/../config/aquara', '*') as $dir) {
-			$path = dirname(__FILE__) . '/../config/aquara/' . $dir;
+        foreach (ls(dirname(__FILE__) . '/../config/devices', '*') as $dir) {
+			$path = dirname(__FILE__) . '/../config/devices/' . $dir;
 			if (!is_dir($path)) {
 				continue;
 			}

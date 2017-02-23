@@ -38,12 +38,13 @@ if (init('type') == 'aquara') {
             //log::add('xiaomihome', 'debug', 'Dump ' . print_r($body['data'], true));
             $data = json_decode($body['data'], true);
             foreach ($data as $key => $value) {
-                if ($body['cmd'] != 'heartbeat' && $key != 'status') {
-                    if ($body['model'] == 'gateway'){
-                        xiaomihome::receiveAquaraData(init('gateway'), $body['model'], $key, $value);
-                    } else {
-                        xiaomihome::receiveAquaraData($body['sid'], $body['model'], $key, $value);
-                    }
+                if ($body['cmd'] == 'heartbeat' && $key == 'status') {
+                    return;
+                }
+                if ($body['model'] == 'gateway'){
+                    xiaomihome::receiveAquaraData(init('gateway'), $body['model'], $key, $value);
+                } else {
+                    xiaomihome::receiveAquaraData($body['sid'], $body['model'], $key, $value);
                 }
             }
         }

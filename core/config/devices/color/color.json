@@ -1,0 +1,302 @@
+{
+    "mono": {
+        "name": "E27 Blanc",
+		"configuration" : {
+			"model" : "mono",
+            "type" : "yeelight"
+		},
+        "commands": [
+            {
+                "name": "Online",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "online",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Statut",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "status"
+            },
+            {
+                "name": "Toggle",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-toggle-o\"><\/i>"
+                },
+                "configuration" : {
+        			"switch" : "toggle"
+        		},
+                "isVisible": 1,
+                "logicalId": "toggle"
+            },
+            {
+                "name": "Allumer",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-sun-o\"><\/i>"
+                },
+                "configuration" : {
+        			"switch" : "on"
+        		},
+                "isVisible": 1,
+                "logicalId": "on"
+            },
+            {
+                "name": "Eteindre",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-power-off\"><\/i>"
+                },
+                "configuration" : {
+        			"switch" : "off"
+        		},
+                "isVisible": 1,
+                "logicalId": "off"
+            },
+            {
+                "name": "Rafraichir",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-refresh\"><\/i>"
+                },
+                "configuration" : {
+        			"switch" : "refresh"
+        		},
+                "isVisible": 0,
+                "logicalId": "refresh"
+            },
+            {
+                "name": "Extinction programmée",
+                "type": "action",
+                "subtype": "slider",
+                "display": {
+					"icon": "<i class=\"fa fa-power-off\"><\/i>"
+                },
+                "configuration" : {
+        			"switch" : "cron",
+                    "minValue" : 1,
+                    "maxValue" : 300
+        		},
+                "isVisible": 0,
+                "logicalId": "cron"
+            },
+            {
+                "name": "Enchainement",
+                "type": "action",
+                "subtype": "message",
+                "display": {
+					"icon": "<i class=\"fa fa-refresh\"><\/i>"
+                },
+                "configuration" : {
+        			"switch" : "flow"
+        		},
+                "isVisible": 0,
+                "logicalId": "flow"
+            },
+            {
+                "name": "Stop Enchainement",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-refresh\"><\/i>"
+                },
+                "configuration" : {
+        			"switch" : "stop"
+        		},
+                "isVisible": 0,
+                "logicalId": "stop"
+            },
+            {
+                "name": "Définir Luminosité",
+                "type": "action",
+                "subtype": "slider",
+                "display": {
+					"generic_type": "LIGHT_SLIDER"
+                },
+                "configuration" : {
+        			"switch" : "brightness",
+                    "minValue" : 0,
+                    "maxValue" : 100
+        		},
+                "value": "brightness",
+                "isVisible": 1,
+                "logicalId": "brightnessAct"
+            },
+            {
+                "name": "Luminosité",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "LIGHT_SLIDER"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "brightness",
+                "template": {
+					"dashboard": "light",
+					"mobile": "light"
+				}
+            },
+            {
+                "name": "Définir température de blanc",
+                "type": "action",
+                "subtype": "slider",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "configuration" : {
+        			"switch" : "temperature",
+                    "minValue" : 1700,
+                    "maxValue" : 6500
+        		},
+                "value": "temperature",
+                "isVisible": 1,
+                "logicalId": "temperatureAct",
+                "template": {
+					"dashboard": "light",
+					"mobile": "light"
+				}
+            },
+            {
+                "name": "Température de blanc",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "temperature",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Mode",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "color_mode",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Définir couleur HSV",
+                "type": "action",
+                "subtype": "slider",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "configuration" : {
+        			"switch" : "hsv",
+                    "minValue" : 0,
+                    "maxValue" : 253
+        		},
+                "value": "hsv",
+                "isVisible": 0,
+                "logicalId": "hsvAct"
+            },
+            {
+                "name": "Couleur HSV",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "hsv",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Définir saturation HSV",
+                "type": "action",
+                "subtype": "slider",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "configuration" : {
+        			"switch" : "saturation",
+                    "minValue" : 0,
+                    "maxValue" : 100
+        		},
+                "value": "saturation",
+                "isVisible": 0,
+                "logicalId": "saturationAct"
+            },
+            {
+                "name": "Saturation HSV",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "saturation",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Définir couleur RGB",
+                "type": "action",
+                "subtype": "color",
+                "display": {
+					"generic_type": "LIGHT_SET_COLOR"
+                },
+                "configuration" : {
+        			"switch" : "rgb"
+        		},
+                "value": "rgb",
+                "isVisible": 1,
+                "logicalId": "rgbAct"
+            },
+            {
+                "name": "Couleur RGB",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "LIGHT_COLOR"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "rgb",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            }
+        ]
+    }
+}
