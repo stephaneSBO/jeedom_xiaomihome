@@ -58,7 +58,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
                 } else {
                     $path = 'xiaomihome_icon.png';
                 }
-                if (strrpos($eqLogic->getConfiguration('model'),'86') !== false) {
+                if (strrpos($eqLogic->getConfiguration('model'),'86') !== false || strrpos($eqLogic->getConfiguration('model'),'ctrl') !== false) {
                     $path = 'aquara_86.png';
                 }
                 echo '<img src="plugins/xiaomihome/doc/images/' . $path . '" height="105" width="95" />';

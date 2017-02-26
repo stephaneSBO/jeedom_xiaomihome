@@ -39,6 +39,7 @@
         			"switch" : "rgb",
                     "request" : "rgb"
         		},
+                "value": "rgb",
                 "isVisible": 1,
                 "logicalId": "rgb-set"
             },
@@ -66,6 +67,7 @@
                     "minValue" : 0,
                     "maxValue" : 100
         		},
+                "value": "brightness",
                 "isVisible": 1,
                 "logicalId": "brightness-set"
             },

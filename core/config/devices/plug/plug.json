@@ -32,6 +32,7 @@
         			"switch" : "status",
                     "request" : "off"
         		},
+                "value": "status",
                 "isVisible": 1,
                 "logicalId": "status-off"
             },
@@ -46,6 +47,7 @@
         			"switch" : "status",
                     "request" : "on"
         		},
+                "value": "status",
                 "isVisible": 1,
                 "logicalId": "status-on"
             },
