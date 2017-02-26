@@ -1,8 +1,6 @@
 === Plugin Konfiguration
 
-Le plugin comporte deux options de configuration :
-
-  - Ne pas prendre en compte les heartbeat des capteurs Aquara : cette option permet d'éviter un bug rencontré par certaines personnes où les capteurs de porte envoient qu'ils sont ouverts alors que c'est pas le cas, ca permet également d'alléger le poids du plugin (mais si l'on perd la trame de report, on ne pourra avoir la sécurité du heartbeat)
+Le plugin comporte une option de configuration :
 
   - Activer un cron pour les Yeelight : permet de s'assurer qu'elles restent réveillées (pas nécessaire pour tous les utilisateurs, mais chez certains elles se mettent en veille après quelques minutes)
 
@@ -59,7 +57,7 @@ Pour les interrupteurs et boutons Aquara, il peut être nécessaire de les activ
 
 Pour les Yeelight, elles sont reconnues par le plugin quand elles s'annoncent, elles font une annonce par heure et quand elles sont branchées/allumées
 
-==== Commande Ecnhainement des Yeelight
+==== Commande enhainement des Yeelight
 
 Pour les Yeelight, une commande spéciale est créée qui a vocation à être utilisée en scénario seulement car on doit envoyer un contenu précis à la commande.
 
