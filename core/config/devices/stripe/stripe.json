@@ -60,6 +60,7 @@
         			"switch" : "on"
         		},
                 "isVisible": 1,
+                "value": "status",
                 "logicalId": "on",
                 "template": {
 					"dashboard": "light",
@@ -77,6 +78,7 @@
         			"switch" : "off"
         		},
                 "isVisible": 1,
+                "value": "status",
                 "logicalId": "off",
                 "template": {
 					"dashboard": "light",
