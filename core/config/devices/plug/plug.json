@@ -74,7 +74,7 @@
                     "icon": "<i class=\"fa fa-plug\"><\/i>",
 					"generic_type": "GENERIC"
                 },
-                "isVisible": 1,
+                "isVisible": 0,
                 "isHistorized": 0,
                 "unite": "V",
                 "logicalId": "voltage",

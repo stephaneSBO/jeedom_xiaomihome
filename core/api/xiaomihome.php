@@ -50,7 +50,9 @@ if (init('type') == 'aquara') {
         }
     }
 } else {
+    if ($body['model'] == 'ceiling' || $body['model'] == 'color' || $body['model'] == 'mono' || $body['model'] == 'stripe') {
         xiaomihome::receiveYeelight(init('gateway'), $body['id'], $body['model'], $body['fw_ver'], $body['power'], $body['color_mode'], $body['rgb'], $body['bright'], $body['hue'], $body['sat'], $body['ct']);
+    }
 }
 
 return true;
