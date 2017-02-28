@@ -506,11 +506,15 @@ class xiaomihomeCmd extends cmd {
                         $couleur = str_replace('#','',$option);
                         if ($couleur == '000000') {
                             $bright = '00';
+                        } else {
+                            if {$bright == '00'} {
+                                $bright = dechex(50);
+                            }
                         }
                         $eqLogic->checkAndUpdateCmd('rgb', $option);
                         $rgbcomplet = $bright . $couleur;
                         $option = hexdec($rgbcomplet);
-                        log::add('xiaomihome', 'debug', 'RGB : dec ' . $option . ' hex ' . $rgbcomplet . ' bright ' . $bright . ' color ' . $couleur);
+                        //log::add('xiaomihome', 'debug', 'RGB : dec ' . $option . ' hex ' . $rgbcomplet . ' bright ' . $bright . ' color ' . $couleur);
                     }
                     break;
                     case 'slider':
@@ -522,14 +526,30 @@ class xiaomihomeCmd extends cmd {
                         $eqLogic->checkAndUpdateCmd('brightness', $bright);
                         $rgbcomplet = $bright . $couleur;
                         $option = hexdec($rgbcomplet);
-                        log::add('xiaomihome', 'debug', 'RGB : dec ' . $option . ' hex ' . $rgbcomplet . ' bright ' . $bright . ' color ' . $couleur);
+                        //log::add('xiaomihome', 'debug', 'RGB : dec ' . $option . ' hex ' . $rgbcomplet . ' bright ' . $bright . ' color ' . $couleur);
                     }
                     break;
                     case 'message':
                     $option = $_options['title'];
                     break;
                     default :
-                    $option = $this->getConfiguration('request');
+                    if ($this->getConfiguration('switch') == 'rgb') {
+                        if ($this->getLogicalId() == 'on') {
+                            $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'rgb');
+                            $couleur = str_replace('#','',$xiaomihomeCmd->execCmd());
+                            $rgbcomplet = dechex(50) . $couleur;
+                            $option = hexdec($rgbcomplet);
+                            $eqLogic->checkAndUpdateCmd('brightness', '50');
+                        } else {
+                            $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'rgb');
+                            $couleur = str_replace('#','',$xiaomihomeCmd->execCmd());
+                            $rgbcomplet = dechex(00) . $couleur;
+                            $option = hexdec($rgbcomplet);
+                            $eqLogic->checkAndUpdateCmd('brightness', '00');
+                        }
+                    } else {
+                        $option = $this->getConfiguration('request');
+                    }
                     break;
                 }
                 $eqLogic->aquaraAction($this->getConfiguration('switch'),$option);

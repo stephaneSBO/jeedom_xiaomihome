@@ -29,6 +29,34 @@
                 "logicalId": "rgb"
             },
             {
+                "name": "On",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-sun-o\"><\/i>"
+                },
+                "configuration" : {
+        			"switch" : "rgb"
+        		},
+                "value": "rgb",
+                "isVisible": 1,
+                "logicalId": "on"
+            },
+            {
+                "name": "Off",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-power-off\"><\/i>"
+                },
+                "configuration" : {
+        			"switch" : "rgb"
+        		},
+                "value": "rgb",
+                "isVisible": 1,
+                "logicalId": "off"
+            },
+            {
                 "name": "Définir Couleur",
                 "type": "action",
                 "subtype": "color",
