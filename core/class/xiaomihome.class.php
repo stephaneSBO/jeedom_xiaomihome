@@ -126,7 +126,7 @@ public function receiveYeelight($ip, $id, $model, $fw_ver, $power, $color_mode, 
     if (!is_array($device)) {
         return true;
     }
-    log::add('xiaomihome', 'debug', 'Yeelight ' . print_r($device,true));
+    //log::add('xiaomihome', 'debug', 'Yeelight ' . print_r($device,true));
 
     $xiaomihome = self::byLogicalId($id, 'xiaomihome');
     if (!is_object($xiaomihome)) {

@@ -39,7 +39,7 @@ if (cmd != 'rgb') {
  state = '\\"' + state + '\\"';
 }
 
-var command = '{"cmd":"write","model":"' + model + '","sid":"' + sid + '","short_id":"' + short_id + '","key":"' + key + '","data":"{\\"' + cmd + '\\":' + state + '}"}';
+var command = '{"cmd":"write","model":"' + model + '","sid":"' + sid + '","short_id":"' + short_id + '","data":"{\\"' + cmd + '\\":' + state + ', \\"key\\": \\"' + key + '\\"}"}';
 console.log((new Date()).toLocaleString(), command);
 
 serverSocket.send(command, 0, command.length, 9898, gateway, (err) => {
