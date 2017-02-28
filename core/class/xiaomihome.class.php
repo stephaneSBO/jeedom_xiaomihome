@@ -219,6 +219,17 @@ public static function receiveAquaraId($sid, $model, $gateway, $short_id) {
     }
     $xiaomihome = self::byLogicalId($id, 'xiaomihome');
     if (!is_object($xiaomihome)) {
+        if ($model == 'gateway') {
+            //test si gateway qui a changé d'ip
+            foreach (eqLogic::byType('xiaomihome') as $gateway) {
+                if ($gateway->getConfiguration('sid') == $sid) {
+                    $gateway->setConfiguration('gateway',$gateway);
+                    $gateway->setLogicalId($id);
+                    $gateway->save();
+                    return;
+                }
+            }
+        }
         $xiaomihome = new xiaomihome();
         $xiaomihome->setEqType_name('xiaomihome');
         $xiaomihome->setLogicalId($id);
