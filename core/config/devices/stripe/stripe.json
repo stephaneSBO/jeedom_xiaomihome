@@ -44,7 +44,7 @@
 					"icon": "<i class=\"fa fa-toggle-o\"><\/i>"
                 },
                 "configuration" : {
-        			"switch" : "toggle"
+        			"request" : "toggle"
         		},
                 "isVisible": 1,
                 "logicalId": "toggle"
@@ -57,7 +57,7 @@
 					"icon": "<i class=\"fa fa-sun-o\"><\/i>"
                 },
                 "configuration" : {
-        			"switch" : "on"
+        			"request" : "on"
         		},
                 "isVisible": 1,
                 "value": "status",
@@ -75,7 +75,7 @@
 					"icon": "<i class=\"fa fa-power-off\"><\/i>"
                 },
                 "configuration" : {
-        			"switch" : "off"
+        			"request" : "off"
         		},
                 "isVisible": 1,
                 "value": "status",
@@ -93,7 +93,7 @@
 					"icon": "<i class=\"fa fa-refresh\"><\/i>"
                 },
                 "configuration" : {
-        			"switch" : "refresh"
+        			"request" : "refresh"
         		},
                 "isVisible": 0,
                 "logicalId": "refresh"
@@ -106,7 +106,7 @@
 					"icon": "<i class=\"fa fa-power-off\"><\/i>"
                 },
                 "configuration" : {
-        			"switch" : "cron",
+        			"request" : "cron",
                     "minValue" : 1,
                     "maxValue" : 300
         		},
@@ -121,7 +121,7 @@
 					"icon": "<i class=\"fa fa-refresh\"><\/i>"
                 },
                 "configuration" : {
-        			"switch" : "flow"
+        			"request" : "flow"
         		},
                 "isVisible": 0,
                 "logicalId": "flow"
@@ -134,7 +134,7 @@
 					"icon": "<i class=\"fa fa-refresh\"><\/i>"
                 },
                 "configuration" : {
-        			"switch" : "stop"
+        			"request" : "stop"
         		},
                 "isVisible": 0,
                 "logicalId": "stop"
@@ -147,7 +147,7 @@
 					"generic_type": "LIGHT_SLIDER"
                 },
                 "configuration" : {
-        			"switch" : "brightness",
+        			"request" : "brightness",
                     "minValue" : 0,
                     "maxValue" : 100
         		},
@@ -178,7 +178,7 @@
 					"generic_type": "DONT"
                 },
                 "configuration" : {
-        			"switch" : "temperature",
+        			"request" : "temperature",
                     "minValue" : 1700,
                     "maxValue" : 6500
         		},
@@ -228,7 +228,7 @@
 					"generic_type": "DONT"
                 },
                 "configuration" : {
-        			"switch" : "hsv",
+        			"request" : "hsv",
                     "minValue" : 0,
                     "maxValue" : 253
         		},
@@ -259,7 +259,7 @@
 					"generic_type": "DONT"
                 },
                 "configuration" : {
-        			"switch" : "saturation",
+        			"request" : "saturation",
                     "minValue" : 0,
                     "maxValue" : 100
         		},
@@ -290,7 +290,7 @@
 					"generic_type": "LIGHT_SET_COLOR"
                 },
                 "configuration" : {
-        			"switch" : "rgb"
+        			"request" : "rgb"
         		},
                 "value": "rgb",
                 "isVisible": 1,
