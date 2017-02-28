@@ -57,7 +57,7 @@
 					"icon": "<i class=\"fa fa-sun-o\"><\/i>"
                 },
                 "configuration" : {
-        			"request" : "on"
+        			"request" : "turn on"
         		},
                 "isVisible": 1,
                 "value": "status",
@@ -75,7 +75,7 @@
 					"icon": "<i class=\"fa fa-power-off\"><\/i>"
                 },
                 "configuration" : {
-        			"request" : "off"
+        			"request" : "turn off"
         		},
                 "isVisible": 1,
                 "value": "status",
