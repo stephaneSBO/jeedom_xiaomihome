@@ -507,7 +507,7 @@ class xiaomihomeCmd extends cmd {
                         if ($couleur == '000000') {
                             $bright = '00';
                         } else {
-                            if {$bright == '00'} {
+                            if ($bright == '00') {
                                 $bright = dechex(50);
                             }
                         }
