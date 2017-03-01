@@ -299,7 +299,7 @@
             {
                 "name": "Couleur RGB",
                 "type": "info",
-                "subtype": "numeric",
+                "subtype": "string",
                 "display": {
 					"generic_type": "LIGHT_COLOR"
                 },
