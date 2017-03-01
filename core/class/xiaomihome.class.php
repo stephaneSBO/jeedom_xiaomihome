@@ -39,7 +39,7 @@ class xiaomihome extends eqLogic {
             return;
         }
 
-        $cmd = 'python ' . realpath(dirname(__FILE__)) . '/../../resources/yeecli.py ' . $ip . ' ' . $request . ' ' $option;
+        $cmd = 'python ' . realpath(dirname(__FILE__)) . '/../../resources/yeecli.py ' . $ip . ' ' . $request . ' ' . $option;
         //$cmd = 'yeecli --ip=' . $ip . ' ' . $request . ' ' . $option;
         log::add('xiaomihome', 'debug', 'Commande Yeelight ' . $cmd);
         exec($cmd);
