@@ -39,7 +39,7 @@ class xiaomihome extends eqLogic {
             return;
         }
 
-        $cmd = 'python ' . realpath(dirname(__FILE__)) . '/../../resources/yeecli.py ' . $ip . ' ' . $arg;
+        $cmd = 'python ' . realpath(dirname(__FILE__)) . '/../../resources/yeecli.py ' . $ip . ' ' . $request . ' ' $option;
         //$cmd = 'yeecli --ip=' . $ip . ' ' . $request . ' ' . $option;
         log::add('xiaomihome', 'debug', 'Commande Yeelight ' . $cmd);
         exec($cmd);
@@ -73,7 +73,7 @@ class xiaomihome extends eqLogic {
          }
          if ($switch == 'mid') {
              $vol = xiaomihomeCmd::byEqLogicIdAndLogicalId($this->getId(),'vol');
-             $arg .= ',\"vol\":' . $vol->execute();
+             $arg .= ',\"vol\":' . $vol->execCmd();
          }
 
         $cmd = 'nodejs ' . $sensor_path . '/' . $script . ' ' . $password . ' ' . $gateway . ' ' . $token . ' ' . $this->getConfiguration('model') . ' ' . $this->getConfiguration('sid') . ' ' . $arg . ' ' . $this->getConfiguration('short_id');
