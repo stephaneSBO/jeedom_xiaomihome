@@ -533,8 +533,8 @@ class xiaomihomeCmd extends cmd {
                     $option = $_options['title'];
                     break;
                     case 'select':
-                    $option = $_options['listValue'];
-                    log::add('xiaomihome', 'debug', 'Options ' . print_r($_options,true));
+                    $option = $_options['select'];
+                    //log::add('xiaomihome', 'debug', 'Options ' . print_r($_options,true));
                     break;
                     default :
                     if ($this->getConfiguration('switch') == 'rgb') {
