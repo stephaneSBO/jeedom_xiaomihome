@@ -35,8 +35,8 @@ key = cipher.update(token, "ascii", "hex");
 cipher.final('hex'); // Useless data, don't know why yet.
 }
 
-if (typeof value != "number") {
-    state = '\\"' + state + '\\"';
+if (cmd != 'rgb' && cmd != 'mid' && cmd != 'vol') {
+ state = '\\"' + state + '\\"';
 }
 
 var command = '{"cmd":"write","model":"' + model + '","sid":"' + sid + '","short_id":"' + short_id + '","data":"{\\"' + cmd + '\\":' + state + ', \\"key\\": \\"' + key + '\\"}"}';
