@@ -33,5 +33,7 @@ Les Yeelight Wifi uniquement
 [panel,primary]
 .Certaines Yeelight ne remontent pas ?
 --
-Les Yeelight Wifi doivent toutes être paramétrées avec le mode développeur pour être joignable sur le réseau local
+Les Yeelight Wifi doivent toutes être paramétrées avec le mode développeur pour être joignable sur le réseau local.
+Pour ceci, il vous faut installer l'application Yeelight (et non pas seulement Mi Home), renseigner votre login /mot de passe, aller dans chaque équipement, accéder aux settings via les ' ... ' et activer le 'Developer Mode'.
+Note : Il n'est pas nécessaire de changer la langue de l'application.
 --

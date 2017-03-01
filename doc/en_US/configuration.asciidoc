@@ -16,7 +16,7 @@ Ensuite cliquer dessus pour la sélectionner, là cliquer sur les "..." et enfin
 
 Là vous avez un numéro de version, cliquez dessus de facon répéter jusqu'à un message (oui en chinois ca aide pas :)) et 2 nouvelles options apparaissent
 
-Choisissez la première option et activer le bouton switch pour qu'il passe en vert, voilà le mode local est actif et votre gateway est accessible du réseau
+Choisissez la première option (nouvellement apparue) et activer le bouton switch pour qu'il passe en vert, voilà le mode local est actif et votre gateway est accessible du réseau
 
 Information importante : pour pouvoir envoyer des commandes (prise) vers la gateway, vous devez renseigner son mot de passe sur la page équipement. Ce mot de passe est visible sur la page où l'on active le mode développeur
 
@@ -57,7 +57,7 @@ Pour les interrupteurs et boutons Aquara, il peut être nécessaire de les activ
 
 Pour les Yeelight, elles sont reconnues par le plugin quand elles s'annoncent, elles font une annonce par heure et quand elles sont branchées/allumées
 
-==== Commande enhainement des Yeelight
+==== Commande enchainement des Yeelight
 
 Pour les Yeelight, une commande spéciale est créée qui a vocation à être utilisée en scénario seulement car on doit envoyer un contenu précis à la commande.
 
