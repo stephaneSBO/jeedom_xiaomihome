@@ -540,6 +540,9 @@ class xiaomihomeCmd extends cmd {
                         $option = hexdec($rgbcomplet);
                         //log::add('xiaomihome', 'debug', 'RGB : dec ' . $option . ' hex ' . $rgbcomplet . ' bright ' . $bright . ' color ' . $couleur);
                     }
+                    if ($this->getConfiguration('switch') == 'vol') {
+                        $eqLogic->checkAndUpdateCmd('vol', $_options['slider']);
+                    }
                     break;
                     case 'message':
                     $option = $_options['title'];
