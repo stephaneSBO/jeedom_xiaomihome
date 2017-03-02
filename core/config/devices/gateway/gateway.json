@@ -129,13 +129,30 @@
                 "type": "action",
                 "subtype": "message",
                 "display": {
-					"generic_type": "GENERIC"
+					"generic_type": "DONT",
+                    "message_disable": 1,
+                    "title_placeholder" : "ID du son"
                 },
                 "configuration" : {
         			"switch" : "mid"
         		},
                 "isVisible": 0,
                 "logicalId": "mid-set"
+            },
+            {
+                "name": "Jouer un son avec volume",
+                "type": "action",
+                "subtype": "message",
+                "display": {
+					"generic_type": "DONT",
+                    "title_placeholder" : "ID du son",
+                    "message_placeholder" : "Volume"
+                },
+                "configuration" : {
+        			"switch" : "mid"
+        		},
+                "isVisible": 0,
+                "logicalId": "mid-scenar"
             },
 			{
                 "name": "Capteur Luminosité",

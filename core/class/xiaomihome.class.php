@@ -322,6 +322,13 @@ public static function receiveAquaraData($id, $model, $key, $value) {
         if ($key == 'humidity' || $key == 'temperature') {
             $value = $value / 100;
         }
+        if ($key == 'rotate') {
+            if ($value  > 0) {
+                $xiaomihome->checkAndUpdateCmd('status', 'rotate_right');
+            } else {
+                $xiaomihome->checkAndUpdateCmd('status', 'rotate_left');
+            }
+        }
         if ($key == 'rgb') {
             $value = str_pad(dechex($value), 8, "0", STR_PAD_LEFT);
             $light = hexdec(substr($value, 0, 2));
@@ -497,12 +504,6 @@ public static function dependancy_install() {
 }
 
 class xiaomihomeCmd extends cmd {
-    public function preSave() {
-        if ($this->getSubtype() == 'message') {
-            $this->setDisplay('message_disable', 1);
-        }
-    }
-
     public function execute($_options = null) {
         if ($this->getType() == 'info') {
             return $this->getConfiguration('value');
@@ -527,6 +528,9 @@ class xiaomihomeCmd extends cmd {
                     $option = str_replace('#','',$_options['color']);
                     break;
                     case 'message':
+                    if ($this->getLogicalId() == 'mid-scenar') {
+                        $eqLogic->checkAndUpdateCmd('vol', $_options['message']);
+                    }
                     $option = $_options['title'];
                     break;
                     default :
