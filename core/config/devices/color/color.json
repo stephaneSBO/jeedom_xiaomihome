@@ -118,7 +118,9 @@
                 "type": "action",
                 "subtype": "message",
                 "display": {
-					"icon": "<i class=\"fa fa-refresh\"><\/i>"
+					"icon": "<i class=\"fa fa-refresh\"><\/i>",
+                    "message_disable": 1,
+                    "title_placeholder" : "Enchainement"
                 },
                 "configuration" : {
         			"request" : "flow"
