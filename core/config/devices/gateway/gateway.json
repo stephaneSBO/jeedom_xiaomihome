@@ -151,7 +151,7 @@
                     "request": 10000
         		},
                 "isVisible": 1,
-                "logicalId": "on"
+                "logicalId": "mid-stop"
             },
             {
                 "name": "Jouer un son avec volume",
