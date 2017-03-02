@@ -35,11 +35,12 @@ key = cipher.update(token, "ascii", "hex");
 cipher.final('hex'); // Useless data, don't know why yet.
 }
 
-if (cmd != 'rgb') {
+/*
+if (cmd != 'rgb' && cmd != 'mid' && cmd != 'vol') {
  state = '\\"' + state + '\\"';
-}
+}*/
 
-var command = '{"cmd":"write","model":"' + model + '","sid":"' + sid + '","short_id":"' + short_id + '","data":"{\\"' + cmd + '\\":' + state + ', \\"key\\": \\"' + key + '\\"}"}';
+var command = '{"cmd":"write","model":"' + model + '","sid":"' + sid + '","short_id":"' + short_id + '","data":"{' + arg + ', \\"key\\": \\"' + key + '\\"}"}';
 console.log((new Date()).toLocaleString(), command);
 serverSocket.send(command, 0, command.length, 9898, gateway, (err) => {
   serverSocket.close();
