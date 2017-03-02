@@ -8,6 +8,8 @@ Il y a un service qui une fois démarré récupère les informations des Aquara 
 
 ==== Configuration de la gateway Aquara
 
+Une présentation complète de la gamme est disponible ici : https://lunarok-domotique.com/plugins-jeedom/xiaomi-home-jeedom/aqara-lumi-xiaomi-smart-home-security/[Article de présentation]
+
 Il est par contre nécessaire de paramétrer la gateway en mode développeur
 
 Pour cela, il faut ajouter la Gateway dans l'application Mi Home et être en China Mainland et Chinese (oui du coup des écrans peuvent contenir beaucoup de caractères illisibles à moins de maitriser le mandarin)
@@ -42,6 +44,8 @@ Information importante : pour pouvoir envoyer des commandes (prise) vers la gate
 
 
 ==== Yeelight Lampe Konfiguration
+
+Une présentation complète de la gamme est disponible ici : https://lunarok-domotique.com/plugins-jeedom/xiaomi-home-jeedom/yeelight-xiaomi-wifi-lamp/[Article de présentation]
 
 Dans l'application Yeelight vous devez activer l'option développeur également
 
