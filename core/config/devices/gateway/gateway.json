@@ -38,7 +38,6 @@
                 "configuration" : {
         			"switch" : "rgb"
         		},
-                "value": "rgb",
                 "isVisible": 1,
                 "logicalId": "on"
             },
@@ -52,7 +51,6 @@
                 "configuration" : {
         			"switch" : "rgb"
         		},
-                "value": "rgb",
                 "isVisible": 1,
                 "logicalId": "off"
             },
@@ -67,7 +65,7 @@
         			"switch" : "rgb",
                     "request" : "rgb"
         		},
-                "value": "rgb",
+                "value": "Couleur Anneau",
                 "isVisible": 1,
                 "logicalId": "rgb-set"
             },
@@ -95,7 +93,7 @@
                     "minValue" : 0,
                     "maxValue" : 100
         		},
-                "value": "brightness",
+                "value": "Luminosité Anneau",
                 "isVisible": 1,
                 "logicalId": "brightness-set"
             },

@@ -267,19 +267,52 @@ $xiaomihome->setConfiguration('short_id',$short_id);
 $xiaomihome->setConfiguration('gateway',$gateway);
 $xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
 $xiaomihome->save();
-
+$link_cmds = array();
+$link_actions = array();
 foreach ($device['commands'] as $command) {
     $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$command['logicalId']);
     if (!is_object($xiaomihomeCmd)) {
         $xiaomihomeCmd = new xiaomihomeCmd();
-        $xiaomihomeCmd->setEqLogic_id($xiaomihome->id);
+        $xiaomihomeCmd->setEqLogic_id($xiaomihome->getId());
         $xiaomihomeCmd->setEqType('xiaomihome');
         $xiaomihomeCmd->setLogicalId($command['logicalId']);
         utils::a2o($xiaomihomeCmd, $command);
         $xiaomihomeCmd->save();
+		if (isset($command['value'])) {
+			$link_cmds[$xiaomihomeCmd->getId()] = $command['value'];
+		}
+		if (isset($command['configuration']) && isset($command['configuration']['updateCmdId'])) {
+			$link_actions[$xiaomihomeCmd->getId()] = $command['configuration']['updateCmdId'];
+		}
     }
 }
-
+if (count($link_cmds) > 0) {
+	foreach ($xiaomihome->getCmd() as $eqLogic_cmd) {
+		foreach ($link_cmds as $cmd_id => $link_cmd) {
+			if ($link_cmd == $eqLogic_cmd->getName()) {
+				$cmd = cmd::byId($cmd_id);
+				if (is_object($cmd)) {
+					$cmd->setValue($eqLogic_cmd->getId());
+					$cmd->save();
+				}
+			}
+		}
+	}
+}
+if (count($link_actions) > 0) {
+	foreach ($xiaomihome->getCmd() as $eqLogic_cmd) {
+		foreach ($link_actions as $cmd_id => $link_action) {
+			if ($link_action == $eqLogic_cmd->getName()) {
+				$cmd = cmd::byId($cmd_id);
+				if (is_object($cmd)) {
+					$cmd->setConfiguration('updateCmdId', $eqLogic_cmd->getId());
+					$cmd->save();
+				}
+			}
+		}
+	}
+}
+$xiaomihome->save();
 }
 
 public static function receiveAquaraData($id, $model, $key, $value) {
