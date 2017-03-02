@@ -294,6 +294,7 @@ public static function receiveAquaraData($id, $model, $key, $value) {
             $light = hexdec(substr($value, 0, 2));
             $value = '#' . substr($value, -6);
             $xiaomihome->checkAndUpdateCmd('brightness', $light);
+            $xiaomihome->checkAndUpdateCmd('rgb', $value);
         }
         if ($key == 'voltage') {
             $battery = ($value-2800) / 5;
