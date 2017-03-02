@@ -140,6 +140,20 @@
                 "logicalId": "mid-set"
             },
             {
+                "name": "Stop Son",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-stop\"><\/i>"
+                },
+                "configuration" : {
+        			"switch" : "mid",
+                    "request": 10000
+        		},
+                "isVisible": 1,
+                "logicalId": "on"
+            },
+            {
                 "name": "Jouer un son avec volume",
                 "type": "action",
                 "subtype": "message",
