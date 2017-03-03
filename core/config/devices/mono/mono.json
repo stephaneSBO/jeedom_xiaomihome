@@ -61,11 +61,7 @@
         		},
                 "isVisible": 1,
                 "value": "status",
-                "logicalId": "on",
-                "template": {
-					"dashboard": "light",
-					"mobile": "light"
-				}
+                "logicalId": "on"
             },
             {
                 "name": "Eteindre",
@@ -79,11 +75,7 @@
         		},
                 "isVisible": 1,
                 "value": "status",
-                "logicalId": "off",
-                "template": {
-					"dashboard": "light",
-					"mobile": "light"
-				}
+                "logicalId": "off"
             },
             {
                 "name": "Rafraichir",
