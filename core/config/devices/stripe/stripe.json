@@ -41,12 +41,12 @@
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-toggle-o\"><\/i>"
+					"icon": "<i class=\"fa fa-toggle-on\"><\/i>"
                 },
                 "configuration" : {
         			"request" : "toggle"
         		},
-                "isVisible": 1,
+                "isVisible": 0,
                 "logicalId": "toggle"
             },
             {
