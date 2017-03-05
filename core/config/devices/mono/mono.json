@@ -54,7 +54,7 @@
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-sun-o\"><\/i>"
+					"icon": "<i class=\"fa fa-lightbulb-o\"><\/i>"
                 },
                 "configuration" : {
         			"request" : "turn on"

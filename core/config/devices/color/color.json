@@ -54,7 +54,7 @@
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-sun-o\"><\/i>"
+					"icon": "<i class=\"fa fa-lightbulb-o\"><\/i>"
                 },
                 "configuration" : {
         			"request" : "turn on"
@@ -165,24 +165,34 @@
 				}
             },
             {
-                "name": "Définir température de blanc",
+                "name": "Lumière de Lune",
                 "type": "action",
-                "subtype": "slider",
+                "subtype": "other",
                 "display": {
-					"generic_type": "DONT"
+					"generic_type": "DONT",
+                    "icon": "<i class=\"fa fa-moon-o\"><\/i>"
                 },
                 "configuration" : {
-        			"request" : "temperature",
-                    "minValue" : 1700,
-                    "maxValue" : 6500
+        			"request" : "temperature 2700"
         		},
                 "value": "Température de blanc",
-                "isVisible": 1,
-                "logicalId": "temperatureAct",
-                "template": {
-					"dashboard": "light",
-					"mobile": "light"
-				}
+                "isVisible": 0,
+                "logicalId": "temperatureMoon"
+            },
+            {
+                "name": "Lumière de Soleil",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"generic_type": "DONT",
+                    "icon": "<i class=\"fa fa-sun-o\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "temperature 6500"
+        		},
+                "value": "Température de blanc",
+                "isVisible": 0,
+                "logicalId": "temperatureMoon"
             },
             {
                 "name": "Mode Nuit",
