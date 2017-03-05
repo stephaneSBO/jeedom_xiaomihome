@@ -191,7 +191,7 @@
             {
                 "name": "Mode Nuit",
                 "type": "action",
-                "subtype": "slider",
+                "subtype": "other",
                 "display": {
 					"generic_type": "DONT",
                     "icon": "<i class=\"fa fa-moon-o\"><\/i>"
@@ -200,7 +200,7 @@
         			"request" : "temperature 2700"
         		},
                 "value": "temperature",
-                "isVisible": 1,
+                "isVisible": 0,
                 "logicalId": "temperatureMoon"
             },
             {

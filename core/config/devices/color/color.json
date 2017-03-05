@@ -185,6 +185,21 @@
 				}
             },
             {
+                "name": "Mode Nuit",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"generic_type": "DONT",
+                    "icon": "<i class=\"fa fa-moon-o\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "temperature 2700"
+        		},
+                "value": "temperature",
+                "isVisible": 0,
+                "logicalId": "temperatureMoon"
+            },
+            {
                 "name": "Température de blanc",
                 "type": "info",
                 "subtype": "numeric",
