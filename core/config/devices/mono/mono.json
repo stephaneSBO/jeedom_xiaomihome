@@ -125,7 +125,7 @@
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-refresh\"><\/i>"
+					"icon": "<i class=\"fa fa-stop\"><\/i>"
                 },
                 "configuration" : {
         			"request" : "stop"
@@ -134,7 +134,7 @@
                 "logicalId": "stop"
             },
             {
-                "name": "Extinction programmée",
+                "name": "Définir Luminosité",
                 "type": "action",
                 "subtype": "slider",
                 "display": {
@@ -145,7 +145,7 @@
                     "minValue" : 0,
                     "maxValue" : 100
         		},
-                "value": "brightness",
+                "value": "Luminosité",
                 "isVisible": 1,
                 "logicalId": "brightnessAct",
                 "template": {

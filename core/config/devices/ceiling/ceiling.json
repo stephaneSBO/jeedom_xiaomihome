@@ -125,7 +125,7 @@
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-refresh\"><\/i>"
+					"icon": "<i class=\"fa fa-stop\"><\/i>"
                 },
                 "configuration" : {
         			"request" : "stop"
@@ -145,7 +145,7 @@
                     "minValue" : 0,
                     "maxValue" : 100
         		},
-                "value": "brightness",
+                "value": "Luminosité",
                 "isVisible": 1,
                 "logicalId": "brightnessAct",
                 "template": {
@@ -180,7 +180,7 @@
                     "minValue" : 1700,
                     "maxValue" : 6500
         		},
-                "value": "temperature",
+                "value": "Température de blanc",
                 "isVisible": 1,
                 "logicalId": "temperatureAct",
                 "template": {
@@ -199,7 +199,7 @@
                 "configuration" : {
         			"request" : "temperature 2700"
         		},
-                "value": "temperature",
+                "value": "Température de blanc",
                 "isVisible": 0,
                 "logicalId": "temperatureMoon"
             },
