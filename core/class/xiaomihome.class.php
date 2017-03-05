@@ -171,7 +171,7 @@ class xiaomihome extends eqLogic {
 }
 
 public function postSave() {
-    $this->applyModuleConfiguration();
+    $this->applyModuleConfiguration($this->getConfiguration('model'));
 }
 
 public static function devicesParameters($_device = '') {
