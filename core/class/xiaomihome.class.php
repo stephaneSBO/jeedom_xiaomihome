@@ -149,7 +149,7 @@ class xiaomihome extends eqLogic {
     $xiaomihome->save();
 
     //use generic method if possible, so just create eqLogic
-    $this->yeeStatus($ip);
+    $xiaomihome->yeeStatus($ip);
 
     /*
     $xiaomihome->checkAndUpdateCmd('online', 1);
