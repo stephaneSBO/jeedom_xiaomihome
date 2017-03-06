@@ -1,4 +1,4 @@
-=== Xiaomi Home, pour les Aquara Home Gateway et lampes Yeeligt
+=== Xiaomi Home, für das Aquara Home-Gateway und Yeeligt Lampen 
 
 Une présentation complète du plugin est disponible ici : https://lunarok-domotique.com/plugins-jeedom/xiaomi-home/[Article de présentation]
 
