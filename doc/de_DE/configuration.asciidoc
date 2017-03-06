@@ -1,6 +1,6 @@
 === Plugin Konfiguration
 
-Le plugin comporte une option de configuration :
+Das Plugin verfügt über eine Konfigurationsoption :
 
   - Activer un cron pour les Yeelight : permet de s'assurer qu'elles restent réveillées (pas nécessaire pour tous les utilisateurs, mais chez certains elles se mettent en veille après quelques minutes)
 
@@ -22,7 +22,7 @@ Choisissez la première option (nouvellement apparue) et activer le bouton switc
 
 Information importante : pour pouvoir envoyer des commandes (prise) vers la gateway, vous devez renseigner son mot de passe sur la page équipement. Ce mot de passe est visible sur la page où l'on active le mode développeur
 
-==== Equipements compatibles
+=== Kompatible Geräte
 
   - Gateway : anneau RGB (avec couleur et intensité, pour éteindre il faut absolument mettre l'intensité à 0), capteur de luminosité, jouer les sons enregistrés (0 à 8, 10 à 13, 20+ correspondent aux sons par défaut dans Mihome, 10000 pour éteindre, 10001 et plus pour les sons personnalisés)
 
