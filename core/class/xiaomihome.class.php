@@ -132,7 +132,7 @@ class xiaomihome extends eqLogic {
             $xiaomihome->setIsVisible(1);
             if (isset($device['configuration'])) {
                 foreach ($device['configuration'] as $key => $value) {
-                    $this->setConfiguration($key, $value);
+                    $xiaomihome->setConfiguration($key, $value);
                 }
             }
             event::add('xiaomihome::includeDevice',
