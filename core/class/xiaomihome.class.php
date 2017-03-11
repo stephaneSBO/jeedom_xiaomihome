@@ -288,7 +288,7 @@ public static function receiveAquaraId($sid, $model, $gateway, $short_id) {
         $xiaomihome->setConfiguration('sid', $sid);
         if (isset($device['configuration'])) {
             foreach ($device['configuration'] as $key => $value) {
-                $this->setConfiguration($key, $value);
+                $xiaomihome->setConfiguration($key, $value);
             }
         }
         event::add('xiaomihome::includeDevice',
