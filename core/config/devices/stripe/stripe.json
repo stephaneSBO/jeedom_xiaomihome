@@ -60,7 +60,7 @@
         			"request" : "turn on"
         		},
                 "isVisible": 1,
-                "value": "status",
+                "value": "Statut",
                 "logicalId": "on"
             },
             {
@@ -74,7 +74,7 @@
         			"request" : "turn off"
         		},
                 "isVisible": 1,
-                "value": "status",
+                "value": "Statut",
                 "logicalId": "off"
             },
             {
