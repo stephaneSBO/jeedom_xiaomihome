@@ -28,7 +28,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
                 }
                 echo '<hr>';
                 foreach ($eqLogics as $eqLogic) {
-                    if ($eqLogic->getConfiguration('type') == 'wifi') {
+                    if ($eqLogic->getConfiguration('type') != 'aquara' && $eqLogic->getConfiguration('type') != 'yeelight') {
                         echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
                     }
                 }
@@ -197,10 +197,10 @@ $eqLogics = eqLogic::byType('xiaomihome');
                             </div>
                         </div>
 
-                        <div class="form-group" id="gatefield">
+                        <div class="form-group" id="gatewayfield">
                             <label class="col-sm-3 control-label">{{Gateway}}</label>
                             <div class="col-sm-3">
-                                <span class="eqLogicAttr" data-l1key="configuration" data-l2key="gateway" id="gatewayfield"></span>
+                                <span class="eqLogicAttr" data-l1key="configuration" data-l2key="gateway"></span>
                             </div>
                         </div>
 
@@ -225,10 +225,10 @@ $eqLogics = eqLogic::byType('xiaomihome');
                             </div>
                         </div>
 
-                        <div class="form-group" id="modelfield">
+                        <div class="form-group" id="modefield">
                             <label class="col-sm-3 control-label">{{Modèle}}</label>
                             <div class="col-sm-3">
-                                <span class="eqLogicAttr" data-l1key="configuration" data-l2key="model"></span>
+                                <span class="eqLogicAttr" data-l1key="configuration" data-l2key="model" id="modelfield"></span>
                             </div>
                         </div>
 
@@ -287,12 +287,12 @@ $( "#typefield" ).change(function(){
     if ($('#typefield').value() != 'aquara' && $('#typefield').value() != 'yeelight') {
         $('#idfield').hide();
         $('#idsfield').hide();
-        $('#modelfield').hide();
+        $('#modefield').hide();
         $('#tokenfield').show();
     } else {
         $('#idfield').show();
         $('#idsfield').show();
-        $('#modelfield').show();
+        $('#modefield').show();
         $('#tokenfield').hide();
     }
 });
