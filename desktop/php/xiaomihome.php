@@ -16,7 +16,21 @@ $eqLogics = eqLogic::byType('xiaomihome');
                 <li class="filter" style="margin-bottom: 5px;"><input class="filter form-control input-sm" placeholder="{{Rechercher}}" style="width: 100%"/></li>
                 <?php
                 foreach ($eqLogics as $eqLogic) {
-                    echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
+                    if ($eqLogic->getConfiguration('type') == 'aquara') {
+                        echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
+                    }
+                }
+                echo '<hr>';
+                foreach ($eqLogics as $eqLogic) {
+                    if ($eqLogic->getConfiguration('type') == 'yeelight') {
+                        echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
+                    }
+                }
+                echo '<hr>';
+                foreach ($eqLogics as $eqLogic) {
+                    if ($eqLogic->getConfiguration('type') == 'wifi') {
+                        echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
+                    }
                 }
                 ?>
             </ul>
@@ -82,6 +96,28 @@ $eqLogics = eqLogic::byType('xiaomihome');
             echo '</div>';
         } else {
             echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucune Yeelight détectée, allumer une lampe pour ajout}}</span></center>";
+        }
+        ?>
+
+        <legend><i class="fa fa-table"></i>  {{Mes Xiaomi Wifi}}</legend>
+        <?php
+        $status = 0;
+        foreach ($eqLogics as $eqLogic) {
+            if ($eqLogic->getConfiguration('type') == 'wifi') {
+                if ($status == 0) {echo '<div class="eqLogicThumbnailContainer">';}
+                $status = 1;
+                $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
+                echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
+                echo "<center>";
+                echo '<img src="plugins/xiaomihome/core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png' . '" height="105" width="95" />';                echo "</center>";
+                echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
+                echo '</div>';
+            }
+        }
+        if ($status == 1) {
+            echo '</div>';
+        } else {
+            echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucun Xiaomi Wifi, ajouter un objet}}</span></center>";
         }
         ?>
 
@@ -154,38 +190,45 @@ $eqLogics = eqLogic::byType('xiaomihome');
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" id="tokenfield">
+                            <label class="col-sm-3 control-label">{{Token}}</label>
+                            <div class="col-sm-3">
+                                <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="token" placeholder="Voir la procédure"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="gatefield">
                             <label class="col-sm-3 control-label">{{Gateway}}</label>
                             <div class="col-sm-3">
-                                <span class="eqLogicAttr" data-l1key="configuration" data-l2key="gateway"></span>
+                                <span class="eqLogicAttr" data-l1key="configuration" data-l2key="gateway" id="gatewayfield"></span>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">{{Type}}</label>
                             <div class="col-sm-3">
-                                <span class="eqLogicAttr" data-l1key="configuration" data-l2key="type"></span>
+                                <span class="eqLogicAttr" data-l1key="configuration" data-l2key="type" id="typefield"></span>
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group"  id="idfield">
                             <label class="col-sm-3 control-label">{{Identifiant}}</label>
                             <div class="col-sm-3">
                                 <span class="eqLogicAttr" data-l1key="configuration" data-l2key="sid"></span>
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group"  id="idsfield">
                             <label class="col-sm-3 control-label">{{Identifiant court}}</label>
                             <div class="col-sm-3">
                                 <span class="eqLogicAttr" data-l1key="configuration" data-l2key="short_id"></span>
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" id="modelfield">
                             <label class="col-sm-3 control-label">{{Modèle}}</label>
                             <div class="col-sm-3">
-                                <span class="eqLogicAttr" data-l1key="configuration" data-l2key="model" id="modelfield"></span>
+                                <span class="eqLogicAttr" data-l1key="configuration" data-l2key="model"></span>
                             </div>
                         </div>
 
@@ -232,6 +275,25 @@ $( "#modelfield" ).change(function(){
         $('#passfield').show();
     } else {
         $('#passfield').hide();
+    }
+});
+
+$( "#typefield" ).change(function(){
+    if ($('#typefield').value() == 'aquara') {
+        $('#gatefield').show();
+    } else {
+        $('#gatefield').hide();
+    }
+    if ($('#typefield').value() != 'aquara' && $('#typefield').value() != 'yeelight') {
+        $('#idfield').hide();
+        $('#idsfield').hide();
+        $('#modelfield').hide();
+        $('#tokenfield').show();
+    } else {
+        $('#idfield').show();
+        $('#idsfield').show();
+        $('#modelfield').show();
+        $('#tokenfield').hide();
     }
 });
 </script>
