@@ -184,16 +184,9 @@ $eqLogics = eqLogic::byType('xiaomihome');
                         </div>
 
                         <div class="form-group" id="passfield">
-                            <label class="col-sm-3 control-label">{{Password}}</label>
+                            <label class="col-sm-3 control-label">{{Password/Token}}</label>
                             <div class="col-sm-3">
                                 <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="password" placeholder="Visible sur l'app Mihome dans les options développeur"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group" id="tokenfield">
-                            <label class="col-sm-3 control-label">{{Token}}</label>
-                            <div class="col-sm-3">
-                                <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="token" placeholder="Voir la procédure"></span>
                             </div>
                         </div>
 
@@ -280,20 +273,17 @@ $( "#modelfield" ).change(function(){
 
 $( "#typefield" ).change(function(){
     if ($('#typefield').value() == 'aquara') {
-        $('#gatefield').show();
-    } else {
-        $('#gatefield').hide();
+        if ($('#modelfield').value() == 'gateway') {
+            $('#passfield').show();
+        } else {
+            $('#passfield').hide();
+        }
     }
-    if ($('#typefield').value() != 'aquara' && $('#typefield').value() != 'yeelight') {
-        $('#idfield').hide();
-        $('#idsfield').hide();
-        $('#modefield').hide();
-        $('#tokenfield').show();
-    } else {
-        $('#idfield').show();
-        $('#idsfield').show();
-        $('#modefield').show();
-        $('#tokenfield').hide();
+    if ($('#typefield').value() == 'yeelight') {
+        $('#passfield').hide();
+    }
+    if ($('#typefield').value() == 'wifi') {
+        $('#passfield').show();
     }
 });
 </script>

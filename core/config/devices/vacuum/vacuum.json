@@ -1,0 +1,237 @@
+{
+    "vacuum": {
+        "name": "Robot Aspirateur",
+		"configuration" : {
+			"model" : "vacuum",
+            "type" : "wifi"
+		},
+        "commands": [
+            {
+                "name": "Online",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "online",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Statut",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "state",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "battery",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Aspiration",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "fanspeed",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "En nettoyage depuis",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "clean_since",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Surface nettoyée",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "clean_surface",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "En cours de nettoyage",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "clean_progress",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "DND",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "DND",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Consommables",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "consumables",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Démarrer",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-lightbulb-o\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "start"
+        		},
+                "isVisible": 1,
+                "logicalId": "start"
+            },
+            {
+                "name": "Arrêter",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-power-off\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "stop"
+        		},
+                "isVisible": 1,
+                "logicalId": "stop"
+            },
+            {
+                "name": "Pause",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-pause\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "pause"
+        		},
+                "isVisible": 1,
+                "logicalId": "pause"
+            },
+            {
+                "name": "Trouver",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-globe\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "find"
+        		},
+                "isVisible": 1,
+                "logicalId": "find"
+            },
+            {
+                "name": "Home",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-home\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "home"
+        		},
+                "isVisible": 1,
+                "logicalId": "home"
+            },
+            {
+                "name": "Rafraichir",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-refresh\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "refresh"
+        		},
+                "isVisible": 0,
+                "logicalId": "refresh"
+            },
+            {
+                "name": "Définir Aspiration",
+                "type": "action",
+                "subtype": "slider",
+                "configuration" : {
+        			"request" : "fanspeed",
+                    "minValue" : 0,
+                    "maxValue" : 100
+        		},
+                "value": "Aspiration",
+                "isVisible": 1,
+                "logicalId": "fanspeedAct"
+            }
+        ]
+    }
+}

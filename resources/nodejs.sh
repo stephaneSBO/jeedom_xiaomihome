@@ -53,10 +53,11 @@ else
 fi
 
 echo 70 > /tmp/xiaomihome_dep
-sudo apt-get -y install python-pip
+sudo apt-get -y install python-pip python3-pip libffi-dev libssl-dev
 sudo pip install yeecli
 sudo pip install mihome
 sudo pip install future
+sudo pip3 install python-mirobo
 
 echo 80 > /tmp/xiaomihome_dep
 npm install dgram
