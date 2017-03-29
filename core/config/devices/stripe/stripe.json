@@ -1,6 +1,7 @@
 {
     "stripe": {
         "name": "Bandeau RGB",
+		"groupe" : "Yeelight",
 		"configuration" : {
 			"model" : "stripe",
             "type" : "yeelight"

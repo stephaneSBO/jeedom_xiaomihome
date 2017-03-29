@@ -23,6 +23,18 @@ try {
     if (!isConnect('admin')) {
         throw new Exception(__('401 - {{Accès non autorisé}}', __FILE__));
     }
+	
+	if (init('action') == 'autoDetectModule') {
+		$eqLogic = xiaomihome::byId(init('id'));
+		if (!is_object($eqLogic)) {
+			throw new Exception(__('XiaomiHome eqLogic non trouvé : ', __FILE__) . init('id'));
+		}
+		foreach ($eqLogic->getCmd() as $cmd) {
+			$cmd->remove();
+		}
+		$eqLogic->applyModuleConfiguration($eqLogic->getConfiguration('model'));
+		ajax::success();
+	}
 
     throw new Exception(__('{{Aucune methode correspondante à}} : ', __FILE__) . init('action'));
     /*     * *********Catch exeption*************** */

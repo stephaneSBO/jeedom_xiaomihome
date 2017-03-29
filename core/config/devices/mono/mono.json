@@ -1,6 +1,7 @@
 {
     "mono": {
         "name": "E27 Blanc",
+		"groupe" : "Yeelight",
 		"configuration" : {
 			"model" : "mono",
             "type" : "yeelight"

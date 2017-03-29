@@ -28,6 +28,139 @@ class xiaomihome extends eqLogic {
             }
         }
     }
+	
+	public static function createFromDef($_def) {
+		event::add('jeedom::alert', array(
+			'level' => 'warning',
+			'page' => 'xiaomihome',
+			'message' => __('Nouveau module detecté', __FILE__),
+		));
+		if (!isset($_def['model']) || !isset($_def['sid'])) {
+			log::add('xiaomihome', 'error', 'Information manquante pour ajouter l\'équipement : ' . print_r($_def, true));
+			event::add('jeedom::alert', array(
+				'level' => 'danger',
+				'page' => 'xiaomihome',
+				'message' => __('Information manquante pour ajouter l\'équipement. Inclusion impossible', __FILE__),
+			));
+			return false;
+		}
+		$logical_id = $_def['sid'];
+		if ($_def['model'] == 'gateway') {
+			$logical_id = $_def['source'];
+		}
+		$xiaomihome=xiaomihome::byLogicalId($logical_id, 'xiaomihome');
+		if (!is_object($xiaomihome)) {
+			if ($model == 'gateway') {
+            //test si gateway qui a changé d'ip
+				foreach (eqLogic::byType('xiaomihome') as $gateway) {
+					if ($gateway->getConfiguration('sid') == $_def['sid']) {
+						$gateway->setConfiguration('gateway',$_def['source']);
+						$gateway->setLogicalId($logical_id );
+						$gateway->save();
+						return;
+					}
+				}
+			}
+			$device = self::devicesParameters($_def['model']);
+			if (!is_array($device)) {
+				return true;
+			}
+			$xiaomihome = new xiaomihome();
+			$xiaomihome->setEqType_name('xiaomihome');
+			$xiaomihome->setLogicalId($logical_id);
+			$xiaomihome->setIsEnable(1);
+			$xiaomihome->setIsVisible(1);
+			$xiaomihome->setName($device['name'] . ' ' . $_def['sid']);
+			$xiaomihome->setConfiguration('sid', $_def['sid']);
+			if (isset($device['configuration'])) {
+				foreach ($device['configuration'] as $key => $value) {
+					$xiaomihome->setConfiguration($key, $value);
+				}
+			}
+			event::add('jeedom::alert', array(
+			'level' => 'warning',
+			'page' => 'xiaomihome',
+			'message' => __('Module inclu avec succès ' . $_def['model'], __FILE__),
+			));
+		}
+		$xiaomihome->setConfiguration('short_id',$_def['short_id']);
+		$xiaomihome->setConfiguration('gateway',$_def['source']);
+		$xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
+		$xiaomihome->save();
+		return $xiaomihome;
+	}
+	
+	public static function deamon_info() {
+		$return = array();
+		$return['log'] = 'xiaomihome';
+		$return['state'] = 'nok';
+		$pid_file = jeedom::getTmpFolder('xiaomihome') . '/deamon.pid';
+		if (file_exists($pid_file)) {
+			if (@posix_getsid(trim(file_get_contents($pid_file)))) {
+				$return['state'] = 'ok';
+			} else {
+				shell_exec(system::getCmdSudo() . 'rm -rf ' . $pid_file . ' 2>&1 > /dev/null');
+			}
+		}
+		$return['launchable'] = 'ok';
+		return $return;
+	}
+
+	public static function deamon_start() {
+		self::deamon_stop();
+		$deamon_info = self::deamon_info();
+		if ($deamon_info['launchable'] != 'ok') {
+			throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
+		}
+		$xiaomihome_path = realpath(dirname(__FILE__) . '/../../resources/xiaomihomed');
+		$cmd = '/usr/bin/python ' . $xiaomihome_path . '/xiaomihomed.py';
+		$cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel('xiaomihome'));
+		$cmd .= ' --socketport ' . config::byKey('socketport', 'xiaomihome');
+		$cmd .= ' --callback ' . network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/plugins/xiaomihome/core/php/jeeXiaomiHome.php';
+		$cmd .= ' --apikey ' . jeedom::getApiKey('xiaomihome');
+		$cmd .= ' --cycle ' . config::byKey('cycle', 'xiaomihome');
+		$cmd .= ' --pid ' . jeedom::getTmpFolder('xiaomihome') . '/deamon.pid';
+		log::add('xiaomihome', 'info', 'Lancement démon xiaomihome : ' . $cmd);
+		$result = exec($cmd . ' >> ' . log::getPathToLog('xiaomihome') . ' 2>&1 &');
+		$i = 0;
+		while ($i < 5) {
+			$deamon_info = self::deamon_info();
+			if ($deamon_info['state'] == 'ok') {
+				break;
+			}
+			sleep(1);
+			$i++;
+		}
+		if ($i >= 5) {
+			log::add('xiaomihome', 'error', 'Impossible de lancer le démon openenocean, vérifiez la log', 'unableStartDeamon');
+			return false;
+		}
+		message::removeAll('xiaomihome', 'unableStartDeamon');
+		return true;
+	}
+	
+	public static function deamon_stop() {
+		$pid_file = jeedom::getTmpFolder('xiaomihome') . '/deamon.pid';
+		if (file_exists($pid_file)) {
+			$pid = intval(trim(file_get_contents($pid_file)));
+			system::kill($pid);
+		}
+		system::kill('xiaomihomed.py');
+		system::fuserk(config::byKey('socketport', 'xiaomihome'));
+	}
+
+	public static function dependancy_info() {
+		$return = array();
+		$return['log'] = 'xiaomihome_dep';
+		$return['state'] = 'ok';
+		return $return;
+	}
+
+	public static function dependancy_install() {
+		log::add('xiaomihome','info','Installation des dépéndances nodejs');
+		$resource_path = realpath(dirname(__FILE__) . '/../../resources');
+		passthru('/bin/bash ' . $resource_path . '/nodejs.sh ' . $resource_path . ' > ' . log::getPathToLog('xiaomihome_dep') . ' 2>&1 &');
+	}
 
     public function yeeAction($ip, $request, $option) {
         exec("sudo ping -c1 " . $ip, $output, $return_var);
@@ -41,42 +174,6 @@ class xiaomihome extends eqLogic {
         //$cmd = 'yeecli --ip=' . $ip . ' ' . $request . ' ' . $option;
         log::add('xiaomihome', 'debug', 'Commande Yeelight ' . $cmd);
         exec($cmd);
-    }
-
-    public function aquaraAction($switch, $request) {
-        $gateway = $this->getConfiguration('gateway');
-        $xiaomihome = self::byLogicalId($gateway, 'xiaomihome');
-        $password = $xiaomihome->getConfiguration('password','');
-        if ($password == '') {
-            log::add('xiaomihome', 'debug', 'Mot de passe manquant sur la gateway Aquara ' . $gateway);
-            return;
-        }
-        exec("sudo ping -c1 " . $gateway, $output, $return_var);
-        if ($return_var != 0) {
-            log::add('xiaomihome', 'debug', 'Gateway Aquara non joignable ' . $gateway);
-            return;
-        }
-        $token = $xiaomihome->getConfiguration('token');
-        $sensor_path = realpath(dirname(__FILE__) . '/../../resources');
-        if (config::byKey('nodejs','xiaomihome') >= 5) {
-            $script = 'aquara.js';
-        } else {
-            $script = 'aquara_legacy.js';
-        }
-
-        if ($switch == 'rgb' || $switch == 'mid' || $switch == 'vol') {
-            $arg = '\"' . $switch . '\":' . $request;
-        } else {
-            $arg = '\"' . $switch . '\":\"' . $request . '\"';
-        }
-        if ($switch == 'mid') {
-            $vol = xiaomihomeCmd::byEqLogicIdAndLogicalId($this->getId(),'vol');
-            $arg .= ',\"vol\":' . $vol->execCmd();
-        }
-
-        $cmd = 'nodejs ' . $sensor_path . '/' . $script . ' ' . $password . ' ' . $gateway . ' ' . $token . ' ' . $this->getConfiguration('model') . ' ' . $this->getConfiguration('sid') . ' ' . $arg . ' ' . $this->getConfiguration('short_id');
-        $result = exec($cmd . ' >> ' . log::getPathToLog('xiaomihome_cmd') . ' 2>&1 &');
-        log::add('xiaomihome', 'debug', 'Commande Aquara ' . $cmd);
     }
 
     public function yeeStatus($ip) {
@@ -168,329 +265,158 @@ class xiaomihome extends eqLogic {
 }
 */
 
-}
+	}
 
-public function postSave() {
-    $this->applyModuleConfiguration($this->getConfiguration('model'));
-}
+	public function postSave() {
+		$this->applyModuleConfiguration($this->getConfiguration('model'));
+	}
 
-public static function devicesParameters($_device = '') {
-    $return = array();
-    foreach (ls(dirname(__FILE__) . '/../config/devices', '*') as $dir) {
-        $path = dirname(__FILE__) . '/../config/devices/' . $dir;
-        if (!is_dir($path)) {
-            continue;
-        }
-        $files = ls($path, '*.json', false, array('files', 'quiet'));
-        foreach ($files as $file) {
-            try {
-                $content = file_get_contents($path . '/' . $file);
-                if (is_json($content)) {
-                    $return += json_decode($content, true);
-                }
-            } catch (Exception $e) {
+	public static function devicesParameters($_device = '') {
+		$return = array();
+		foreach (ls(dirname(__FILE__) . '/../config/devices', '*') as $dir) {
+			$path = dirname(__FILE__) . '/../config/devices/' . $dir;
+			if (!is_dir($path)) {
+				continue;
+			}
+			$files = ls($path, '*.json', false, array('files', 'quiet'));
+			foreach ($files as $file) {
+				try {
+					$content = file_get_contents($path . '/' . $file);
+					if (is_json($content)) {
+						$return += json_decode($content, true);
+					}
+				} catch (Exception $e) {
+				}
+			}
+		}
+		if (isset($_device) && $_device != '') {
+			if (isset($return[$_device])) {
+				return $return[$_device];
+			}
+			return array();
+		}
+		return $return;
+	}
 
-            }
-        }
-    }
-    if (isset($_device) && $_device != '') {
-        if (isset($return[$_device])) {
-            return $return[$_device];
-        }
-        return array();
-    }
-    return $return;
-}
+	public function applyModuleConfiguration($model) {
+		$device = self::devicesParameters($model);
+		if (!is_array($device)) {
+			return true;
+		}
+	
+		$link_cmds = array();
+		$link_actions = array();
+		foreach ($device['commands'] as $command) {
+			$xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($this->getId(),$command['logicalId']);
+			if (!is_object($xiaomihomeCmd)) {
+				$xiaomihomeCmd = new xiaomihomeCmd();
+				$xiaomihomeCmd->setEqLogic_id($this->getId());
+				$xiaomihomeCmd->setEqType('xiaomihome');
+				$xiaomihomeCmd->setLogicalId($command['logicalId']);
+				utils::a2o($xiaomihomeCmd, $command);
+				$xiaomihomeCmd->save();
+				if (isset($command['value'])) {
+					$link_cmds[$xiaomihomeCmd->getId()] = $command['value'];
+				}
+				if (isset($command['configuration']) && isset($command['configuration']['updateCmdId'])) {
+					$link_actions[$xiaomihomeCmd->getId()] = $command['configuration']['updateCmdId'];
+				}
+			}
+		}
+		if (count($link_cmds) > 0) {
+			foreach ($this->getCmd() as $eqLogic_cmd) {
+				foreach ($link_cmds as $cmd_id => $link_cmd) {
+					if ($link_cmd == $eqLogic_cmd->getName()) {
+						$cmd = cmd::byId($cmd_id);
+						if (is_object($cmd)) {
+							$cmd->setValue($eqLogic_cmd->getId());
+							$cmd->save();
+						}
+					}
+				}
+			}
+		}
+		if (count($link_actions) > 0) {
+			foreach ($this->getCmd() as $eqLogic_cmd) {
+				foreach ($link_actions as $cmd_id => $link_action) {
+					if ($link_action == $eqLogic_cmd->getName()) {
+						$cmd = cmd::byId($cmd_id);
+						if (is_object($cmd)) {
+							$cmd->setConfiguration('updateCmdId', $eqLogic_cmd->getId());
+							$cmd->save();
+						}
+					}
+				}
+			}
+		}
+	}
 
-public function applyModuleConfiguration($model) {
-    $device = self::devicesParameters($model);
-    if (!is_array($device)) {
-        return true;
-    }
-
-    $link_cmds = array();
-    $link_actions = array();
-    foreach ($device['commands'] as $command) {
-        $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($this->getId(),$command['logicalId']);
-        if (!is_object($xiaomihomeCmd)) {
-            $xiaomihomeCmd = new xiaomihomeCmd();
-            $xiaomihomeCmd->setEqLogic_id($this->getId());
-            $xiaomihomeCmd->setEqType('xiaomihome');
-            $xiaomihomeCmd->setLogicalId($command['logicalId']);
-            utils::a2o($xiaomihomeCmd, $command);
-            $xiaomihomeCmd->save();
-            if (isset($command['value'])) {
-                $link_cmds[$xiaomihomeCmd->getId()] = $command['value'];
-            }
-            if (isset($command['configuration']) && isset($command['configuration']['updateCmdId'])) {
-                $link_actions[$xiaomihomeCmd->getId()] = $command['configuration']['updateCmdId'];
-            }
-        }
-    }
-    if (count($link_cmds) > 0) {
-        foreach ($this->getCmd() as $eqLogic_cmd) {
-            foreach ($link_cmds as $cmd_id => $link_cmd) {
-                if ($link_cmd == $eqLogic_cmd->getName()) {
-                    $cmd = cmd::byId($cmd_id);
-                    if (is_object($cmd)) {
-                        $cmd->setValue($eqLogic_cmd->getId());
-                        $cmd->save();
-                    }
-                }
-            }
-        }
-    }
-    if (count($link_actions) > 0) {
-        foreach ($this->getCmd() as $eqLogic_cmd) {
-            foreach ($link_actions as $cmd_id => $link_action) {
-                if ($link_action == $eqLogic_cmd->getName()) {
-                    $cmd = cmd::byId($cmd_id);
-                    if (is_object($cmd)) {
-                        $cmd->setConfiguration('updateCmdId', $eqLogic_cmd->getId());
-                        $cmd->save();
-                    }
-                }
-            }
-        }
-    }
-}
-
-public static function receiveAquaraId($sid, $model, $gateway, $short_id) {
-    if ($model == 'gateway') {
-        $id = $gateway;
-    } else {
-        $id = $sid;
-    }
-
-    $xiaomihome = self::byLogicalId($id, 'xiaomihome');
-    if (!is_object($xiaomihome)) {
-        if ($model == 'gateway') {
-            //test si gateway qui a changé d'ip
-            foreach (eqLogic::byType('xiaomihome') as $gateway) {
-                if ($gateway->getConfiguration('sid') == $sid) {
-                    $gateway->setConfiguration('gateway',$gateway);
-                    $gateway->setLogicalId($id);
-                    $gateway->save();
-                    return;
-                }
-            }
-        }
-        $device = self::devicesParameters($model);
-        if (!is_array($device)) {
-            return true;
-        }
-        $xiaomihome = new xiaomihome();
-        $xiaomihome->setEqType_name('xiaomihome');
-        $xiaomihome->setLogicalId($id);
-        $xiaomihome->setIsEnable(1);
-        $xiaomihome->setIsVisible(1);
-        $xiaomihome->setName($device['name'] . ' ' . $sid);
-        $xiaomihome->setConfiguration('sid', $sid);
-        if (isset($device['configuration'])) {
-            foreach ($device['configuration'] as $key => $value) {
-                $xiaomihome->setConfiguration($key, $value);
-            }
-        }
-        event::add('xiaomihome::includeDevice',
-        array(
-            'state' => 1
-        )
-    );
-}
-
-$xiaomihome->setConfiguration('short_id',$short_id);
-$xiaomihome->setConfiguration('gateway',$gateway);
-$xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
-$xiaomihome->save();
-
-}
-
-public static function receiveAquaraData($id, $model, $key, $value) {
-    //log::add('xiaomihome', 'debug', 'Capteur ' . $id . ' de ' . $model . ' : ' . $key . ' ' . $value);
-    $xiaomihome = self::byLogicalId($id, 'xiaomihome');
-    if (is_object($xiaomihome)) {
-        if ($key == 'humidity' || $key == 'temperature') {
-            $value = $value / 100;
-        }
-        if ($key == 'rotate') {
-            if ($value  > 0) {
-                $xiaomihome->checkAndUpdateCmd('status', 'rotate_right');
-            } else {
-                $xiaomihome->checkAndUpdateCmd('status', 'rotate_left');
-            }
-        }
-        if ($key == 'rgb') {
-            $value = str_pad(dechex($value), 8, "0", STR_PAD_LEFT);
-            $light = hexdec(substr($value, 0, 2));
-            $value = '#' . substr($value, -6);
-            $xiaomihome->checkAndUpdateCmd('brightness', $light);
-            $xiaomihome->checkAndUpdateCmd('rgb', $value);
-        }
-        if ($key == 'voltage') {
-            $battery = ($value-2800) / 5;
-            $value = $value / 1000;
-            $xiaomihome->checkAndUpdateCmd('battery', $battery);
-            $xiaomihome->setConfiguration('battery',$battery);
-            $xiaomihome->batteryStatus($battery);
-            $xiaomihome->save();
-        }
-        if ($key == 'no_motion') {
-            $xiaomihome->checkAndUpdateCmd('status', 0);
-        }
-        if ($key == 'no_close') {
-            $xiaomihome->checkAndUpdateCmd('status', 1);
-        }
-        if ($key == 'channel_0' || $key == 'channel_1') {
-            $value = ($value == 'on') ? 1 : 0;
-        }
-        if ($key == 'status') {
-            if ($model == 'motion') {
-                if ($value == 'motion') {
-                    $xiaomihome->checkAndUpdateCmd('no_motion', 0);
-                    $value = 1;
-                } else {
-                    $value = 0;
-                }
-            }
-            if ($model == 'magnet') {
-                if ($value == 'open') {
-                    $value = 1;
-                } else {
-                    $value = 0;
-                    $xiaomihome->checkAndUpdateCmd('no_close', 0);
-                }
-            }
-            if ($model == 'plug') {
-                $value = ($value == 'on') ? 1 : 0;
-            }
-        }
-        //log::add('xiaomihome', 'debug', 'Capteur ' . $id . ' de ' . $model . ' : ' . $key . ' ' . $value);
-        //$xiaomihome->checkAndUpdateCmd($key, $value);
-        $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
-        if (is_object($xiaomihomeCmd)) {
-            $xiaomihomeCmd->setConfiguration('value',$value);
-            $xiaomihomeCmd->save();
-            $xiaomihomeCmd->event($value);
-        }
-    }
-}
-
-public static function deamon_info() {
-    $return = array();
-    $return['log'] = 'xiaomihome_node';
-    $return['state'] = 'nok';
-    $pid = trim( shell_exec ('ps ax | grep "xiaomihome.py" | grep -v "grep" | wc -l') );
-    if ($pid != '' && $pid != '0') {
-        $return['state'] = 'ok';
-    }
-    $return['launchable'] = 'ok';
-    return $return;
-}
-
-public static function deamon_start() {
-    self::deamon_stop();
-    $deamon_info = self::deamon_info();
-    if ($deamon_info['launchable'] != 'ok') {
-        throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
-    }
-    log::add('xiaomihome', 'info', 'Lancement du démon xiaomihome');
-
-    if (filter_var(network::getNetworkAccess('internal'), FILTER_VALIDATE_URL) === FALSE) {
-        log::add('xiaomihome', 'error', 'Adresse réseau invalide, merci de vérifier votre configuration');
-        die();
-    }
-
-    $url = network::getNetworkAccess('internal') . '/plugins/xiaomihome/core/api/xiaomihome.php?apikey=' . jeedom::getApiKey('xiaomihome');
-    $log = log::convertLogLevel(log::getLogLevel('xiaomihome'));
-    $sensor_path = realpath(dirname(__FILE__) . '/../../resources');
-    $cmd = 'nice -n 19 python -u ' . $sensor_path . '/xiaomihome.py ' . $url . ' ' . $log;
-
-    log::add('xiaomihome', 'debug', 'Lancement démon xiaomihome : ' . $cmd);
-
-    $result = exec('nohup ' . $cmd . ' >> ' . log::getPathToLog('xiaomihome_node') . ' 2>&1 &');
-    if (strpos(strtolower($result), 'error') !== false || strpos(strtolower($result), 'traceback') !== false) {
-        log::add('xiaomihome', 'error', $result);
-        return false;
-    }
-
-    $i = 0;
-    while ($i < 30) {
-        $deamon_info = self::deamon_info();
-        if ($deamon_info['state'] == 'ok') {
-            break;
-        }
-        sleep(1);
-        $i++;
-    }
-    if ($i >= 30) {
-        log::add('xiaomihome', 'error', 'Impossible de lancer le démon xiaomihome, vérifiez le port', 'unableStartDeamon');
-        return false;
-    }
-    message::removeAll('xiaomihome', 'unableStartDeamon');
-    log::add('xiaomihome', 'info', 'Démon xiaomihome lancé');
-    sleep(5);
-
-    $node = shell_exec('nodejs -v');
-    $node = explode('.',$node);
-    config::save('nodejs', substr($node[0], 1),  'xiaomihome');
-    return true;
-}
-
-public static function deamon_stop() {
-    exec('kill $(ps aux | grep "xiaomihome.py" | awk \'{print $2}\')');
-    exec('kill $(ps aux | grep "aquara.js" | awk \'{print $2}\')');
-    exec('kill $(ps aux | grep "aquara_legacy.js" | awk \'{print $2}\')');
-    log::add('xiaomihome', 'info', 'Arrêt du service xiaomihome');
-    $deamon_info = self::deamon_info();
-    if ($deamon_info['state'] == 'ok') {
-        sleep(1);
-        exec('kill -9 $(ps aux | grep "xiaomihome.py" | awk \'{print $2}\')');
-    }
-    $deamon_info = self::deamon_info();
-    if ($deamon_info['state'] == 'ok') {
-        sleep(1);
-        exec('sudo kill -9 $(ps aux | grep "xiaomihome.py" | awk \'{print $2}\')');
-    }
-}
-
-/*public static function dependancy_info() {
-$return = array();
-$return['log'] = 'xiaomihome_dep';
-$cmd = "pip list | grep yeecli";
-exec($cmd, $output, $return_var);
-$cmd2 = "pip list | grep mihome";
-exec($cmd2, $output2, $return_var2);
-$return['state'] = 'nok';
-if (array_key_exists(0,$output)) {
-if ($output[0] != "" && $output2[0] != "") {
-$return['state'] = 'ok';
-}
-}
-return $return;
-}*/
-
-public static function dependancy_info() {
-    $return = array();
-    $return['log'] = 'xiaomihome_dep';
-    $crypto = realpath(dirname(__FILE__) . '/../../resources/node_modules/crypto');
-    $cmd = "pip list | grep yeecli";
-    exec($cmd, $output, $return_var);
-    $return['progress_file'] = '/tmp/xiaomihome_dep';
-    $return['state'] = 'nok';
-    if (array_key_exists(0,$output)) {
-        if (is_dir($crypto) && $output[0] != "") {
-            $return['state'] = 'ok';
-        }
-    }
-    return $return;
-}
-
-public static function dependancy_install() {
-    log::add('xiaomihome','info','Installation des dépéndances nodejs');
-    $resource_path = realpath(dirname(__FILE__) . '/../../resources');
-    passthru('/bin/bash ' . $resource_path . '/nodejs.sh ' . $resource_path . ' > ' . log::getPathToLog('xiaomihome_dep') . ' 2>&1 &');
-}
-
+	public static function receiveAquaraData($id, $model, $key, $value) {
+		$xiaomihome = self::byLogicalId($id, 'xiaomihome');
+		if (is_object($xiaomihome)) {
+			if ($key == 'humidity' || $key == 'temperature') {
+				$value = $value / 100;
+			}
+			if ($key == 'rotate') {
+				if ($value  > 0) {
+					$xiaomihome->checkAndUpdateCmd('status', 'rotate_right');
+				} else {
+					$xiaomihome->checkAndUpdateCmd('status', 'rotate_left');
+				}
+			}
+			if ($key == 'rgb') {
+				$value = str_pad(dechex($value), 8, "0", STR_PAD_LEFT);
+				$light = hexdec(substr($value, 0, 2));
+				$value = '#' . substr($value, -6);
+				$xiaomihome->checkAndUpdateCmd('brightness', $light);
+				$xiaomihome->checkAndUpdateCmd('rgb', $value);
+			}
+			if ($key == 'voltage') {
+				$battery = ($value-2800) / 5;
+				$value = $value / 1000;
+				$xiaomihome->checkAndUpdateCmd('battery', $battery);
+				$xiaomihome->setConfiguration('battery',$battery);
+				$xiaomihome->batteryStatus($battery);
+				$xiaomihome->save();
+			}
+			if ($key == 'no_motion') {
+				$xiaomihome->checkAndUpdateCmd('status', 0);
+			}
+			if ($key == 'no_close') {
+				$xiaomihome->checkAndUpdateCmd('status', 1);
+			}
+			if ($key == 'channel_0' || $key == 'channel_1') {
+				$value = ($value == 'on') ? 1 : 0;
+			}
+			if ($key == 'status') {
+				if ($model == 'motion') {
+					if ($value == 'motion') {
+						$xiaomihome->checkAndUpdateCmd('no_motion', 0);
+						$value = 1;
+					} else {
+						$value = 0;
+					}
+				}
+				if ($model == 'magnet') {
+					if ($value == 'open') {
+						$value = 1;
+					} else {
+						$value = 0;
+						$xiaomihome->checkAndUpdateCmd('no_close', 0);
+					}
+				}
+				if ($model == 'plug') {
+					$value = ($value == 'on') ? 1 : 0;
+				}
+			}
+			$xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
+			if (is_object($xiaomihomeCmd)) {
+				$xiaomihomeCmd->setConfiguration('value',$value);
+				$xiaomihomeCmd->save();
+				$xiaomihomeCmd->event($value);
+			}
+		}
+	}
 }
 
 class xiaomihomeCmd extends cmd {
@@ -599,7 +525,26 @@ class xiaomihomeCmd extends cmd {
                     }
                     break;
                 }
-                $eqLogic->aquaraAction($this->getConfiguration('switch'),$option);
+                $gateway = $eqLogic->getConfiguration('gateway');
+                $xiaomihome = $eqLogic->byLogicalId($gateway, 'xiaomihome');
+                $password = $xiaomihome->getConfiguration('password','');
+                if ($password == '') {
+                    log::add('xiaomihome', 'debug', 'Mot de passe manquant sur la gateway Aquara ' . $gateway);
+                    return;
+                }
+                exec("sudo ping -c1 " . $gateway, $output, $return_var);
+                if ($return_var != 0) {
+                    log::add('xiaomihome', 'debug', 'Gateway Aquara non joignable ' . $gateway);
+                    return;
+                }
+                $token = $xiaomihome->getConfiguration('token');
+                $vol = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),'vol');
+                $volume = $vol->execCmd();
+                $value = json_encode(array('apikey' => jeedom::getApiKey('xiaomihome'), 'type' => 'aquara','cmd' => 'send', 'dest' => $gateway , 'password' => $password , 'token' => $token, 'model' => $eqLogic->getConfiguration('model'), 'sid' => $eqLogic->getConfiguration('sid'), 'short_id' => $eqLogic->getConfiguration('short_id'),'switch' => $this->getConfiguration('switch'), 'request' => $option	, 'vol'=> $volume ));
+                $socket = socket_create(AF_INET, SOCK_STREAM, 0);
+                socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'xiaomihome'));
+                socket_write($socket, $value, strlen($value));
+                socket_close($socket);
             }
         }
     }

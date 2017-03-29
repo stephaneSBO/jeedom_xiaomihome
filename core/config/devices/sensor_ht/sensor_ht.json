@@ -1,6 +1,7 @@
 {
     "sensor_ht": {
         "name": "Capteur Température Hygrométrie",
+		"groupe" : "Aquara",
 		"configuration" : {
 			"model" : "sensor_ht",
             "type" : "aquara",

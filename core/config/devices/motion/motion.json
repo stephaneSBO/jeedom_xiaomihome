@@ -1,6 +1,7 @@
 {
     "motion": {
         "name": "Détetecteur Mouvement",
+		"groupe" : "Aquara",
 		"configuration" : {
 			"model" : "motion",
             "type" : "aquara",

@@ -1,6 +1,7 @@
 {
     "vacuum": {
         "name": "Robot Aspirateur",
+		"groupe" : "Wifi",
 		"configuration" : {
 			"model" : "vacuum",
             "type" : "wifi"

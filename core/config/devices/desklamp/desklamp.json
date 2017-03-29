@@ -1,9 +1,9 @@
 {
-    "ceiling": {
-        "name": "Plafonnier",
+    "desklamp": {
+        "name": "Lampe de bureau",
 		"groupe" : "Yeelight",
 		"configuration" : {
-			"model" : "ceiling",
+			"model" : "desklamp",
             "type" : "yeelight"
 		},
         "commands": [

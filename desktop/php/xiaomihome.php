@@ -134,10 +134,12 @@ $eqLogics = eqLogic::byType('xiaomihome');
         </ul>
         <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
             <div role="tabpanel" class="tab-pane active" id="eqlogictab">
+			<div class="row">
+				<div class="col-sm-6">
                 <form class="form-horizontal">
                     <fieldset>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">{{Nom du Node}}</label>
+                            <label class="col-sm-3 control-label">{{Nom de l'équipement}}</label>
                             <div class="col-sm-3">
                                 <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
                                 <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement xiaomihome}}"/>
@@ -178,66 +180,100 @@ $eqLogics = eqLogic::byType('xiaomihome');
                         </div>
                         <div class="form-group expertModeVisible">
                             <label class="col-sm-3 control-label">{{Délai max entre 2 messages}}</label>
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
                                 <input class="eqLogicAttr form-control" data-l1key="timeout" placeholder="Délai maximum autorisé entre 2 messages (en mn)"/>
                             </div>
                         </div>
 
                         <div class="form-group" id="passfield">
                             <label class="col-sm-3 control-label">{{Password/Token}}</label>
-                            <div class="col-sm-3">
+                            <div class="col-sm-6">
                                 <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="password" placeholder="Visible sur l'app Mihome dans les options développeur"></span>
                             </div>
                         </div>
-
-                        <div class="form-group" id="gatewayfield">
-                            <label class="col-sm-3 control-label">{{Gateway}}</label>
-                            <div class="col-sm-3">
-                                <span class="eqLogicAttr" data-l1key="configuration" data-l2key="gateway"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">{{Type}}</label>
-                            <div class="col-sm-3">
-                                <span class="eqLogicAttr" data-l1key="configuration" data-l2key="type" id="typefield"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group"  id="idfield">
-                            <label class="col-sm-3 control-label">{{Identifiant}}</label>
-                            <div class="col-sm-3">
-                                <span class="eqLogicAttr" data-l1key="configuration" data-l2key="sid"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group"  id="idsfield">
-                            <label class="col-sm-3 control-label">{{Identifiant court}}</label>
-                            <div class="col-sm-3">
-                                <span class="eqLogicAttr" data-l1key="configuration" data-l2key="short_id"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group" id="modefield">
-                            <label class="col-sm-3 control-label">{{Modèle}}</label>
-                            <div class="col-sm-3">
-                                <span class="eqLogicAttr" data-l1key="configuration" data-l2key="model" id="modelfield"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">{{Dernière Activité}}</label>
-                            <div class="col-sm-3">
-                                <span class="eqLogicAttr" data-l1key="configuration" data-l2key="lastCommunication"></span>
-                            </div>
-                        </div>
-
-
-
+						</fieldset>
+						</form>
+						</div>
+						<div class="col-sm-6">
+							<form class="form-horizontal">
+							<fieldset>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"></label>
+								<div class="col-sm-8">
+									<a class="btn btn-danger" id="bt_autoDetectModule"><i class="fa fa-search" title="{{Recréer les commandes}}"></i>  {{Recréer les commandes}}</a>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">{{Equipement}}</label>
+								<div class="col-sm-8">
+									<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="model" id="modelfield">
+									<option value="">Aucun</option>
+									<?php
+									$groups = array();
+									
+									foreach (xiaomihome::devicesParameters() as $key => $info) {
+										if (isset($info['groupe'])) {
+											$info['key'] = $key;
+											if (!isset($groups[$info['groupe']])) {
+												$groups[$info['groupe']][0] = $info;
+											} else {
+												array_push($groups[$info['groupe']], $info);
+											}
+										}
+									}
+									ksort($groups);
+									foreach ($groups as $group) {
+										usort($group, function ($a, $b) {
+											return strcmp($a['name'], $b['name']);
+										});
+										foreach ($group as $key => $info) {
+											if ($key == 0) {
+												echo '<optgroup label="{{' . $info['groupe'] . '}}">';
+											}
+											echo '<option value="' . $info['key'] . '">' . $info['name'] . '</option>';
+										}
+										echo '</optgroup>';
+									}
+									?>
+									</select>
+								</div>
+							</div>
+							<div class="form-group" id="gatewayfield">
+								<label class="col-sm-3 control-label">{{Gateway}}</label>
+								<div class="col-sm-3">
+									<span class="eqLogicAttr label label-default" data-l1key="configuration" data-l2key="gateway"></span>
+								</div>
+								<label class="col-sm-2 control-label">{{Type}}</label>
+								<div class="col-sm-3">
+									<span class="eqLogicAttr label label-default" data-l1key="configuration" data-l2key="type" id="typefield"></span>
+								</div>
+							</div>
+	
+							<div class="form-group"  id="idfield">
+								<label class="col-sm-3 control-label">{{Identifiant}}</label>
+								<div class="col-sm-3">
+									<span class="eqLogicAttr label label-default" data-l1key="configuration" data-l2key="sid"></span>
+								</div>
+								<label class="col-sm-2 control-label">{{Identifiant court}}</label>
+								<div class="col-sm-3">
+									<span class="eqLogicAttr label label-default" data-l1key="configuration" data-l2key="short_id"></span>
+								</div>
+							</div>
+	
+							<div class="form-group" id="modefield">
+								<label class="col-sm-3 control-label">{{Dernière Activité}}</label>
+								<div class="col-sm-3">
+									<span class="eqLogicAttr label label-default" data-l1key="configuration" data-l2key="lastCommunication"></span>
+								</div>
+							</div>
+							<center>
+								<img src="core/img/no_image.gif" data-original=".jpg" id="img_device" class="img-responsive" style="max-height : 250px;"  onerror="this.src='plugins/xiaomihome/doc/images/xiaomihome_icon.png'"/>
+							</center>
                     </fieldset>
                 </form>
             </div>
-
+			</div>
+			</div>
             <div role="tabpanel" class="tab-pane" id="commandtab">
 
                 <table id="table_cmd" class="table table-bordered table-condensed">

@@ -1,6 +1,7 @@
 {
     "color": {
         "name": "E27 Couleur",
+		"groupe" : "Yeelight",
 		"configuration" : {
 			"model" : "color",
             "type" : "yeelight"

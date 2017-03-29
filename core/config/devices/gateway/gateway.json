@@ -1,6 +1,7 @@
 {
     "gateway": {
         "name": "Gateway",
+		"groupe" : "Aquara",
 		"configuration" : {
 			"model" : "gateway",
             "type" : "aquara"

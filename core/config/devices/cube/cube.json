@@ -1,6 +1,7 @@
 {
     "cube": {
         "name": "Cube Magique",
+		"groupe" : "Aquara",
 		"configuration" : {
 			"model" : "cube",
             "type" : "aquara",

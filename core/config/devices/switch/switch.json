@@ -1,6 +1,7 @@
 {
     "switch": {
         "name": "Bouton clic",
+		"groupe" : "Aquara",
 		"configuration" : {
 			"model" : "switch",
             "type" : "aquara",

@@ -1,6 +1,7 @@
 {
     "plug": {
         "name": "Prise avec Conso",
+		"groupe" : "Aquara",
 		"configuration" : {
 			"model" : "plug",
             "type" : "aquara"
@@ -13,7 +14,7 @@
                 "display": {
 					"generic_type": "ENERGY_STATE"
                 },
-                "isVisible": 1,
+                "isVisible": 0,
                 "isHistorized": 0,
                 "logicalId": "status",
 				"template": {
@@ -32,9 +33,13 @@
         			"switch" : "status",
                     "request" : "off"
         		},
-                "value": "status",
+                "value": "Status",
                 "isVisible": 1,
-                "logicalId": "status-off"
+                "logicalId": "status-off",
+				"template": {
+					"dashboard": "prise",
+					"mobile": "prise"
+				}
             },
             {
                 "name": "On",
@@ -47,9 +52,13 @@
         			"switch" : "status",
                     "request" : "on"
         		},
-                "value": "status",
+                "value": "Status",
                 "isVisible": 1,
-                "logicalId": "status-on"
+                "logicalId": "status-on",
+				"template": {
+					"dashboard": "prise",
+					"mobile": "prise"
+				}
             },
             {
                 "name": "Utilisation",

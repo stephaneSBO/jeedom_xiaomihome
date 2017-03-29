@@ -1,6 +1,7 @@
 {
     "magnet": {
         "name": "Détecteur Ouverture",
+		"groupe" : "Aquara",
 		"configuration" : {
 			"model" : "magnet",
             "type" : "aquara",
