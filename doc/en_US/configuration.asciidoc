@@ -24,7 +24,7 @@ Information importante : pour pouvoir envoyer des commandes (prise) vers la gate
 
 ==== Equipements compatibles
 
-  - Gateway : anneau RGB (avec couleur et intensité, pour éteindre il faut absolument mettre l'intensité à 0), capteur de luminosité, jouer les sons enregistrés (0 à 8, 10 à 13, 20+ correspondent aux sons par défaut dans Mihome, 10000 pour éteindre, 10001 et plus pour les sons personnalisés)
+  - Gateway : anneau RGB (avec couleur et intensité, pour éteindre il faut absolument mettre l'intensité à 0), capteur de luminosité, jouer les sons enregistrés (0 à 8, 10 à 13, 20+ correspondent aux sons par défaut dans Mihome, 10000 pour éteindre, 10001 et plus pour les sons personnalisés) https://lunarok-domotique.com/2017/03/mi-smart-gateway-domotique-jeedom/[Présentation]
 
   - Détecteur de mouvement : commande statut de type binaire activée sur mouvement, batterie et voltage
 
@@ -40,7 +40,7 @@ Information importante : pour pouvoir envoyer des commandes (prise) vers la gate
 
   - Interrupteur encastré : commande statut binaire avec on et off pour chaque interrupteur
 
-  - Cube : commande statut avec pour valeur move, tap_twice, shake_air, alert, flip90, flip180, free_fall et une commande rotate avec la valeur en degré du mouvement, batterie et voltage
+  - Cube : commande statut avec pour valeur move, tap_twice, shake_air, alert, flip90, flip180, free_fall et une commande rotate avec la valeur en degré du mouvement, batterie et voltage https://lunarok-domotique.com/2017/03/aqara-xiaomi-magic-controller-utilisation-dans-jeedom/[Présentation]
 
 
 ==== Configuration des lampes Yeelight

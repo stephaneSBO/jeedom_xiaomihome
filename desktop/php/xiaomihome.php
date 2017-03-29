@@ -16,7 +16,21 @@ $eqLogics = eqLogic::byType('xiaomihome');
                 <li class="filter" style="margin-bottom: 5px;"><input class="filter form-control input-sm" placeholder="{{Rechercher}}" style="width: 100%"/></li>
                 <?php
                 foreach ($eqLogics as $eqLogic) {
-                    echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
+                    if ($eqLogic->getConfiguration('type') == 'aquara') {
+                        echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
+                    }
+                }
+                echo '<hr>';
+                foreach ($eqLogics as $eqLogic) {
+                    if ($eqLogic->getConfiguration('type') == 'yeelight') {
+                        echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
+                    }
+                }
+                echo '<hr>';
+                foreach ($eqLogics as $eqLogic) {
+                    if ($eqLogic->getConfiguration('type') != 'aquara' && $eqLogic->getConfiguration('type') != 'yeelight') {
+                        echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
+                    }
                 }
                 ?>
             </ul>
@@ -85,6 +99,28 @@ $eqLogics = eqLogic::byType('xiaomihome');
         }
         ?>
 
+        <legend><i class="fa fa-table"></i>  {{Mes Xiaomi Wifi}}</legend>
+        <?php
+        $status = 0;
+        foreach ($eqLogics as $eqLogic) {
+            if ($eqLogic->getConfiguration('type') == 'wifi') {
+                if ($status == 0) {echo '<div class="eqLogicThumbnailContainer">';}
+                $status = 1;
+                $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
+                echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
+                echo "<center>";
+                echo '<img src="plugins/xiaomihome/core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png' . '" height="105" width="95" />';                echo "</center>";
+                echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
+                echo '</div>';
+            }
+        }
+        if ($status == 1) {
+            echo '</div>';
+        } else {
+            echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucun Xiaomi Wifi, ajouter un objet}}</span></center>";
+        }
+        ?>
+
     </div>
 
     <div class="col-lg-10 col-md-9 col-sm-8 eqLogic" style="border-left: solid 1px #EEE; padding-left: 25px;display: none;">
@@ -148,13 +184,13 @@ $eqLogics = eqLogic::byType('xiaomihome');
                         </div>
 
                         <div class="form-group" id="passfield">
-                            <label class="col-sm-3 control-label">{{Password}}</label>
+                            <label class="col-sm-3 control-label">{{Password/Token}}</label>
                             <div class="col-sm-3">
                                 <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="password" placeholder="Visible sur l'app Mihome dans les options développeur"></span>
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" id="gatewayfield">
                             <label class="col-sm-3 control-label">{{Gateway}}</label>
                             <div class="col-sm-3">
                                 <span class="eqLogicAttr" data-l1key="configuration" data-l2key="gateway"></span>
@@ -164,25 +200,25 @@ $eqLogics = eqLogic::byType('xiaomihome');
                         <div class="form-group">
                             <label class="col-sm-3 control-label">{{Type}}</label>
                             <div class="col-sm-3">
-                                <span class="eqLogicAttr" data-l1key="configuration" data-l2key="type"></span>
+                                <span class="eqLogicAttr" data-l1key="configuration" data-l2key="type" id="typefield"></span>
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group"  id="idfield">
                             <label class="col-sm-3 control-label">{{Identifiant}}</label>
                             <div class="col-sm-3">
                                 <span class="eqLogicAttr" data-l1key="configuration" data-l2key="sid"></span>
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group"  id="idsfield">
                             <label class="col-sm-3 control-label">{{Identifiant court}}</label>
                             <div class="col-sm-3">
                                 <span class="eqLogicAttr" data-l1key="configuration" data-l2key="short_id"></span>
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" id="modefield">
                             <label class="col-sm-3 control-label">{{Modèle}}</label>
                             <div class="col-sm-3">
                                 <span class="eqLogicAttr" data-l1key="configuration" data-l2key="model" id="modelfield"></span>
@@ -232,6 +268,22 @@ $( "#modelfield" ).change(function(){
         $('#passfield').show();
     } else {
         $('#passfield').hide();
+    }
+});
+
+$( "#typefield" ).change(function(){
+    if ($('#typefield').value() == 'aquara') {
+        if ($('#modelfield').value() == 'gateway') {
+            $('#passfield').show();
+        } else {
+            $('#passfield').hide();
+        }
+    }
+    if ($('#typefield').value() == 'yeelight') {
+        $('#passfield').hide();
+    }
+    if ($('#typefield').value() == 'wifi') {
+        $('#passfield').show();
     }
 });
 </script>

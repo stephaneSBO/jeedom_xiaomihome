@@ -132,7 +132,7 @@ class xiaomihome extends eqLogic {
             $xiaomihome->setIsVisible(1);
             if (isset($device['configuration'])) {
                 foreach ($device['configuration'] as $key => $value) {
-                    $this->setConfiguration($key, $value);
+                    $xiaomihome->setConfiguration($key, $value);
                 }
             }
             event::add('xiaomihome::includeDevice',
@@ -149,7 +149,7 @@ class xiaomihome extends eqLogic {
     $xiaomihome->save();
 
     //use generic method if possible, so just create eqLogic
-    $this->yeeStatus($ip);
+    $xiaomihome->yeeStatus($ip);
 
     /*
     $xiaomihome->checkAndUpdateCmd('online', 1);
@@ -288,7 +288,7 @@ public static function receiveAquaraId($sid, $model, $gateway, $short_id) {
         $xiaomihome->setConfiguration('sid', $sid);
         if (isset($device['configuration'])) {
             foreach ($device['configuration'] as $key => $value) {
-                $this->setConfiguration($key, $value);
+                $xiaomihome->setConfiguration($key, $value);
             }
         }
         event::add('xiaomihome::includeDevice',
