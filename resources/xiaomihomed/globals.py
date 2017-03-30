@@ -1,24 +1,6 @@
 import time
-CONNECTOR = ''
+from yeelight import *
 JEEDOM_COM = ''
-KNOWN_DEVICES = {}
-LEARN_MODE = False
-LEARN_MODE_ALL = 0
-LAST_VIRTUAL = int(time.time())
-LAST_BEAT = int(time.time())
-LEARN_BEGIN = int(time.time())
-LAST_CLEAR = int(time.time())
-COMPATIBILITY = []
-LAST_STATE={}
-PRESENT={}
-IGNORE=[]
-KEEPED_CONNECTION={}
-LAST_STORAGE={}
-LAST_TIME_READ = {}
-IFACE_DEVICE = 0
-SCAN_ERRORS = 0
-SCANNER = ''
-PENDING_ACTION = False
 log_level = "error"
 pidfile = '/tmp/blead.pid'
 apikey = ''
@@ -27,3 +9,11 @@ cycle = 0.3
 daemonname=''
 socketport=''
 sockethost=''
+
+DICT_MAPPING_YEELIGHT = {'wait' : SleepTransition,\
+	'hsv' : HSVTransition, \
+	'rgb' : RGBTransition, \
+	'temp' : TemperatureTransition, \
+	}
+
+IV_AQUARA = bytearray([0x17, 0x99, 0x6d, 0x09, 0x3d, 0x28, 0xdd, 0xb3, 0xba, 0x69, 0x5a, 0x2e, 0x6f, 0x58, 0x56, 0x2e])

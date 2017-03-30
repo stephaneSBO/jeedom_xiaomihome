@@ -45,7 +45,7 @@ if (isset($result['devices'])) {
 			}
 			$xiaomihome=xiaomihome::byLogicalId($logical_id, 'xiaomihome');
 			if (!is_object($xiaomihome)) {
-				$xiaomihome= xiaomihome::createFromDef($datas);
+				$xiaomihome= xiaomihome::createFromDef($datas,$key);
 				if (!is_object($xiaomihome)) {
 					log::add('xiaomihome', 'debug', __('Aucun équipement trouvé pour : ', __FILE__) . secureXSS($datas['sid']));
 					continue;
@@ -82,35 +82,34 @@ if (isset($result['devices'])) {
 				}
 			}
 		}
+		elseif ($key == 'yeelight'){
+			if (!isset($datas['capabilities']['id'])) {
+				continue;
+			}
+			$logical_id = $datas['capabilities']['id'];
+			$xiaomihome=xiaomihome::byLogicalId($logical_id, 'xiaomihome');
+			if (!is_object($xiaomihome)) {
+				if (!isset($datas['capabilities']['model'])) {
+					continue;
+				}
+				$xiaomihome= xiaomihome::createFromDef($datas,$key);
+				if (!is_object($xiaomihome)) {
+					log::add('xiaomihome', 'debug', __('Aucun équipement trouvé pour : ', __FILE__) . secureXSS($datas['sid']));
+					continue;
+				}
+				sleep(2);
+				event::add('jeedom::alert', array(
+					'level' => 'warning',
+					'page' => 'xiaomihome',
+					'message' => '',
+				));
+				event::add('xiaomihome::includeDevice', $xiaomihome->getId());
+			}
+			if (!$xiaomihome->getIsEnable()) {
+				continue;
+			}
+		}
 	}
-}
-
-if ('tutu' == 'aquara') {
-    if ($body['sid'] !== null && $body['model'] !== null) {
-        xiaomihome::receiveAquaraId($body['sid'], $body['model'], init('gateway'), $body['short_id']);
-        if ($body['cmd'] == 'heartbeat' && $body['model'] == 'gateway') {
-            $xiaomihome = xiaomihome::byLogicalId(init('gateway'), 'xiaomihome');
-            $xiaomihome->setConfiguration('token',$body['token']);
-            $xiaomihome->save();
-        }
-        if (isset($body['data'])) {
-            $data = json_decode($body['data'], true);
-            foreach ($data as $key => $value) {
-                if ($body['cmd'] == 'heartbeat' && $key == 'status') {
-                    return;
-                }
-                if ($body['model'] == 'gateway'){
-                    xiaomihome::receiveAquaraData(init('gateway'), $body['model'], $key, $value);
-                } else {
-                    xiaomihome::receiveAquaraData($body['sid'], $body['model'], $key, $value);
-                }
-            }
-        }
-    }
-} else {
-    if ($body['model'] == 'ceiling' || $body['model'] == 'color' || $body['model'] == 'mono' || $body['model'] == 'stripe' || $body['model'] == 'desklamp') {
-        xiaomihome::receiveYeelight(init('gateway'), $body['id'], $body['model'], $body['fw_ver'], $body['power'], $body['color_mode'], $body['rgb'], $body['bright'], $body['hue'], $body['sat'], $body['ct']);
-    }
 }
 
 ?>

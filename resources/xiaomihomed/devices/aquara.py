@@ -6,7 +6,6 @@ import json
 import logging
 import globals
 from Crypto.Cipher import AES
-IV = bytearray([0x17, 0x99, 0x6d, 0x09, 0x3d, 0x28, 0xdd, 0xb3, 0xba, 0x69, 0x5a, 0x2e, 0x6f, 0x58, 0x56, 0x2e])
 
 class XiaomiConnector:
     """Connector for the Xiaomi Mi Hub and devices on multicast."""
@@ -111,7 +110,7 @@ class XiaomiConnector:
 
 def execute_action(data):
     logging.debug("executing " + str(data))
-    aes = AES.new(data['password'], AES.MODE_CBC, str(IV))
+    aes = AES.new(data['password'], AES.MODE_CBC, str(globals.IV_AQUARA))
     ciphertext = aes.encrypt(data['token'])
     write_key = binascii.hexlify(ciphertext)
     if data['switch'] == 'mid' :

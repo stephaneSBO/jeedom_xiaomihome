@@ -50,7 +50,7 @@ def push_data_from_aquara(model, sid, cmd,short_id,token, data, type,source):
 	data_to_send['data'] = data
 	globals.JEEDOM_COM.add_changes('devices::'+type,data_to_send )
 
-cb = lambda m, s, c, i, token, d, t ,src: push_data_from_aquara(m, s, c,i,token, d,t,src)
+cb_aquara = lambda m, s, c, i, token, d, t ,src: push_data_from_aquara(m, s, c,i,token, d,t,src)
 
 def listen():
 	jeedom_socket.open()
@@ -59,8 +59,6 @@ def listen():
 	logging.debug('Read Socket Thread Launched')
 	thread.start_new_thread( xiaomiconnector, ('aquara',))
 	logging.debug('Aquara Thread Launched')
-	thread.start_new_thread(yeelightconnector, ('yeelight',))
-	logging.debug('Yeelight Thread Launched')
 
 def read_socket(name):
 	while 1:
@@ -77,27 +75,23 @@ def read_socket(name):
 					logging.debug('Executing action on : '+str(message['model']))
 					if message['type'] == 'aquara':
 						devices.aquara.execute_action(message)
+					if message['type'] == 'yeelight':
+						devices.yeehome.execute_action(message)
+				if message['cmd'] == 'scanyeelight':
+					logging.debug('Scanning yeelight')
+					devices.yeehome.scan(2)
 		except Exception,e:
 			logging.error("Exception on socket : %s" % str(e))
 		time.sleep(0.3)
 
 def xiaomiconnector(name) :
-    globals.CONNECTOR = XiaomiConnector(data_callback=cb)
+    globals.CONNECTOR = XiaomiConnector(data_callback=cb_aquara)
     while True:
         try:
             globals.CONNECTOR.check_incoming()
             time.sleep(0.05)
         except Exception as e:
             logging.error(str(e))
-
-def yeelightconnector(name) :
-    yeelight = YeelightConnector(data_callback=cb)
-    while True:
-        try:
-            yeelight.check_incoming()
-            time.sleep(0.05)
-        except Exception:
-            pass
 
 def handler(signum=None, frame=None):
 	logging.debug("Signal %i caught, exiting..." % int(signum))

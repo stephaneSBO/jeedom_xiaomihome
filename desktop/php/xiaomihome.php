@@ -40,11 +40,23 @@ $eqLogics = eqLogic::byType('xiaomihome');
     <div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
         <legend><i class="fa fa-cog"></i>  {{Gestion}}</legend>
         <div class="eqLogicThumbnailContainer">
-            <div class="cursor eqLogicAction" data-action="gotoPluginConf" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
+			<div class="cursor eqLogicAction discover" data-action="scanyeelight" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
+				<center>
+					<i class="icon jeedom2-bright4" style="font-size : 5em;color:#767676;"></i>
+				</center>
+				<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Scan Yeelight}}</center></span>
+			</div>
+			<div class="cursor eqLogicAction discover" data-action="scanwifi" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
+				<center>
+					<i class="fa fa-wifi" style="font-size : 5em;color:#767676;"></i>
+				</center>
+				<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Scan Wifi}}</center></span>
+			</div>
+            <div class="cursor eqLogicAction" data-action="gotoPluginConf" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
                 <center>
                     <i class="fa fa-wrench" style="font-size : 5em;color:#767676;"></i>
                 </center>
-                <span style="font-size : 1.1em;position:relative; top : 23px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Configuration}}</center></span>
+                <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Configuration}}</center></span>
             </div>
             <div class="cursor" id="bt_healthxiaomihome" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
                 <center>
@@ -54,7 +66,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
             </div>
         </div>
 
-        <legend><i class="fa fa-table"></i>  {{Mes Aquara}}</legend>
+        <legend><i class="fa fa-home"></i>  {{Mes Aquara}}</legend>
         <?php
         $status = 0;
         foreach ($eqLogics as $eqLogic) {
@@ -77,7 +89,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
         }
         ?>
 
-        <legend><i class="fa fa-table"></i>  {{Mes Yeelight}}</legend>
+        <legend><i class="icon jeedom2-bright4"></i>  {{Mes Yeelight}}</legend>
         <?php
         $status = 0;
         foreach ($eqLogics as $eqLogic) {
@@ -95,11 +107,11 @@ $eqLogics = eqLogic::byType('xiaomihome');
         if ($status == 1) {
             echo '</div>';
         } else {
-            echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucune Yeelight détectée, allumer une lampe pour ajout}}</span></center>";
+            echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucune Yeelight détectée, lancer un scan yeelight}}</span></center>";
         }
         ?>
 
-        <legend><i class="fa fa-table"></i>  {{Mes Xiaomi Wifi}}</legend>
+        <legend><i class="fa fa-wifi"></i>  {{Mes Xiaomi Wifi}}</legend>
         <?php
         $status = 0;
         foreach ($eqLogics as $eqLogic) {
@@ -117,7 +129,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
         if ($status == 1) {
             echo '</div>';
         } else {
-            echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucun Xiaomi Wifi, ajouter un objet}}</span></center>";
+            echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucun Xiaomi Wifi, lancer un scan wifi}}</span></center>";
         }
         ?>
 

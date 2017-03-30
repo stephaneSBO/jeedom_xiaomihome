@@ -21,6 +21,31 @@ $('#bt_healthxiaomihome').on('click', function () {
   $('#md_modal').load('index.php?v=d&plugin=xiaomihome&modal=health').dialog('open');
 });
 
+$('.discover').on('click', function () {
+	$('#div_alert').showAlert({message: '{{Détection en cours}}', level: 'warning'});
+	$.ajax({
+                type: "POST", // méthode de transmission des données au fichier php
+                url: "plugins/xiaomihome/core/ajax/xiaomihome.ajax.php", 
+                data: {
+                    action: "discover",
+                    mode: $(this).attr('data-action'),
+                },
+                dataType: 'json',
+                global: false,
+                error: function (request, status, error) {
+                    handleAjaxError(request, status, error);
+                },
+                success: function (data) { 
+                    if (data.state != 'ok') {
+                        $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                        return;
+                    }
+                    $('#div_alert').showAlert({message: '{{Opération réalisée avec succès}}', level: 'success'});
+                    $('.li_eqLogic[data-eqLogic_id=' + $('.eqLogicAttr[data-l1key=id]').value() + ']').click();
+                }
+            });
+});
+
  $('.eqLogicAttr[data-l1key=configuration][data-l2key=model]').on('change', function () {
   if($('.li_eqLogic.active').attr('data-eqlogic_id') != ''){
      icon = $('.eqLogicAttr[data-l1key=configuration][data-l2key=model] option:selected').val();

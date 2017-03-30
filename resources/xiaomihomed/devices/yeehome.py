@@ -1,69 +1,74 @@
-from past.builtins import basestring
-import socket
-import binascii
-import struct
-import json
+from yeelight.main import Bulb, BulbType, BulbException, discover_bulbs
+from yeelight.flow import (
+		Flow,
+		HSVTransition,
+		RGBTransition,
+		TemperatureTransition,
+		SleepTransition
+)
+import logging
+import globals
+import time
+import utils
 
-class YeelightConnector:
-    """Connector for the Yeelight devices on multicast."""
+def scan(timeout=2):
+	for x in range(3):
+		bulbs  = discover_bulbs(timeout)
+		logging.debug('Scan found ' + str(bulbs))
+		for bulb in bulbs:
+			globals.JEEDOM_COM.send_change_immediate({'devices':{'yeelight':bulb}})
+			time.sleep(0.1)
 
-    MULTICAST_PORT = 1982
-    SERVER_PORT = 4321
-
-    MULTICAST_ADDRESS = '239.255.255.250'
-    SOCKET_BUFSIZE = 1024
-
-    toReport = ['id', 'model', 'fw_ver', 'power', 'bright', 'color_mode', 'ct', 'rgb', 'hue', 'sat']
-
-    def __init__(self, data_callback=None, auto_discover=True):
-        """Initialize the connector."""
-        self.data_callback = data_callback
-        self.last_tokens = dict()
-        self.socket = self._prepare_socket()
-
-    def _prepare_socket(self):
-        sock = socket.socket(socket.AF_INET,  # Internet
-                             socket.SOCK_DGRAM)  # UDP
-
-        sock.bind(("0.0.0.0", self.MULTICAST_PORT))
-
-        mreq = struct.pack("=4sl", socket.inet_aton(self.MULTICAST_ADDRESS),
-                           socket.INADDR_ANY)
-        sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 32)
-        sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP, 1)
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF,
-                        self.SOCKET_BUFSIZE)
-        sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
-
-        return sock
-
-    def check_incoming(self):
-        """Check incoming data."""
-        data, addr = self.socket.recvfrom(self.SOCKET_BUFSIZE)
-        try:
-            #print(data)
-            report = dict()
-            lines = data.split('\r\n')
-            for line in lines:
-                #print('line' + line)
-                if ': ' in line:
-                    args = line.split(': ')
-                    if args[0] in self.toReport:
-
-                        report[args[0]] = args[1]
-
-            self.handle_incoming_data(report, addr)
-            print('Yeelight received from ' + addr[0] + ' : ' + json.dumps(report))
-
-        except Exception as e:
-            raise
-            print("Can't handle message %r (%r)" % (data, e))
-
-    def handle_incoming_data(self, data, addr):
-        """Handle an incoming payload, save related data if needed,
-        and use the callback if there is one.
-        """
-        if self.data_callback is not None:
-            self.data_callback(addr[0],
-                               'yeelight',
-                               data)
+def execute_action(message):
+	logging.debug(str(message))
+	bulb = Bulb(message['dest'], 55443, 'smooth', 500, True)
+	command_list= message['command'].split(' ')
+	if command_list[0] == 'turn':
+		if command_list[1] == 'on':
+			bulb.turn_on()
+		else:
+			bulb.turn_off()
+	elif command_list[0] == 'stop':
+		bulb.stop_flow()
+	elif command_list[0] == 'rgb':
+		red, green, blue = utils.hex_color_to_rgb(message['option'])
+		bulb.set_rgb(red, green, blue)
+	elif command_list[0] == 'toggle':
+		bulb.toggle()
+	elif command_list[0] == 'brightness':
+		bulb.set_brightness(int(message['option']))
+	elif command_list[0] == 'temperature':
+		if len(command_list)>1:
+			bulb.set_color_temp(int(command_list[1]))
+		else:
+			bulb.set_color_temp(int(message['option']))
+	elif command_list[0] == 'flow':
+		flow_params = message['option'].split(' ')
+		translist = flow_params[2].split('-')
+		list =[]
+		for transition in translist:
+			elements = transition.split(',')
+			if elements[0] in globals.DICT_MAPPING_YEELIGHT:
+				effect = globals.DICT_MAPPING_YEELIGHT[elements[0]]
+				if elements[0] == 'hsv':
+					list.append(effect(int(elements[1]),int(elements[2]),int(elements[3]),int(elements[4])))
+				elif elements[0] == 'rgb' :
+					list.append(effect(int(elements[1]),int(elements[2]),int(elements[3]),int(elements[4]),int(elements[5])))
+				elif elements[0] == 'temp' :
+					list.append(effect(int(elements[1]),int(elements[2]),int(elements[3])))
+				else:
+					list.append(effect(int(elements[1])))
+			else:
+				logging.debug("Not an effect")
+			if flow_params[1] == 'recover':
+				flow = Flow(int(flow_params[0]),Flow.actions.recover,list)
+			elif flow_params[1] == 'stay' :
+				flow = Flow(int(flow_params[0]),Flow.actions.stay,list)
+			else:
+				flow = Flow(int(flow_params[0]),Flow.actions.off,list)
+			bulb.start_flow(flow)
+	elif command_list[0] == 'cron':
+		bulb.cron_add(enums.CronType.off, int(message['option']))
+	elif command_list[0] == 'hsv':
+		hsv_option = message['option'].split(' ')
+		bulb.set_hsv(int(hsv_option[0]), int(hsv_option[1]))

@@ -35,6 +35,11 @@ try {
 		$eqLogic->applyModuleConfiguration($eqLogic->getConfiguration('model'));
 		ajax::success();
 	}
+	
+	if (init('action') == 'discover') {
+		xiaomihome::discover(init('mode'));
+		ajax::success();
+	}
 
     throw new Exception(__('{{Aucune methode correspondante à}} : ', __FILE__) . init('action'));
     /*     * *********Catch exeption*************** */

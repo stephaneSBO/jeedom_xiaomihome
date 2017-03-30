@@ -2,7 +2,6 @@ import colorsys
 import json
 import logging
 import socket
-import time
 
 from enum import Enum
 
@@ -15,8 +14,6 @@ except ImportError:
 
 from .decorator import decorator
 from .flow import Flow
-
-_LOGGER = logging.getLogger(__name__)
 
 
 @decorator
@@ -45,7 +42,7 @@ def _command(f, *args, **kw):
             elif method in action_property_map:
                 set_prop = action_property_map[method]
                 update_props = {set_prop[prop]: params[prop] for prop in range(len(set_prop))}
-                _LOGGER.debug("Music mode cache update: %s", update_props)
+                logging.debug("Music mode cache update: %s", update_props)
                 self._last_properties.update(update_props)
         # Add the effect parameters.
         params += [effect, duration]
@@ -266,10 +263,11 @@ class Bulb(object):
             "params": params,
         }
 
-        _LOGGER.debug("%s > %s", self, command)
+        logging.debug("%s > %s", self, command)
 
         try:
             self._socket.send((json.dumps(command) + "\r\n").encode("utf8"))
+            self._socket.send(("\r\n").encode("utf8"))
         except socket.error as ex:
             # Some error occurred, remove this socket in hopes that we can later
             # create a new one.
@@ -287,11 +285,11 @@ class Bulb(object):
         while response is None:
             try:
                 data = self._socket.recv(16 * 1024)
-            except socket.error:
+            except socket.error as e:
                 # An error occured, let's close and abort...
                 self.__socket.close()
                 self.__socket = None
-                response = {"error": "Bulb closed the connection."}
+                response = {"error": "Bulb closed the connection." + e}
                 break
 
             for line in data.split(b"\r\n"):
@@ -300,7 +298,7 @@ class Bulb(object):
 
                 try:
                     line = json.loads(line.decode("utf8"))
-                    _LOGGER.debug("%s < %s", self, line)
+                    logging.debug("%s < %s", self, line)
                 except ValueError:
                     line = {"result": ["invalid command"]}
 
