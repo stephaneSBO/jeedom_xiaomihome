@@ -18,12 +18,14 @@
 if (!isConnect('admin')) {
 	throw new Exception('401 Unauthorized');
 }
+$plugin = plugin::byId('xiaomihome');
 $eqLogics = xiaomihome::byType('xiaomihome');
 ?>
 
 <table class="table table-condensed tablesorter" id="table_healthxiaomihome">
 	<thead>
 		<tr>
+			<th>{{Image}}</th>
 			<th>{{Module}}</th>
 			<th>{{ID}}</th>
 			<th>{{Modèle}}</th>
@@ -37,7 +39,12 @@ $eqLogics = xiaomihome::byType('xiaomihome');
 	<tbody>
 	 <?php
 foreach ($eqLogics as $eqLogic) {
-	echo '<tr><td><a href="' . $eqLogic->getLinkToConfiguration() . '" style="text-decoration: none;">' . $eqLogic->getHumanName(true) . '</a></td>';
+	if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png')) {
+		$image = '<img src="plugins/xiaomihome/core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png' . '" height="55" width="55" />';
+	} else {
+		$image = '<img src="' . $plugin->getPathImgIcon() . '" height="55" width="55" />';
+	}
+	echo '<tr><td>' . $image . '</td><td><a href="' . $eqLogic->getLinkToConfiguration() . '" style="text-decoration: none;">' . $eqLogic->getHumanName(true) . '</a></td>';
 	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getId() . '</span></td>';
 	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getConfiguration('model') . '</span></td>';
 	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getConfiguration('sid') . '</span></td>';
