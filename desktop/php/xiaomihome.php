@@ -67,7 +67,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
             </div>
         </div>
 
-        <legend><i class="fa fa-home"></i>  {{Mes Aquara}}</legend>
+        <legend><i class="fa fa-home"></i>  {{Mes Aqara}}</legend>
         <?php
         $status = 0;
         foreach ($eqLogics as $eqLogic) {
