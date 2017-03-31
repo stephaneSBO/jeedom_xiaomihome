@@ -194,14 +194,23 @@ class xiaomihome extends eqLogic {
 	public static function dependancy_info() {
 		$return = array();
 		$return['log'] = 'xiaomihome_dep';
-		$return['state'] = 'ok';
+		$cmd = "pip list | grep pycrypto";
+		exec($cmd, $output, $return_var);
+		$cmd = "pip list | grep future";
+		exec($cmd, $output2, $return_var);
+		$return['state'] = 'nok';
+		if (array_key_exists(0,$output) && array_key_exists(0,$output2)) {
+		    if ($output[0] != "" && $output2[0] != "") {
+			$return['state'] = 'ok';
+		    }
+		}
 		return $return;
 	}
 
 	public static function dependancy_install() {
 		log::add('xiaomihome','info','Installation des dépéndances nodejs');
 		$resource_path = realpath(dirname(__FILE__) . '/../../resources');
-		passthru('/bin/bash ' . $resource_path . '/nodejs.sh ' . $resource_path . ' > ' . log::getPathToLog('xiaomihome_dep') . ' 2>&1 &');
+		passthru('/bin/bash ' . $resource_path . '/install.sh > ' . log::getPathToLog('xiaomihome_dep') . ' 2>&1 &');
 	}
 	
 	public static function discover($_mode) {
