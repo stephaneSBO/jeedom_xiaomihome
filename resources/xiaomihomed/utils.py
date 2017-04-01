@@ -6,4 +6,3 @@ def hex_color_to_rgb(color):
 	except:
 		red, green, blue = (255, 0, 0)
 	return red, green, blue
-

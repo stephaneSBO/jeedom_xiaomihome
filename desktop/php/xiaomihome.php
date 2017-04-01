@@ -41,27 +41,27 @@ $eqLogics = eqLogic::byType('xiaomihome');
     <div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
         <legend><i class="fa fa-cog"></i>  {{Gestion}}</legend>
         <div class="eqLogicThumbnailContainer">
+			<div class="cursor eqLogicAction" data-action="add" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
+				<center>
+					<i class="fa fa-plus-circle" style="font-size : 6em;color:#00979c;"></i>
+				</center>
+				<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#00979c"><center>Ajouter</center></span>
+			</div>
 			<div class="cursor eqLogicAction discover" data-action="scanyeelight" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
 				<center>
-					<i class="icon jeedom2-bright4" style="font-size : 5em;color:#767676;"></i>
+					<i class="icon jeedom2-bright4" style="font-size : 6em;color:#767676;"></i>
 				</center>
 				<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Scan Yeelight}}</center></span>
 			</div>
-			<div class="cursor eqLogicAction discover" data-action="scanwifi" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
-				<center>
-					<i class="fa fa-wifi" style="font-size : 5em;color:#767676;"></i>
-				</center>
-				<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Scan Wifi}}</center></span>
-			</div>
             <div class="cursor eqLogicAction" data-action="gotoPluginConf" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
                 <center>
-                    <i class="fa fa-wrench" style="font-size : 5em;color:#767676;"></i>
+                    <i class="fa fa-wrench" style="font-size : 6em;color:#767676;"></i>
                 </center>
                 <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Configuration}}</center></span>
             </div>
             <div class="cursor" id="bt_healthxiaomihome" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
                 <center>
-                    <i class="fa fa-medkit" style="font-size : 5em;color:#767676;"></i>
+                    <i class="fa fa-medkit" style="font-size : 6em;color:#767676;"></i>
                 </center>
                 <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Santé}}</center></span>
             </div>
@@ -199,31 +199,26 @@ $eqLogics = eqLogic::byType('xiaomihome');
                                 <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
                             </div>
                         </div>
-                        <div class="form-group expertModeVisible">
-                            <label class="col-sm-3 control-label">{{Délai max entre 2 messages}}</label>
+						<div class="form-group" id="ipfield">
+                            <label class="col-sm-3 control-label">{{Adresse Ip}}</label>
                             <div class="col-sm-6">
-                                <input class="eqLogicAttr form-control" data-l1key="timeout" placeholder="Délai maximum autorisé entre 2 messages (en mn)"/>
+                                <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ipwifi" placeholder="Ip du device wifi"></span>
                             </div>
                         </div>
-
                         <div class="form-group" id="passfield">
                             <label class="col-sm-3 control-label">{{Password/Token}}</label>
                             <div class="col-sm-6">
-                                <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="password" placeholder="Visible sur l'app Mihome dans les options développeur"></span>
+                                <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="password" placeholder="Voir message en bleu"></span>
                             </div>
                         </div>
 						</fieldset>
 						</form>
 						</div>
 						<div class="col-sm-6">
+							<a class="btn btn-danger btn-sm pull-right" id="bt_autoDetectModule"><i class="fa fa-search" title="{{Recréer les commandes}}"></i>  {{Recréer les commandes}}</a>
+							<a class="btn btn-primary btn-sm eqLogicAction pull-right" id="btn_sync"><i class="fa fa-spinner" title="{{Récupérer les infos}}"></i> {{Récupérer les infos}}</a><br/><br/>
 							<form class="form-horizontal">
 							<fieldset>
-							<div class="form-group">
-								<label class="col-sm-2 control-label"></label>
-								<div class="col-sm-8">
-									<a class="btn btn-danger" id="bt_autoDetectModule"><i class="fa fa-search" title="{{Recréer les commandes}}"></i>  {{Recréer les commandes}}</a>
-								</div>
-							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">{{Equipement}}</label>
 								<div class="col-sm-8">
@@ -335,12 +330,15 @@ $( "#typefield" ).change(function(){
         } else {
             $('#passfield').hide();
         }
+		$('#ipfield').hide();
     }
     if ($('#typefield').value() == 'yeelight') {
         $('#passfield').hide();
+		$('#ipfield').hide();
     }
     if ($('#typefield').value() == 'wifi') {
         $('#passfield').show();
+		$('#ipfield').show();
     }
 });
 </script>

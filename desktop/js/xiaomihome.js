@@ -97,6 +97,34 @@ $('#bt_autoDetectModule').on('click', function () {
     });
 });
 
+$('#btn_sync').on('click', function () {
+    bootbox.confirm('{{Assurez vous d\'avoir renseigné l\'adresse ip du device et d\'avoir sauvegardé avant de lancer. Ensuite le retour se fera dans les 5 secondes}}', function (result) {
+        if (result) {
+            $('#div_alert').showAlert({message: '{{Recherche en cours}}', level: 'warning'});
+            $.ajax({
+                type: "POST", // méthode de transmission des données au fichier php
+                url: "plugins/xiaomihome/core/ajax/xiaomihome.ajax.php", 
+                data: {
+                    action: "sync",
+                    id: $('.eqLogicAttr[data-l1key=id]').value(),
+                },
+                dataType: 'json',
+                global: false,
+                error: function (request, status, error) {
+                    handleAjaxError(request, status, error);
+                },
+                success: function (data) { 
+                    if (data.state != 'ok') {
+                        $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                        return;
+                    }
+                    $('.li_eqLogic[data-eqLogic_id=' + $('.eqLogicAttr[data-l1key=id]').value() + ']').click();
+                }
+            });
+        }
+    });
+});
+
 $("#table_cmd").delegate(".listEquipementInfo", 'click', function () {
   var el = $(this);
   jeedom.cmd.getSelectModal({cmd: {type: 'info'}}, function (result) {
@@ -220,4 +248,11 @@ if (init(_cmd.type) == 'action') {
   });
 
 }
+$('body').on('xiaomihome::found', function (_event,_options) {
+    window.location.href = 'index.php?v=d&p=xiaomihome&m=xiaomihome&id=' + _options+'&nocache=' + (new Date()).getTime();
+});
+
+$('body').on('xiaomihome::notfound', function (_event,_options) {
+    $('#div_alert').showAlert({message: '{{Device pas trouvé veuillez vérifier l\'ip et le token et relancer}}', level: 'danger'});
+});
 }

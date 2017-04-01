@@ -40,6 +40,14 @@ try {
 		xiaomihome::discover(init('mode'));
 		ajax::success();
 	}
+	
+	if (init('action') == 'sync') {
+		$eqLogic = xiaomihome::byId(init('id'));
+		if (!is_object($eqLogic)) {
+			throw new Exception(__('XiaomiHome eqLogic non trouvé : ', __FILE__) . init('id'));
+		}
+		ajax::success($eqLogic->get_wifi_info());
+	}
 
     throw new Exception(__('{{Aucune methode correspondante à}} : ', __FILE__) . init('action'));
     /*     * *********Catch exeption*************** */

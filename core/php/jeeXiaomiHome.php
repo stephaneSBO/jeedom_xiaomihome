@@ -109,6 +109,65 @@ if (isset($result['devices'])) {
 				continue;
 			}
 		}
+		elseif ($key == 'wifi'){
+			if (isset($datas['notfound'])){
+				$logical_id = $datas['ip'];
+				$xiaomihome=xiaomihome::byLogicalId($logical_id, 'xiaomihome');
+				event::add('xiaomihome::notfound', $xiaomihome->getId());
+				continue;
+			}
+			if (isset($datas['found'])){
+				$logical_id = $datas['ip'];
+				$xiaomihome=xiaomihome::byLogicalId($logical_id, 'xiaomihome');
+				$xiaomihome->setConfiguration('gateway',$datas['ip']);
+				$xiaomihome->setConfiguration('sid',$datas['serial']);
+				$xiaomihome->setConfiguration('short_id',$datas['devtype']);
+				$xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
+				$xiaomihome->setIsEnable(1);
+				$xiaomihome->setIsVisible(1);
+				$xiaomihome->save();
+				event::add('xiaomihome::found', $xiaomihome->getId());
+				$refreshcmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),'refresh');
+				$refreshcmd->execCmd();
+				continue;
+			}
+			if (!isset($datas['model']) || !isset($datas['ip'])) {
+				continue;
+			}
+			$logical_id = $datas['ip'];
+			$xiaomihome=xiaomihome::byLogicalId($logical_id, 'xiaomihome');
+			if (!is_object($xiaomihome)) {
+				continue;
+			}
+			if (!$xiaomihome->getIsEnable()) {
+				continue;
+			}
+			log::add('xiaomihome', 'debug', 'Status ' . print_r($datas, true));
+			foreach ($xiaomihome->getCmd('info') as $cmd) {
+				$logicalId = $cmd->getLogicalId();
+				if ($logicalId == '') {
+					continue;
+				}
+				$path = explode('::', $logicalId);
+				$value = $datas;
+				foreach ($path as $key) {
+					if (!isset($value[$key])) {
+						continue (2);
+					}
+					$value = $value[$key];
+					if (!is_array($value) && strpos($value, 'toggle') !== false && $cmd->getSubType() == 'binary') {
+						$value = $cmd->execCmd();
+						$value = ($value != 0) ? 0 : 1;
+					}
+				}
+				if (!is_array($value)) {
+					if ($cmd->getSubType() == 'numeric') {
+						$value = round($value, 2);
+					}
+					$cmd->event($value);
+				}
+			}
+		}
 	}
 }
 

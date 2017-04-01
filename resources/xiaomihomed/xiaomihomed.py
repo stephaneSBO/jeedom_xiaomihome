@@ -26,6 +26,7 @@ import traceback
 import globals
 from devices.aquara import *
 from devices.yeehome import *
+from devices.xiaowifi import *
 from threading import Timer
 import thread
 try:
@@ -75,11 +76,22 @@ def read_socket(name):
 					logging.debug('Executing action on : '+str(message['model']))
 					if message['type'] == 'aquara':
 						devices.aquara.execute_action(message)
-					if message['type'] == 'yeelight':
+					elif message['type'] == 'yeelight':
 						devices.yeehome.execute_action(message)
+					elif message['type'] == 'wifi':
+						devices.xiaowifi.execute_action(message)
+				if message['cmd'] == 'refresh':
+					logging.debug('Refreshing : '+str(message['model']))
+					if message['type'] == 'yeelight':
+						devices.yeehome.refresh(message)
+					elif message['type'] == 'wifi':
+						devices.xiaowifi.refresh(message)
 				if message['cmd'] == 'scanyeelight':
 					logging.debug('Scanning yeelight')
 					devices.yeehome.scan(2)
+				if message['cmd'] == 'discover':
+					logging.debug('Discovering : '+str(message['model']))
+					devices.xiaowifi.discover(message)
 		except Exception,e:
 			logging.error("Exception on socket : %s" % str(e))
 		time.sleep(0.3)

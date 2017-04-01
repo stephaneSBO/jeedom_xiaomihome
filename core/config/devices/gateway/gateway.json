@@ -7,6 +7,22 @@
             "type" : "aquara"
 		},
         "commands": [
+			{
+                "name": "Capteur Luminosité",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-sun-o\"><\/i>",
+					"generic_type": "GENERIC"
+				},
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "illumination",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
             {
                 "name": "IP Gateway",
                 "type": "info",
@@ -28,6 +44,21 @@
                 "isVisible": 0,
                 "isHistorized": 0,
                 "logicalId": "rgb"
+            },
+			{
+                "name": "Définir Couleur",
+                "type": "action",
+                "subtype": "color",
+                "display": {
+					"generic_type": "LIGHT_SET_COLOR"
+                },
+                "configuration" : {
+        			"switch" : "rgb",
+                    "request" : "rgb"
+        		},
+                "value": "Couleur Anneau",
+                "isVisible": 1,
+                "logicalId": "rgb-set"
             },
             {
                 "name": "On",
@@ -56,19 +87,18 @@
                 "logicalId": "off"
             },
             {
-                "name": "Définir Couleur",
+                "name": "Stop Son",
                 "type": "action",
-                "subtype": "color",
+                "subtype": "other",
                 "display": {
-					"generic_type": "LIGHT_SET_COLOR"
+					"icon": "<i class=\"fa fa-stop\"><\/i>"
                 },
                 "configuration" : {
-        			"switch" : "rgb",
-                    "request" : "rgb"
+        			"switch" : "mid",
+                    "request": 10000
         		},
-                "value": "Couleur Anneau",
                 "isVisible": 1,
-                "logicalId": "rgb-set"
+                "logicalId": "mid-stop"
             },
             {
                 "name": "Luminosité Anneau",
@@ -86,7 +116,9 @@
                 "type": "action",
                 "subtype": "slider",
                 "display": {
-					"generic_type": "LIGHT_SLIDER"
+					"generic_type": "LIGHT_SLIDER",
+					
+				"forceReturnLineBefore": 1
                 },
                 "configuration" : {
         			"switch" : "rgb",
@@ -141,20 +173,6 @@
                 "logicalId": "mid-set"
             },
             {
-                "name": "Stop Son",
-                "type": "action",
-                "subtype": "other",
-                "display": {
-					"icon": "<i class=\"fa fa-stop\"><\/i>"
-                },
-                "configuration" : {
-        			"switch" : "mid",
-                    "request": 10000
-        		},
-                "isVisible": 1,
-                "logicalId": "mid-stop"
-            },
-            {
                 "name": "Jouer un son avec volume",
                 "type": "action",
                 "subtype": "message",
@@ -168,22 +186,6 @@
         		},
                 "isVisible": 0,
                 "logicalId": "mid-scenar"
-            },
-			{
-                "name": "Capteur Luminosité",
-                "type": "info",
-                "subtype": "numeric",
-                "display": {
-					"icon": "<i class=\"fa fa-sun-o\"><\/i>",
-					"generic_type": "GENERIC"
-				},
-                "isVisible": 1,
-                "isHistorized": 0,
-                "logicalId": "illumination",
-				"template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
             },
             {
                 "name": "Son prédéfini",
