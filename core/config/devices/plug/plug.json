@@ -65,6 +65,74 @@
 					"dashboard": "line",
 					"mobile": "line"
 				}
+            },
+            {
+                "name": "Voltage",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "icon": "<i class=\"fa fa-plug\"><\/i>",
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "V",
+                "logicalId": "voltage",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Charge voltage",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "icon": "<i class=\"fa fa-plug\"><\/i>",
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "V",
+                "logicalId": "load_voltage",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Charge puissance",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "icon": "<i class=\"fa fa-plug\"><\/i>",
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "W",
+                "logicalId": "load_power",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Puissance consommée",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "icon": "<i class=\"fa fa-plug\"><\/i>",
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "kWh",
+                "logicalId": "power_consumed",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
             }
         ]
     }
