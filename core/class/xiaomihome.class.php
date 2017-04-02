@@ -187,7 +187,7 @@ class xiaomihome extends eqLogic {
 			$i++;
 		}
 		if ($i >= 30) {
-			log::add('xiaomihome', 'error', 'Impossible de lancer le démon Xiaomi, vérifiez la log', 'unableStartDeamon');
+			log::add('xiaomihome', 'error', 'Impossible de lancer le démon Xiaomi, vérifiez le log', 'unableStartDeamon');
 			return false;
 		}
 		message::removeAll('xiaomihome', 'unableStartDeamon');
