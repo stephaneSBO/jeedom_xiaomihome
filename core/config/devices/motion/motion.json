@@ -1,6 +1,6 @@
 {
     "motion": {
-        "name": "Détetecteur Mouvement",
+        "name": "Détecteur Mouvement",
 		"configuration" : {
 			"model" : "motion",
             "type" : "aquara",
