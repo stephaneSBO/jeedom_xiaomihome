@@ -28,7 +28,7 @@ class xiaomihome extends eqLogic {
             }
         }
     }
-	
+
 	public static function cron5() {
 		$eqLogics = eqLogic::byType('xiaomihome');
 		foreach($eqLogics as $xiaomihome) {
@@ -39,7 +39,7 @@ class xiaomihome extends eqLogic {
 			}
 		}
 	}
-	
+
 	public static function createFromDef($_def,$_type) {
 		event::add('jeedom::alert', array(
 			'level' => 'warning',
@@ -144,7 +144,7 @@ class xiaomihome extends eqLogic {
 		}
 		return $xiaomihome;
 	}
-	
+
 	public static function deamon_info() {
 		$return = array();
 		$return['log'] = 'xiaomihome';
@@ -193,7 +193,7 @@ class xiaomihome extends eqLogic {
 		message::removeAll('xiaomihome', 'unableStartDeamon');
 		return true;
 	}
-	
+
 	public static function deamon_stop() {
 		$pid_file = jeedom::getTmpFolder('xiaomihome') . '/deamon.pid';
 		if (file_exists($pid_file)) {
@@ -207,18 +207,12 @@ class xiaomihome extends eqLogic {
 	public static function dependancy_info() {
 		$return = array();
 		$return['log'] = 'xiaomihome_dep';
-		$cmd = "pip list | grep pycrypto";
-		exec($cmd, $output, $return_var);
-		$cmd = "pip list | grep future";
-		exec($cmd, $output2, $return_var);
-		$cmd = "pip list | grep construct";
-		exec($cmd, $output3, $return_var);
+		$cmd = "pip list";
+		$output = shell_exec($cmd);
 		$return['state'] = 'nok';
-		if (array_key_exists(0,$output) && array_key_exists(0,$output2) && array_key_exists(0,$output3)) {
-		    if ($output[0] != "" && $output2[0] != "") {
-			$return['state'] = 'ok';
-		    }
-		}
+		if (strpos($output, 'construct') !== false && strpos($output, 'future') !== false && strpos($output, 'pycrypto') !== false && strpos($output, 'cryptography') !== false) {
+	         $return['state'] = 'ok';
+	    }
 		return $return;
 	}
 
@@ -227,7 +221,7 @@ class xiaomihome extends eqLogic {
 		$resource_path = realpath(dirname(__FILE__) . '/../../resources');
 		passthru('/bin/bash ' . $resource_path . '/install.sh > ' . log::getPathToLog('xiaomihome_dep') . ' 2>&1 &');
 	}
-	
+
 	public static function discover($_mode) {
 		if ($_mode == 'wifi') {
 			$value = json_encode(array('apikey' => jeedom::getApiKey('xiaomihome'), 'cmd' => 'scanwifi'));
@@ -272,7 +266,7 @@ class xiaomihome extends eqLogic {
             $this->checkAndUpdateCmd('temperature', $color_temp[1]);
         }
 	}
-	
+
 	public function get_wifi_info(){
 		if ($this->getConfiguration('type') == 'wifi' && $this->getConfiguration('ipwifi') != ''){
 			$value = json_encode(array('apikey' => jeedom::getApiKey('xiaomihome'), 'type' => 'wifi','cmd' => 'discover', 'dest' => $this->getConfiguration('ipwifi') , 'token' => $this->getConfiguration('password') , 'model' => $this->getConfiguration('model')));
@@ -288,7 +282,7 @@ class xiaomihome extends eqLogic {
 			$this->setLogicalId($this->getConfiguration('ipwifi'));
 		}
 	}
-	
+
 	public function postSave() {
 		if ($this->getConfiguration('applyDevice') != $this->getConfiguration('model')) {
 			log::add('xiaomihome','debug',$this->getConfiguration('model'));
