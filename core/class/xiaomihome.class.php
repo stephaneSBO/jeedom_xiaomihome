@@ -187,7 +187,7 @@ class xiaomihome extends eqLogic {
 			$i++;
 		}
 		if ($i >= 30) {
-			log::add('xiaomihome', 'error', 'Impossible de lancer le démon openenocean, vérifiez la log', 'unableStartDeamon');
+			log::add('xiaomihome', 'error', 'Impossible de lancer le démon Xiaomi, vérifiez la log', 'unableStartDeamon');
 			return false;
 		}
 		message::removeAll('xiaomihome', 'unableStartDeamon');
@@ -211,8 +211,10 @@ class xiaomihome extends eqLogic {
 		exec($cmd, $output, $return_var);
 		$cmd = "pip list | grep future";
 		exec($cmd, $output2, $return_var);
+		$cmd = "pip list | grep construct";
+		exec($cmd, $output3, $return_var);
 		$return['state'] = 'nok';
-		if (array_key_exists(0,$output) && array_key_exists(0,$output2)) {
+		if (array_key_exists(0,$output) && array_key_exists(0,$output2) && array_key_exists(0,$output3)) {
 		    if ($output[0] != "" && $output2[0] != "") {
 			$return['state'] = 'ok';
 		    }
