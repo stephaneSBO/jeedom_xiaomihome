@@ -80,6 +80,8 @@ if (isset($result['devices'])) {
 						}
 					}
 				}
+				$xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
+				$xiaomihome->save();
 			}
 		}
 		elseif ($key == 'yeelight'){
@@ -122,6 +124,8 @@ if (isset($result['devices'])) {
 				if ($xiaomihome->getConfiguration('model') != 'mono') {
 					$xiaomihome->checkAndUpdateCmd('temperature', $data['ct']);
 				}
+				$xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
+				$xiaomihome->save();
 			}
 		}
 		elseif ($key == 'wifi'){
@@ -187,6 +191,8 @@ if (isset($result['devices'])) {
 				if (strpos($logicalId,'battery') !== false) {
 					$xiaomihome->batteryStatus($value);
 				}
+				$xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
+				$xiaomihome->save();
 			}
 		}
 	}

@@ -329,6 +329,7 @@ class xiaomihome extends eqLogic {
 				} else {
 					$battery = 1;
 				}
+				$value = $value /1000;
 				$xiaomihome->checkAndUpdateCmd('battery', $battery);
 				$xiaomihome->setConfiguration('battery',$battery);
 				$xiaomihome->batteryStatus($battery);
