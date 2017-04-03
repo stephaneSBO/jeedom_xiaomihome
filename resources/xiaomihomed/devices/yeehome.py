@@ -10,6 +10,7 @@ import logging
 import globals
 import time
 import utils
+import threading
 
 def scan(timeout=2):
 	for x in range(3):
@@ -72,3 +73,19 @@ def execute_action(message):
 	elif command_list[0] == 'hsv':
 		hsv_option = message['option'].split(' ')
 		bulb.set_hsv(int(hsv_option[0]), int(hsv_option[1]))
+	t = threading.Timer(2, refresh,args=(message,))
+	t.start()
+	return
+
+def refresh(message):
+	result={}
+	data={}
+	result['ip']=message['dest']
+	data['id'] = message['id']
+	bulb = Bulb(message['dest'], 55443, 'smooth', 500, True)
+	result_brut = bulb.get_properties().items()
+	for key, value in result_brut:
+		data[key] = value
+	result['capabilities'] = data
+	globals.JEEDOM_COM.add_changes('devices::yeelight',result)
+	return

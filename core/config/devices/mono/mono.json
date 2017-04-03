@@ -27,7 +27,7 @@
                 "type": "info",
                 "subtype": "binary",
                 "display": {
-					"generic_type": "LIGHT_STATE"
+					"generic_type": "DONT"
                 },
                 "isVisible": 0,
                 "isHistorized": 0,
@@ -55,14 +55,13 @@
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-lightbulb-o\"><\/i>",
-                    "generic_type": "LIGHT_ON"
+					"icon": "<i class=\"fa fa-lightbulb-o\"><\/i>"
                 },
                 "configuration" : {
         			"request" : "turn on"
         		},
                 "isVisible": 1,
-                "value": "status",
+                "value": "Statut",
                 "logicalId": "on"
             },
             {
@@ -70,28 +69,14 @@
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-power-off\"><\/i>",
-                    "generic_type": "LIGHT_OFF"
+					"icon": "<i class=\"fa fa-power-off\"><\/i>"
                 },
                 "configuration" : {
         			"request" : "turn off"
         		},
                 "isVisible": 1,
-                "value": "status",
+                "value": "Statut",
                 "logicalId": "off"
-            },
-            {
-                "name": "Rafraichir",
-                "type": "action",
-                "subtype": "other",
-                "display": {
-					"icon": "<i class=\"fa fa-refresh\"><\/i>"
-                },
-                "configuration" : {
-        			"request" : "refresh"
-        		},
-                "isVisible": 0,
-                "logicalId": "refresh"
             },
             {
                 "name": "Extinction programmée",
@@ -137,27 +122,24 @@
                 "logicalId": "stop"
             },
             {
-                "name": "Définir Luminosité",
+                "name": "Luminosité",
                 "type": "action",
                 "subtype": "slider",
                 "display": {
-					"generic_type": "LIGHT_SLIDER"
+					"generic_type": "LIGHT_SLIDER",
+					"forceReturnLineBefore": 1
                 },
                 "configuration" : {
         			"request" : "brightness",
                     "minValue" : 0,
                     "maxValue" : 100
         		},
-                "value": "Luminosité",
+                "value": "Luminosité info",
                 "isVisible": 1,
-                "logicalId": "brightnessAct",
-                "template": {
-					"dashboard": "light",
-					"mobile": "light"
-				}
+                "logicalId": "brightnessAct"
             },
             {
-                "name": "Luminosité",
+                "name": "Luminosité info",
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
@@ -165,11 +147,20 @@
                 },
                 "isVisible": 0,
                 "isHistorized": 0,
-                "logicalId": "brightness",
-                "template": {
-					"dashboard": "light",
-					"mobile": "light"
-				}
+                "logicalId": "brightness"
+            },
+            {
+                "name": "Rafraichir",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-refresh\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "refresh"
+        		},
+                "isVisible": 1,
+                "logicalId": "refresh"
             }
         ]
     }

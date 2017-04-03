@@ -108,6 +108,21 @@ if (isset($result['devices'])) {
 			if (!$xiaomihome->getIsEnable()) {
 				continue;
 			}
+			if (isset($datas['capabilities'])) {
+				$data = $datas['capabilities'];
+				$power = ($data['power'] == 'off')? 0:1;
+				$xiaomihome->checkAndUpdateCmd('status', $power);
+				$xiaomihome->checkAndUpdateCmd('brightness', $data['bright']);
+				if ($xiaomihome->getConfiguration('model') != 'mono' && $xiaomihome->getConfiguration('model') != 'ceiling') {
+					$xiaomihome->checkAndUpdateCmd('color_mode', $data['color_mode']);
+					$xiaomihome->checkAndUpdateCmd('rgb', '#' . str_pad(dechex($data['rgb']), 6, "0", STR_PAD_LEFT));
+					$xiaomihome->checkAndUpdateCmd('hsv', $data['hue']);
+					$xiaomihome->checkAndUpdateCmd('saturation', $data['sat']);
+				}
+				if ($xiaomihome->getConfiguration('model') != 'mono') {
+					$xiaomihome->checkAndUpdateCmd('temperature', $data['ct']);
+				}
+			}
 		}
 		elseif ($key == 'wifi'){
 			if (isset($datas['notfound'])){
@@ -125,6 +140,9 @@ if (isset($result['devices'])) {
 				$xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
 				$xiaomihome->setIsEnable(1);
 				$xiaomihome->setIsVisible(1);
+				if ($datas['model']!='vacuum'){
+					$xiaomihome->setConfiguration('password',$datas['token']);
+				}
 				$xiaomihome->save();
 				event::add('xiaomihome::found', $xiaomihome->getId());
 				$refreshcmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),'refresh');
@@ -165,6 +183,9 @@ if (isset($result['devices'])) {
 						$value = round($value, 2);
 					}
 					$cmd->event($value);
+				}
+				if (strpos($logicalId,'battery') !== false) {
+					$xiaomihome->batteryStatus($value);
 				}
 			}
 		}

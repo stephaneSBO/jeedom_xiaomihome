@@ -253,6 +253,6 @@ $('body').on('xiaomihome::found', function (_event,_options) {
 });
 
 $('body').on('xiaomihome::notfound', function (_event,_options) {
-    $('#div_alert').showAlert({message: '{{Device pas trouvé veuillez vérifier l\'ip et le token et relancer}}', level: 'danger'});
+    $('#div_alert').showAlert({message: '{{Device pas trouvé veuillez vérifier l\'ip et relancer}}', level: 'danger'});
 });
 }

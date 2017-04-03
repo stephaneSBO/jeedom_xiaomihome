@@ -216,7 +216,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
 						</div>
 						<div class="col-sm-6">
 							<a class="btn btn-danger btn-sm pull-right" id="bt_autoDetectModule"><i class="fa fa-search" title="{{Recréer les commandes}}"></i>  {{Recréer les commandes}}</a>
-							<a class="btn btn-primary btn-sm eqLogicAction pull-right" id="btn_sync"><i class="fa fa-spinner" title="{{Récupérer les infos}}"></i> {{Récupérer les infos}}</a><br/><br/>
+							<a class="btn btn-primary btn-sm eqLogicAction pull-right syncinfo" id="btn_sync"><i class="fa fa-spinner" title="{{Récupérer les infos}}"></i> {{Récupérer les infos}}</a><br/><br/>
 							<form class="form-horizontal">
 							<fieldset>
 							<div class="form-group">
@@ -287,6 +287,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
 							</center>
                     </fieldset>
                 </form>
+			<div class="alert alert-info globalRemark" style="display:none">{{Veuillez renseigner l'ip puis sauver. Ensuite il vous suffit de cliquer sur Récupérer les infos. Si le device est trouvé les identifiants et le token seront trouvés. L'aspirateur est une exception dans son cas il faut récupérer le token avant. Veuillez vous référer à la doc. Pour la gateway il suffit juste de la récupérer dans les options développeurs de Mi Home}}</div>
             </div>
 			</div>
 			</div>
@@ -316,10 +317,13 @@ $eqLogics = eqLogic::byType('xiaomihome');
 <script>
 
 $( "#modelfield" ).change(function(){
-    if ($('#modelfield').value() == 'gateway') {
+    if (['gateway','purifier','pm25','humidifier','vacuum','ricecooker'].indexOf($('#modelfield').value()) != -1) {
         $('#passfield').show();
+		$('.globalRemark').show();
     } else {
         $('#passfield').hide();
+		$('.syncinfo').hide();
+		$('.globalRemark').hide();
     }
 });
 
@@ -327,17 +331,24 @@ $( "#typefield" ).change(function(){
     if ($('#typefield').value() == 'aquara') {
         if ($('#modelfield').value() == 'gateway') {
             $('#passfield').show();
+			$('.globalRemark').show();
         } else {
             $('#passfield').hide();
+			$('.globalRemark').hide();
         }
 		$('#ipfield').hide();
+		$('.syncinfo').hide();
     }
-    if ($('#typefield').value() == 'yeelight') {
+    else if ($('#typefield').value() == 'yeelight') {
         $('#passfield').hide();
 		$('#ipfield').hide();
+		$('.syncinfo').hide();
+		$('.globalRemark').hide();
     }
-    if ($('#typefield').value() == 'wifi') {
+    else if ($('#typefield').value() == 'wifi') {
         $('#passfield').show();
+		$('.globalRemark').show();
+		$('.syncinfo').show();
 		$('#ipfield').show();
     }
 });

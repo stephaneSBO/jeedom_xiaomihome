@@ -27,15 +27,29 @@
                 "type": "info",
                 "subtype": "binary",
                 "display": {
-					"generic_type": "LIGHT_STATE"
+					"generic_type": "DONT"
                 },
-                "isVisible": 0,
+                "isVisible": 1,
                 "isHistorized": 0,
                 "logicalId": "status",
                 "template": {
-					"dashboard": "light",
-					"mobile": "light"
+					"dashboard": "line",
+					"mobile": "line"
 				}
+            },
+            {
+                "name": "Définir couleur RGB",
+                "type": "action",
+                "subtype": "color",
+                "display": {
+					"generic_type": "LIGHT_SET_COLOR"
+                },
+                "configuration" : {
+        			"request" : "rgb"
+        		},
+                "value": "Couleur RGB",
+                "isVisible": 1,
+                "logicalId": "rgbAct"
             },
             {
                 "name": "Toggle",
@@ -55,14 +69,13 @@
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-lightbulb-o\"><\/i>",
-                    "generic_type": "LIGHT_ON"
+					"icon": "<i class=\"fa fa-lightbulb-o\"><\/i>"
                 },
                 "configuration" : {
         			"request" : "turn on"
         		},
                 "isVisible": 1,
-                "value": "Statut",
+                "value": "status",
                 "logicalId": "on"
             },
             {
@@ -70,28 +83,42 @@
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-power-off\"><\/i>",
-                    "generic_type": "LIGHT_OFF"
+					"icon": "<i class=\"fa fa-power-off\"><\/i>"
                 },
                 "configuration" : {
         			"request" : "turn off"
         		},
                 "isVisible": 1,
-                "value": "Statut",
+                "value": "status",
                 "logicalId": "off"
             },
             {
-                "name": "Rafraichir",
+                "name": "Lumière de Lune",
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-refresh\"><\/i>"
+					"generic_type": "DONT",
+                    "icon": "<i class=\"fa fa-moon-o\"><\/i>"
                 },
                 "configuration" : {
-        			"request" : "refresh"
+        			"request" : "temperature 2700"
         		},
-                "isVisible": 0,
-                "logicalId": "refresh"
+                "isVisible": 1,
+                "logicalId": "temperatureMoon"
+            },
+            {
+                "name": "Lumière de Soleil",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"generic_type": "DONT",
+                    "icon": "<i class=\"fa fa-sun-o\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "temperature 6500"
+        		},
+                "isVisible": 1,
+                "logicalId": "temperatureSun"
             },
             {
                 "name": "Extinction programmée",
@@ -137,23 +164,24 @@
                 "logicalId": "stop"
             },
             {
-                "name": "Définir Luminosité",
+                "name": "Luminosité",
                 "type": "action",
                 "subtype": "slider",
                 "display": {
-					"generic_type": "LIGHT_SLIDER"
+					"generic_type": "LIGHT_SLIDER",
+					"forceReturnLineBefore": 1
                 },
                 "configuration" : {
         			"request" : "brightness",
                     "minValue" : 0,
                     "maxValue" : 100
         		},
-                "value": "Luminosité",
+                "value": "Luminosité Info",
                 "isVisible": 1,
                 "logicalId": "brightnessAct"
             },
             {
-                "name": "Luminosité",
+                "name": "Luminosité Info",
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
@@ -168,27 +196,7 @@
 				}
             },
             {
-                "name": "Définir température de blanc",
-                "type": "action",
-                "subtype": "slider",
-                "display": {
-					"generic_type": "DONT"
-                },
-                "configuration" : {
-        			"request" : "temperature",
-                    "minValue" : 1700,
-                    "maxValue" : 6500
-        		},
-                "value": "Température de blanc",
-                "isVisible": 1,
-                "logicalId": "temperatureAct",
-                "template": {
-					"dashboard": "light",
-					"mobile": "light"
-				}
-            },
-            {
-                "name": "Température de blanc",
+                "name": "Température de blanc info",
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
@@ -202,35 +210,21 @@
 					"mobile": "line"
 				}
             },
-            {
-                "name": "Lumière de Lune",
+			{
+                "name": "Température de blanc",
                 "type": "action",
-                "subtype": "other",
+                "subtype": "slider",
                 "display": {
-					"generic_type": "DONT",
-                    "icon": "<i class=\"fa fa-moon-o\"><\/i>"
+					"generic_type": "DONT"
                 },
                 "configuration" : {
-        			"request" : "temperature 2700"
+        			"request" : "temperature",
+                    "minValue" : 1700,
+                    "maxValue" : 6500
         		},
-                "value": "Température de blanc",
-                "isVisible": 0,
-                "logicalId": "temperatureMoon"
-            },
-            {
-                "name": "Lumière de Soleil",
-                "type": "action",
-                "subtype": "other",
-                "display": {
-					"generic_type": "DONT",
-                    "icon": "<i class=\"fa fa-sun-o\"><\/i>"
-                },
-                "configuration" : {
-        			"request" : "temperature 6500"
-        		},
-                "value": "Température de blanc",
-                "isVisible": 0,
-                "logicalId": "temperatureMoon"
+                "value": "Température de blanc info",
+                "isVisible": 1,
+                "logicalId": "temperatureAct"
             },
             {
                 "name": "Mode",
@@ -310,20 +304,6 @@
 				}
             },
             {
-                "name": "Définir couleur RGB",
-                "type": "action",
-                "subtype": "color",
-                "display": {
-					"generic_type": "LIGHT_SET_COLOR"
-                },
-                "configuration" : {
-        			"request" : "rgb"
-        		},
-                "value": "Couleur RGB",
-                "isVisible": 1,
-                "logicalId": "rgbAct"
-            },
-            {
                 "name": "Couleur RGB",
                 "type": "info",
                 "subtype": "string",
@@ -337,7 +317,21 @@
 					"dashboard": "line",
 					"mobile": "line"
 				}
+            },
+			{
+                "name": "Rafraichir",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-refresh\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "refresh"
+        		},
+                "isVisible": 1,
+                "logicalId": "refresh"
             }
         ]
     }
 }
+

@@ -1,54 +1,57 @@
 {
-    "desklamp": {
-        "name": "Lampe de bureau",
-		"groupe" : "Yeelight",
+	"philipseyecare": {
+		"name": "Lampe Philips Eyecare",
+		"groupe" : "Wifi",
 		"configuration" : {
-			"model" : "desklamp",
-            "type" : "yeelight"
+			"model" : "philipseyecare",
+			"type" : "wifi"
 		},
-       "commands": [
-            {
-                "name": "Online",
-                "type": "info",
-                "subtype": "binary",
-                "display": {
-					"generic_type": "DONT"
-                },
-                "isVisible": 0,
-                "isHistorized": 0,
-                "logicalId": "online",
-                "template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-            },
-            {
+        "commands": [
+			{
                 "name": "Statut",
                 "type": "info",
-                "subtype": "binary",
+                "subtype": "string",
                 "display": {
 					"generic_type": "DONT"
                 },
                 "isVisible": 1,
                 "isHistorized": 0,
-                "logicalId": "status",
+                "logicalId": "status::power",
                 "template": {
 					"dashboard": "line",
 					"mobile": "line"
 				}
             },
-            {
-                "name": "Toggle",
-                "type": "action",
-                "subtype": "other",
+			{
+                "name": "Statut eyecare",
+                "type": "info",
+                "subtype": "string",
                 "display": {
-					"icon": "<i class=\"fa fa-toggle-on\"><\/i>"
+					"generic_type": "DONT",
+					"icon": "<i class=\"fa fa-eye\"><\/i>"
                 },
-                "configuration" : {
-        			"request" : "toggle"
-        		},
-                "isVisible": 0,
-                "logicalId": "toggle"
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "status::eyecare",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Scene eyecare",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "status::scene_num",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
             },
             {
                 "name": "Allumer",
@@ -58,10 +61,10 @@
 					"icon": "<i class=\"fa fa-lightbulb-o\"><\/i>"
                 },
                 "configuration" : {
-        			"request" : "turn on"
+        			"request" : "set_power",
+					"params" : "[\"on\"]"
         		},
                 "isVisible": 1,
-                "value": "status",
                 "logicalId": "on"
             },
             {
@@ -72,128 +75,117 @@
 					"icon": "<i class=\"fa fa-power-off\"><\/i>"
                 },
                 "configuration" : {
-        			"request" : "turn off"
+        			"request" : "set_power",
+					"params" : "[\"off\"]"
         		},
                 "isVisible": 1,
-                "value": "status",
                 "logicalId": "off"
             },
-            {
-                "name": "Lumière de Lune",
+			{
+                "name": "Eyecare on",
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"generic_type": "DONT",
-                    "icon": "<i class=\"fa fa-moon-o\"><\/i>"
+					"icon": "<i class=\"fa fa-eye\"><\/i>"
                 },
                 "configuration" : {
-        			"request" : "temperature 2700"
+        			"request" : "set_eyecare",
+					"params" : "[\"on\"]"
         		},
                 "isVisible": 1,
-                "logicalId": "temperatureMoon"
+                "logicalId": "eyecare"
             },
-            {
-                "name": "Lumière de Soleil",
+			{
+                "name": "Eyecare off",
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"generic_type": "DONT",
-                    "icon": "<i class=\"fa fa-sun-o\"><\/i>"
+					"icon": "<i class=\"fa fa-eye-slash\"><\/i>"
                 },
                 "configuration" : {
-        			"request" : "temperature 6500"
+        			"request" : "set_eyecare",
+					"params" : "[\"off\"]"
         		},
                 "isVisible": 1,
-                "logicalId": "temperatureSun"
+                "logicalId": "eyecareoff"
             },
-            {
-                "name": "Extinction programmée",
-                "type": "action",
-                "subtype": "slider",
-                "display": {
-					"icon": "<i class=\"fa fa-power-off\"><\/i>"
-                },
-                "configuration" : {
-        			"request" : "cron",
-                    "minValue" : 1,
-                    "maxValue" : 300
-        		},
-                "isVisible": 0,
-                "logicalId": "cron"
-            },
-            {
-                "name": "Enchainement",
-                "type": "action",
-                "subtype": "message",
-                "display": {
-					"icon": "<i class=\"fa fa-refresh\"><\/i>",
-                    "message_disable": 1,
-                    "title_placeholder" : "Enchainement"
-                },
-                "configuration" : {
-        			"request" : "flow"
-        		},
-                "isVisible": 0,
-                "logicalId": "flow"
-            },
-            {
-                "name": "Stop Enchainement",
+			{
+                "name": "Eycare enfant",
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-stop\"><\/i>"
+					"icon": "<i class=\"icon personne-boy22\"><\/i>"
                 },
                 "configuration" : {
-        			"request" : "stop"
+        			"request" : "set_user_scene",
+					"params" : "[1]"
         		},
-                "isVisible": 0,
-                "logicalId": "stop"
+                "isVisible": 1,
+                "logicalId": "scennumkids"
             },
-            {
+			{
+                "name": "Eycare Lecture",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-book\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "set_user_scene",
+					"params" : "[2]"
+        		},
+                "isVisible": 1,
+                "logicalId": "scennumread"
+            },
+			{
+                "name": "Eycare Ordinateur",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-laptop\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "set_user_scene",
+					"params" : "[3]"
+        		},
+                "isVisible": 1,
+                "logicalId": "scennumcomputer"
+            },
+			{
                 "name": "Luminosité",
                 "type": "action",
                 "subtype": "slider",
-                "display": {
-					"generic_type": "LIGHT_SLIDER",
+				"display": {
 					"forceReturnLineBefore": 1
                 },
                 "configuration" : {
-        			"request" : "brightness",
+        			"request" : "set_bright",
                     "minValue" : 0,
-                    "maxValue" : 100
+                    "maxValue" : 100,
+					"params" : "[#slider#]"
         		},
-                "value": "Luminosité info",
+				"value" : "Luminosité info",
                 "isVisible": 1,
-                "logicalId": "brightnessAct"
+                "logicalId": "bright"
             },
-            {
+			{
                 "name": "Luminosité info",
                 "type": "info",
                 "subtype": "numeric",
-                "display": {
-					"generic_type": "LIGHT_SLIDER"
-                },
+				"unite": "%",
                 "isVisible": 0,
-                "isHistorized": 0,
-                "logicalId": "brightness",
-                "template": {
-					"dashboard": "light",
-					"mobile": "light"
-				}
+                "logicalId": "status::bright"
             },
-			{
+			 {
                 "name": "Rafraichir",
                 "type": "action",
                 "subtype": "other",
-                "display": {
+				"display": {
 					"icon": "<i class=\"fa fa-refresh\"><\/i>"
                 },
-                "configuration" : {
-        			"request" : "refresh"
-        		},
                 "isVisible": 1,
                 "logicalId": "refresh"
-            }
+            }            
         ]
     }
 }

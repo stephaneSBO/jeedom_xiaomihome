@@ -24,18 +24,3 @@ if (!isConnect()) {
 }
 ?>
 
-
-<form class="form-horizontal">
-  <div class="form-group">
-    <fieldset>
-
-        <div class="form-group">
-                <label class="col-lg-4 control-label">{{Activer un check des Yeelights toutes les minutes}}</label>
-                <div class="col-lg-3">
-                  <span><label class="checkbox-inline"><input type="checkbox" class="configKey" data-l1key="yeeCron"/>{{Activer}}</label></span>
-                </div>
-  </div>
-
-    </fieldset>
-  </div>
-</form>

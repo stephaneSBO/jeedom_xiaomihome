@@ -1,14 +1,13 @@
 {
-	"vacuum": {
-		"name": "Robot Aspirateur",
+	"humidifier": {
+		"name": "Humidificateur d'air",
 		"groupe" : "Wifi",
 		"configuration" : {
-			"model" : "vacuum",
-			"type" : "wifi",
-			"battery_type" : "Batterie"
+			"model" : "humidifier",
+			"type" : "wifi"
 		},
         "commands": [
-            {
+			{
                 "name": "Statut",
                 "type": "info",
                 "subtype": "string",
@@ -17,102 +16,102 @@
                 },
                 "isVisible": 1,
                 "isHistorized": 0,
-                "logicalId": "get_status::state",
+                "logicalId": "status::power",
                 "template": {
 					"dashboard": "line",
 					"mobile": "line"
 				}
             },
-            {
-                "name": "Batterie",
+			{
+                "name": "Mode",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "status::mode",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Humidité",
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
 					"generic_type": "DONT"
                 },
-                "isVisible": 0,
+                "isVisible": 1,
                 "isHistorized": 0,
 				"unite" : "%",
-                "logicalId": "get_status::battery",
+                "logicalId": "status::humidity",
                 "template": {
 					"dashboard": "line",
 					"mobile": "line"
 				}
             },
-            {
-                "name": "Aspiration",
+			{
+                "name": "Humidité cible",
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
 					"generic_type": "DONT"
                 },
+                "isVisible": 1,
+                "isHistorized": 0,
+				"unite" : "%",
+                "logicalId": "status::limit_hum",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Température",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+				"unite" : "°",
+                "logicalId": "status::temp_dec",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Statut buzzer",
+                "type": "info",
+                "subtype": "string",
                 "isVisible": 0,
-                "isHistorized": 0,
-                "logicalId": "get_status::fan_power",
-                "template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-            },
-            {
-                "name": "Surface nettoyée",
-                "type": "info",
-                "subtype": "numeric",
-				"unite" : "m2",
-                "display": {
-					"generic_type": "DONT"
-                },
-                "isVisible": 1,
-                "isHistorized": 0,
-                "logicalId": "get_status::clean_area",
-                "template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
+                "logicalId": "status::buzzer"
             },
 			{
-                "name": "Durée nettoyage",
+                "name": "Statut led",
                 "type": "info",
                 "subtype": "string",
-                "display": {
-					"generic_type": "DONT"
-                },
-                "isVisible": 1,
-                "isHistorized": 0,
-                "logicalId": "get_status::clean_time",
-                "template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-            },
-            {
-                "name": "Erreur",
-                "type": "info",
-                "subtype": "string",
-                "display": {
-					"generic_type": "DONT"
-                },
-                "isVisible": 1,
-                "isHistorized": 0,
-                "logicalId": "get_status::error_code",
-                "template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
+                "isVisible": 0,
+                "logicalId": "status::led"
             },
 			{
-                "name": "Puissance Aspiration",
+                "name": "Cible",
                 "type": "action",
                 "subtype": "slider",
                 "configuration" : {
-        			"request" : "set_custom_mode",
-                    "minValue" : 0,
-                    "maxValue" : 100,
+        			"request" : "set_limit_hum",
+                    "minValue" : 30,
+                    "maxValue" : 80,
 					"params" : "[#slider#]"
         		},
-                "value": "Aspiration",
+				"value" : "Humidité cible",
                 "isVisible": 1,
-                "logicalId": "fanspeedAct"
+                "logicalId": "targethum"
             },
             {
                 "name": "Démarrer",
@@ -122,10 +121,11 @@
 					"icon": "<i class=\"fa fa-play\"><\/i>"
                 },
                 "configuration" : {
-        			"request" : "app_start"
+        			"request" : "set_power",
+					"params" : "[\"on\"]"
         		},
                 "isVisible": 1,
-                "logicalId": "start"
+                "logicalId": "on"
             },
             {
                 "name": "Arrêter",
@@ -135,78 +135,99 @@
 					"icon": "<i class=\"fa fa-stop\"><\/i>"
                 },
                 "configuration" : {
-        			"request" : "app_stop"
+        			"request" : "set_power",
+					"params" : "[\"off\"]"
         		},
                 "isVisible": 1,
-                "logicalId": "stop"
+                "logicalId": "off"
             },
             {
-                "name": "Pause",
+                "name": "Fort",
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-pause\"><\/i>"
+					"icon": "<i class=\"icon meteo-pluie\"><\/i>"
                 },
                 "configuration" : {
-        			"request" : "app_pause"
+        			"request" : "set_mode",
+					"params" : "[\"high\"]"
         		},
                 "isVisible": 1,
-                "logicalId": "pause"
+                "logicalId": "high"
             },
 			{
-                "name": "Home",
+                "name": "Moyen",
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-home\"><\/i>"
+					"icon": "<i class=\"icon meteo-nuageux\"><\/i>"
                 },
                 "configuration" : {
-        			"request" : "app_charge"
+        			"request" : "set_mode",
+					"params" : "[\"medium\"]"
         		},
                 "isVisible": 1,
-                "logicalId": "home"
+                "logicalId": "medium"
             },
 			{
-                "name": "Spot",
+                "name": "Silence",
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-dot-circle-o\"><\/i>"
+					"icon": "<i class=\"icon personne-sleeping4\"><\/i>"
                 },
                 "configuration" : {
-        			"request" : "app_spot"
+        			"request" : "set_mode",
+					"params" : "[\"silent\"]"
         		},
                 "isVisible": 1,
-                "logicalId": "spot"
+                "logicalId": "silent"
             },
-            {
-                "name": "Trouver",
+			{
+                "name": "Buzzer On",
                 "type": "action",
                 "subtype": "other",
-                "display": {
-					"icon": "<i class=\"fa fa-globe\"><\/i>"
-                },
                 "configuration" : {
-        			"request" : "find_me",
-					"params" : "[\"\"]"
+        			"request" : "set_buzzer",
+					"params" : "[\"on\"]"
         		},
-                "isVisible": 1,
-                "logicalId": "find"
+                "isVisible": 0,
+                "logicalId": "buzzon"
             },
-            {
+			{
+                "name": "Buzzer Off",
+                "type": "action",
+                "subtype": "other",
+                "configuration" : {
+        			"request" : "set_buzzer",
+					"params" : "[\"off\"]"
+        		},
+                "isVisible": 0,
+                "logicalId": "buzzoff"
+            },
+			{
+                "name": "Diode",
+                "type": "action",
+                "subtype": "slider",
+                "configuration" : {
+        			"request" : "set_led_b",
+                    "minValue" : 0,
+                    "maxValue" : 2,
+					"params" : "[#slider#]"
+        		},
+                "isVisible": 0,
+                "logicalId": "ledb"
+            },
+			 {
                 "name": "Rafraichir",
                 "type": "action",
                 "subtype": "other",
-                "display": {
+				"display": {
 					"icon": "<i class=\"fa fa-refresh\"><\/i>"
                 },
-                "configuration" : {
-        			"request" : "refresh"
-        		},
                 "isVisible": 1,
                 "logicalId": "refresh"
-            }
-            
+            }            
         ]
     }
 }
