@@ -65,7 +65,8 @@
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-sun-o\"><\/i>"
+					"icon": "<i class=\"fa fa-sun-o\"><\/i>",
+                    "generic_type": "LIGHT_ON"
                 },
                 "configuration" : {
         			"switch" : "rgb"
@@ -78,7 +79,8 @@
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-power-off\"><\/i>"
+					"icon": "<i class=\"fa fa-power-off\"><\/i>",
+                    "generic_type": "LIGHT_OFF"
                 },
                 "configuration" : {
         			"switch" : "rgb"
@@ -117,7 +119,7 @@
                 "subtype": "slider",
                 "display": {
 					"generic_type": "LIGHT_SLIDER",
-					
+
 				"forceReturnLineBefore": 1
                 },
                 "configuration" : {

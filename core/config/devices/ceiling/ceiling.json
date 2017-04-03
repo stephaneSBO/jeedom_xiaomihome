@@ -27,7 +27,7 @@
                 "type": "info",
                 "subtype": "binary",
                 "display": {
-					"generic_type": "DONT"
+					"generic_type": "LIGHT_STATE"
                 },
                 "isVisible": 0,
                 "isHistorized": 0,
@@ -55,7 +55,8 @@
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-lightbulb-o\"><\/i>"
+					"icon": "<i class=\"fa fa-lightbulb-o\"><\/i>",
+                    "generic_type": "LIGHT_ON"
                 },
                 "configuration" : {
         			"request" : "turn on"
@@ -69,7 +70,8 @@
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-power-off\"><\/i>"
+					"icon": "<i class=\"fa fa-power-off\"><\/i>",
+                    "generic_type": "LIGHT_OFF"
                 },
                 "configuration" : {
         			"request" : "turn off"
