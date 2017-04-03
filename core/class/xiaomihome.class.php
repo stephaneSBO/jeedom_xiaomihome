@@ -321,7 +321,7 @@ class xiaomihome extends eqLogic {
 				$xiaomihome->checkAndUpdateCmd('brightness', $light);
 				$xiaomihome->checkAndUpdateCmd('rgb', $value);
 			}
-			if ($key == 'voltage' and $model != 'plug') {
+			if ($key == 'voltage' && $model != 'plug' && $model != 'gateway') {
 				if ($value>=3000) {
 					$battery = 100;
 				} else if ($value<3000 && $value>2800) {
