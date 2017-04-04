@@ -1,0 +1,12 @@
+
+=== 04/04/2017
+
+- réécriture du daemon
+
+- suppression de nodejs pour les actions aquara
+
+- Yeelight : ajout de la Desklamp
+
+- Xiaomi Wifi : ajout Vacuum, Rice Cooker, Purifier, Humidifier, PM2.5, Philips Eyecare
+
+- changement du calcul statut batterie
