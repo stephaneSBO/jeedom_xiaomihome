@@ -2,37 +2,57 @@
 
 Une présentation complète du plugin est disponible ici : https://lunarok-domotique.com/plugins-jeedom/xiaomi-home/[Article de présentation]
 
+Le plugin implémente 3 protocoles Xiaomi ce qui donne un éventail conséquent de matériel supporté
+
 ==== Xiaomi Aquara Home Gateway
 
 La Xiaomi Aquara Home Gateway permet d'utiliser différents capteurs Zigbee Xiaomi.
 
-Liste des capteurs compatibles :
+Liste des capteurs compatibles (la gateway est nécessaire et un prérequis) :
 
-  * Gateway : http://www.gearbest.com/living-appliances/pp_344667.html?lkid=10269386[Gateway]
+  * http://www.gearbest.com/living-appliances/pp_344667.html?lkid=10269386[Gateway]
 
-  * Capteur de porte : http://www.gearbest.com/smart-light-bulb/pp_257677.html?lkid=10269970[Capteur porte et fenêtre]
+  * http://www.gearbest.com/smart-light-bulb/pp_257677.html?lkid=10269970[Capteur porte et fenêtre]
 
-  * Capteur de mouvement : http://www.gearbest.com/smart-light-bulb/pp_257678.html?lkid=10269971[Capteur mouvement]
+  * http://www.gearbest.com/smart-light-bulb/pp_257678.html?lkid=10269971[Capteur mouvement]
 
-  * Température / Humidité : http://www.gearbest.com/living-appliances/pp_344665.html?lkid=10269957[Capteur température]
+  * http://www.gearbest.com/living-appliances/pp_344665.html?lkid=10269957[Capteur température/humidité]
 
-  * Interrupteur : http://www.gearbest.com/smart-light-bulb/pp_257679.html?lkid=10269959[Interrupteur bouton]
+  * http://www.gearbest.com/smart-light-bulb/pp_257679.html?lkid=10269959[Interrupteur bouton]
 
-  * Cube : http://www.gearbest.com/living-appliances/pp_364494.html?lkid=10269960[Magic Cube]
+  * http://www.gearbest.com/living-appliances/pp_364494.html?lkid=10269960[Magic Cube]
 
-  * Prise : http://www.gearbest.com/living-appliances/pp_344666.html?lkid=10269961[Prise]
+  * http://www.gearbest.com/living-appliances/pp_344666.html?lkid=10269961[Prise]
 
-  * Interrupteur mural et encastrable (simple et double): http://s.click.aliexpress.com/e/6AAyZf2[Interrupteurs]
+  * http://s.click.aliexpress.com/e/6AAyZf2[Interrupteur mural et encastrable (simple et double)]
 
 
 ==== Yeelight Wifi
 
-Le plugin permet également d'utiliser les ampoules et bandeau RGB Yeelight Wifi de Xiaomi
+Le plugin permet également d'utiliser les lampes qui supportent le protocole Yeelight Wifi. C'est le cas des ampoules/lampes ci-dessous :
 
-  * Yeelight E27 Blanc : http://www.gearbest.com/smart-light-bulb/pp_278478.html?lkid=10269966[Yeelight Blanc]
+  * http://www.gearbest.com/smart-light-bulb/pp_278478.html?lkid=10269966[Yeelight E27 Blanc]
 
-  * Yeelight E27 RGB : http://www.gearbest.com/smart-lighting/pp_361555.html?lkid=10269964[Yeelight RGB]
+  * http://www.gearbest.com/smart-lighting/pp_361555.html?lkid=10269964[Yeelight E27 RGB]
 
-  * Bandeau Yeelight RGB : http://www.gearbest.com/smart-lighting/pp_424884.html?lkid=10269963[Yeelight Ruban RGB]
+  * http://www.gearbest.com/smart-lighting/pp_424884.html?lkid=10269963[Yeelight Ruban RGB]
 
-  * Yeelight Ceiling : http://www.gearbest.com/ceiling-lights/pp_596249.html?lkid=10269966[Yeelight Ceiling]
+  * http://www.gearbest.com/ceiling-lights/pp_596249.html?lkid=10269966[Yeelight Ceiling]
+
+  * Mijia Smart LED Desklamp
+
+==== Xiaomi Wifi
+
+Il existe aussi un protocole Xiaomi commun à beaucoup de périphériques Wifi. Le plugin permet ainsi d'utiliser ces matériels :
+
+  * Xiaomi Mi Robot Vacuum
+
+  * Xiaomi Smart Mi Air Purifier
+
+  * Xiaomi Smart Ultrasonic Humidifier
+
+  * Xiaomi Smart Air Quality Monitor PM2.5 Detector
+
+  * Xiaomi Mi Electric Rice Cooker
+
+  * Xiaomi Philips Eyecare Smart Lamp
