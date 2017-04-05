@@ -27,7 +27,7 @@ Les remontées utilisateurs indiquent 31 capteurs + la Gateway. Au delà il faut
 [panel,primary]
 .Quelles ampoules sont supportées ?
 --
-Les Yeelight Wifi uniquement
+Les Yeelight Wifi uniquement (la liste est fournie dans la documentation)
 --
 
 [panel,primary]
