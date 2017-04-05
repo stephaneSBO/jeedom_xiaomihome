@@ -257,9 +257,6 @@ class xiaomihome extends eqLogic {
 	public function postSave() {
 		if ($this->getConfiguration('applyDevice') != $this->getConfiguration('model')) {
 			log::add('xiaomihome','debug',$this->getConfiguration('model'));
-			foreach ($this->getCmd() as $cmd) {
-				$cmd->remove();
-			}
 			$this->applyModuleConfiguration($this->getConfiguration('model'));
 		}
 	}
@@ -297,6 +294,9 @@ class xiaomihome extends eqLogic {
 			return true;
 		}
 		$this->setConfiguration('applyDevice', $model);
+		foreach ($this->getCmd() as $cmd) {
+			$cmd->remove();
+		}
 		$this->save();
 		$this->import($device);
 	}
@@ -307,21 +307,21 @@ class xiaomihome extends eqLogic {
 			if ($key == 'humidity' || $key == 'temperature') {
 				$value = $value / 100;
 			}
-			if ($key == 'rotate') {
+			else if ($key == 'rotate') {
 				if ($value  > 0) {
 					$xiaomihome->checkAndUpdateCmd('status', 'rotate_right');
 				} else {
 					$xiaomihome->checkAndUpdateCmd('status', 'rotate_left');
 				}
 			}
-			if ($key == 'rgb') {
+			else if ($key == 'rgb') {
 				$value = str_pad(dechex($value), 8, "0", STR_PAD_LEFT);
 				$light = hexdec(substr($value, 0, 2));
 				$value = '#' . substr($value, -6);
 				$xiaomihome->checkAndUpdateCmd('brightness', $light);
 				$xiaomihome->checkAndUpdateCmd('rgb', $value);
 			}
-			if ($key == 'voltage' && $model != 'plug' && $model != 'gateway') {
+			else if ($key == 'voltage' && $model != 'plug' && $model != 'gateway') {
 				if ($value>=3000) {
 					$battery = 100;
 				} else if ($value<3000 && $value>2800) {
@@ -334,17 +334,20 @@ class xiaomihome extends eqLogic {
 				$xiaomihome->setConfiguration('battery',$battery);
 				$xiaomihome->batteryStatus($battery);
 				$xiaomihome->save();
+			} 
+			else if ($key == 'voltage') {
+				$value = $value /1000;
 			}
-			if ($key == 'no_motion') {
+			else if ($key == 'no_motion') {
 				$xiaomihome->checkAndUpdateCmd('status', 0);
 			}
-			if ($key == 'no_close') {
+			else if ($key == 'no_close') {
 				$xiaomihome->checkAndUpdateCmd('status', 1);
 			}
-			if ($key == 'channel_0' || $key == 'channel_1') {
+			else if ($key == 'channel_0' || $key == 'channel_1') {
 				$value = ($value == 'on') ? 1 : 0;
 			}
-			if ($key == 'status') {
+			else if ($key == 'status') {
 				if ($model == 'motion') {
 					if ($value == 'motion') {
 						$xiaomihome->checkAndUpdateCmd('no_motion', 0);
@@ -353,7 +356,7 @@ class xiaomihome extends eqLogic {
 						$value = 0;
 					}
 				}
-				if ($model == 'magnet') {
+				else if ($model == 'magnet') {
 					if ($value == 'open') {
 						$value = 1;
 					} else {
@@ -361,7 +364,7 @@ class xiaomihome extends eqLogic {
 						$xiaomihome->checkAndUpdateCmd('no_close', 0);
 					}
 				}
-				if ($model == 'plug') {
+				else if ($model == 'plug') {
 					$value = ($value == 'on') ? 1 : 0;
 				}
 			}

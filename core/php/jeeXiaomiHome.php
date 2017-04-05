@@ -71,7 +71,7 @@ if (isset($result['devices'])) {
 					$data = $datas['data'];
 					foreach ($data as $key => $value) {
 						if ($datas['cmd'] == 'heartbeat' && $key == 'status') {
-							return;
+							continue;
 						}
 						if ($datas['model'] == 'gateway'){
 							xiaomihome::receiveAquaraData($datas['source'], $datas['model'], $key, $value);
