@@ -15,16 +15,4 @@ Le plugin permet également d'utiliser les lampes qui supportent le protocole Ye
 
 ==== Xiaomi Wifi
 
-Il existe aussi un protocole Xiaomi commun à beaucoup de périphériques Wifi. Le plugin permet ainsi d'utiliser ces matériels :
-
-  * Xiaomi Mi Robot Vacuum
-
-  * Xiaomi Smart Mi Air Purifier
-
-  * Xiaomi Smart Ultrasonic Humidifier
-
-  * Xiaomi Smart Air Quality Monitor PM2.5 Detector
-
-  * Xiaomi Mi Electric Rice Cooker
-
-  * Xiaomi Philips Eyecare Smart Lamp
+Il existe aussi un protocole Xiaomi commun à beaucoup de périphériques Wifi.
