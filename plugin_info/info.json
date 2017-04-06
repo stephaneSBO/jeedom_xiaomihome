@@ -2,7 +2,7 @@
 	"id" : "xiaomihome",
 	"name" : "Xiaomi Home",
 	"licence" : "AGPL",
-	"author" : "lunarok",
+	"author" : "lunarok,sarakha63",
 	"require" : "2.4",
 	"category" : "automation protocol",
     "hasDependency" : 1,
