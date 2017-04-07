@@ -22,11 +22,11 @@ Pour les équipements Wifi supplémentaires, il faut faire un ajout manuel.
 
 Il faut renseigner pour tous les équipements supportés : adresse IP et sélectionner le type dans le ménu déroulant.
 
-Il vous faut également le token. Pour obtenir le token, il suffit de cliquer sur le bouton bleu "Récupérer les infos", sauf pour le Robot Aspirateur, il faudra l'obtenir au préalable
+Il vous faut également le token. Pour obtenir le token, il suffit de cliquer sur le bouton bleu "Récupérer les infos", dans le cas où le token récupéré est une suite de 0 seulement ou de f seulement, il faut alors le récupérer manuellement avec la procédure ci-dessous
 
-===== Récupérer le token du Robot Aspirateur
+===== Récupérer le token d'un équipement manuellement
 
-Pour le robot, il est nécessaire de récupérer le token manuellement avant son intégration dans Mi Home.
+Pour le robot entre autre, il est nécessaire de récupérer le token manuellement avant son intégration dans Mi Home.
 
 Pour cela, on doit d'abord le reseter (appuyer sur le bouton reset à proximité des boutons on/home) afin qu'il initialise son point d'accès Wifi
 
@@ -37,6 +37,8 @@ De là, il y a un petit utilitaire à lancer qui va vous permettre de récupére
 Là vous pouvez l'intégrer dans Mi Home pour configurer votre Wifi et l'ajouter dans le plugin avec son IP et le token
 
 Attention, tout reset le Robot change de token et donc il faut refaire la procédure pour récupérer le token
+
+La même procédure s'applique pour tout équipement qui ne fournirait pas son token automatiquement (Rice Cooker, Robot par exemple)
 
 === Configuration de la gateway Aqara
 
