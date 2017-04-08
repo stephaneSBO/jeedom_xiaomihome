@@ -192,23 +192,28 @@
         		},
                 "value": "Température de blanc",
                 "isVisible": 0,
-                "logicalId": "temperatureMoon"
+                "logicalId": "temperatureSun"
             },
-            {
-                "name": "Mode Nuit",
+           {
+                "name": "Définir température de blanc",
                 "type": "action",
-                "subtype": "other",
+                "subtype": "slider",
                 "display": {
-					"generic_type": "DONT",
-                    "icon": "<i class=\"fa fa-moon-o\"><\/i>"
+					"generic_type": "DONT"
                 },
                 "configuration" : {
-        			"request" : "temperature 2700"
+        			"request" : "temperature",
+                    "minValue" : 1700,
+                    "maxValue" : 6500
         		},
                 "value": "Température de blanc",
-                "isVisible": 0,
-                "logicalId": "temperatureMoon"
-            },
+                "isVisible": 1,
+                "logicalId": "temperatureAct",
+                "template": {
+					"dashboard": "light",
+					"mobile": "light"
+				}
+},
             {
                 "name": "Température de blanc",
                 "type": "info",
