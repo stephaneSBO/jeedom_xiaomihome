@@ -216,7 +216,7 @@
         		},
                 "value": "Température de blanc",
                 "isVisible": 0,
-                "logicalId": "temperatureMoon"
+                "logicalId": "temperatureSun"
             },
             {
                 "name": "Température de blanc",
