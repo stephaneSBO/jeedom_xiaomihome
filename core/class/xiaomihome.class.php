@@ -327,12 +327,20 @@ public static function receiveAquaraData($id, $model, $key, $value) {
             $xiaomihome->checkAndUpdateCmd('rgb', $value);
         }
         if ($key == 'voltage') {
+            if ($value >= 3000) {
+                $battery = 100;
+            } else {
+                $battery = ($value-2800) / 2;
+            }
             $battery = ($value-2800) / 5;
             $value = $value / 1000;
             $xiaomihome->checkAndUpdateCmd('battery', $battery);
             $xiaomihome->setConfiguration('battery',$battery);
             $xiaomihome->batteryStatus($battery);
             $xiaomihome->save();
+        }
+        if ($key == 'power_consumed') {
+            $value = $value / 1000;
         }
         if ($key == 'no_motion') {
             $xiaomihome->checkAndUpdateCmd('status', 0);
