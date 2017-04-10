@@ -28,7 +28,7 @@ class xiaomihome extends eqLogic {
 			}
 		}
 	}
-	
+
 	public static function cron5() {
 		$eqLogics = eqLogic::byType('xiaomihome');
 		foreach($eqLogics as $xiaomihome) {
@@ -39,7 +39,7 @@ class xiaomihome extends eqLogic {
 			}
 		}
 	}
-	
+
 	public static function createFromDef($_def,$_type) {
 		event::add('jeedom::alert', array(
 			'level' => 'warning',
@@ -144,7 +144,7 @@ class xiaomihome extends eqLogic {
 		}
 		return $xiaomihome;
 	}
-	
+
 	public static function deamon_info() {
 		$return = array();
 		$return['log'] = 'xiaomihome';
@@ -193,7 +193,7 @@ class xiaomihome extends eqLogic {
 		message::removeAll('xiaomihome', 'unableStartDeamon');
 		return true;
 	}
-	
+
 	public static function deamon_stop() {
 		$pid_file = jeedom::getTmpFolder('xiaomihome') . '/deamon.pid';
 		if (file_exists($pid_file)) {
@@ -225,7 +225,7 @@ class xiaomihome extends eqLogic {
 		$resource_path = realpath(dirname(__FILE__) . '/../../resources');
 		passthru('/bin/bash ' . $resource_path . '/install.sh > ' . log::getPathToLog('xiaomihome_dep') . ' 2>&1 &');
 	}
-	
+
 	public static function discover($_mode) {
 		if ($_mode == 'wifi') {
 			$value = json_encode(array('apikey' => jeedom::getApiKey('xiaomihome'), 'cmd' => 'scanwifi'));
@@ -237,7 +237,7 @@ class xiaomihome extends eqLogic {
 		socket_write($socket, $value, strlen($value));
 		socket_close($socket);
 	}
-	
+
 	public function get_wifi_info(){
 		if ($this->getConfiguration('type') == 'wifi' && $this->getConfiguration('ipwifi') != ''){
 			$value = json_encode(array('apikey' => jeedom::getApiKey('xiaomihome'), 'type' => 'wifi','cmd' => 'discover', 'dest' => $this->getConfiguration('ipwifi') , 'token' => $this->getConfiguration('password') , 'model' => $this->getConfiguration('model')));
@@ -253,7 +253,7 @@ class xiaomihome extends eqLogic {
 			$this->setLogicalId($this->getConfiguration('ipwifi'));
 		}
 	}
-	
+
 	public function postSave() {
 		if ($this->getConfiguration('applyDevice') != $this->getConfiguration('model')) {
 			log::add('xiaomihome','debug',$this->getConfiguration('model'));
@@ -334,8 +334,11 @@ class xiaomihome extends eqLogic {
 				$xiaomihome->setConfiguration('battery',$battery);
 				$xiaomihome->batteryStatus($battery);
 				$xiaomihome->save();
-			} 
+			}
 			else if ($key == 'voltage') {
+				$value = $value /1000;
+			}
+            else if ($key == 'power_consumed') {
 				$value = $value /1000;
 			}
 			else if ($key == 'no_motion') {
