@@ -347,7 +347,7 @@ class xiaomihome extends eqLogic {
 			else if ($key == 'no_close') {
 				$xiaomihome->checkAndUpdateCmd('status', 1);
 			}
-			else if ($key == 'channel_0' || $key == 'channel_1') {
+			else if (($key == 'channel_0' || $key == 'channel_1') && ($model == 'ctrl_neutral1' || $model == 'ctrl_neutral2')) {
 				$value = ($value == 'on') ? 1 : 0;
 			}
 			else if ($key == 'status') {
