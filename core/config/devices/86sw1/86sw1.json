@@ -3,7 +3,7 @@
         "name": "Interrupteur double à pile",
         "groupe" : "Aquara",
 		"configuration" : {
-			"model" : "86sw2",
+			"model" : "86sw1",
             "type" : "aquara",
             "battery_type" : "1x3V CR2032"
 		},
