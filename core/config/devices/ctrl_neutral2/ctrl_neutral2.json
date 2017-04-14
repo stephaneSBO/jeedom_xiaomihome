@@ -1,6 +1,7 @@
 {
     "ctrl_neutral2": {
         "name": "Interrupteur double",
+        "groupe" : "Aquara",
 		"configuration" : {
 			"model" : "ctrl_neutral2",
             "type" : "aquara"

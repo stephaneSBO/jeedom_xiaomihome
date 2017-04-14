@@ -1,6 +1,7 @@
 {
     "86sw2": {
         "name": "Interrupteur double",
+        "groupe" : "Aquara",
 		"configuration" : {
 			"model" : "86sw2",
             "type" : "aquara",
