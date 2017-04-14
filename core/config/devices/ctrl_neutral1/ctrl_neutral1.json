@@ -1,6 +1,6 @@
 {
     "ctrl_neutral1": {
-        "name": "Interrupteur simple",
+        "name": "Interrupteur simple encastré",
         "groupe" : "Aquara",
 		"configuration" : {
 			"model" : "ctrl_neutral1",
