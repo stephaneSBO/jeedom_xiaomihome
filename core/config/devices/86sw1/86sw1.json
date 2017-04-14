@@ -1,6 +1,6 @@
 {
     "86sw2": {
-        "name": "Interrupteur double à pile",
+        "name": "Interrupteur simple à pile",
         "groupe" : "Aquara",
 		"configuration" : {
 			"model" : "86sw1",
