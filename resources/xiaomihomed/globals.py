@@ -1,6 +1,6 @@
 # coding: utf-8
 import time
-from yeelight import *
+from devices.yeelight.flow import *
 JEEDOM_COM = ''
 log_level = "error"
 pidfile = '/tmp/blead.pid'
