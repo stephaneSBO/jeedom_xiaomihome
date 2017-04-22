@@ -35,7 +35,24 @@
                 },
                 "isVisible": 1,
                 "isHistorized": 0,
+                "unite": "°",
                 "logicalId": "rotate",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Temps Rotation",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "ms",
+                "logicalId": "rotatetime",
 				"template": {
 					"dashboard": "line",
 					"mobile": "line"

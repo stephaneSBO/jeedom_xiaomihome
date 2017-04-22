@@ -314,6 +314,9 @@ class xiaomihome extends eqLogic {
                 $value = $value / 100;
             }
             else if ($key == 'rotate') {
+                $mvalues = explode(',',$value);
+                $xiaomihome->checkAndUpdateCmd('rotatetime', $mvalues[1]);
+                $value = $mvalues[0] * 3.6;
                 if ($value  > 0) {
                     $xiaomihome->checkAndUpdateCmd('status', 'rotate_right');
                 } else {
