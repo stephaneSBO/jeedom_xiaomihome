@@ -138,7 +138,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
         if ($status == 1) {
             echo '</div>';
         } else {
-            echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucun Xiaomi Wifi, lancer un scan wifi}}</span></center>";
+            echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucun Xiaomi Wifi, ajoutez en un}}</span></center>";
         }
         ?>
 
@@ -320,6 +320,7 @@ $( "#modelfield" ).change(function(){
     if (['gateway','purifier','pm25','humidifier','vacuum','ricecooker'].indexOf($('#modelfield').value()) != -1) {
         $('#passfield').show();
 		$('.globalRemark').show();
+		$('.syncinfo').show();
     } else {
         $('#passfield').hide();
 		$('.syncinfo').hide();
