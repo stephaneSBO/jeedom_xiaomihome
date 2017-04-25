@@ -7,6 +7,21 @@
             "type" : "aquara"
 		},
         "commands": [
+            {
+                "name": "Online",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "online",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
 			{
                 "name": "Capteur Luminosité",
                 "type": "info",
@@ -117,7 +132,7 @@
                 "subtype": "slider",
                 "display": {
 					"generic_type": "LIGHT_SLIDER",
-					
+
 				"forceReturnLineBefore": 1
                 },
                 "configuration" : {
