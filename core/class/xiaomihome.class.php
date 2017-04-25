@@ -537,7 +537,7 @@ class xiaomihomeCmd extends cmd {
             $eqLogic = $this->getEqLogic();
             log::add('xiaomihome', 'debug', 'execute : ' . $this->getType() . ' ' . $eqLogic->getConfiguration('type') . ' ' . $this->getLogicalId());
             if ($eqLogic->getConfiguration('type') == 'yeelight') {
-                if (!$eqLogic->pingHost($eqLogic->getConfiguration('gateway'))) {
+                if ($eqLogic->pingHost($eqLogic->getConfiguration('gateway')) == false) {
                     log::add('xiaomihome', 'debug', 'Offline Yeelight : ' . $eqLogic->getName());
                     return;
                 }
@@ -648,7 +648,7 @@ class xiaomihomeCmd extends cmd {
                 }
                 $gateway = $eqLogic->getConfiguration('gateway');
                 $xiaomihome = $eqLogic->byLogicalId($gateway, 'xiaomihome');
-                if (!$xiaomihome->pingHost($gateway)) {
+                if ($xiaomihome->pingHost($gateway) == false) {
                     log::add('xiaomihome', 'debug', 'Offline Aqara : ' . $xiaomihome->getName());
                     return;
                 }
@@ -667,7 +667,7 @@ class xiaomihomeCmd extends cmd {
                 socket_close($socket);
             }
             else {
-                if (!$eqLogic->pingHost($eqLogic->getConfiguration('ipwifi'))) {
+                if ($eqLogic->pingHost($eqLogic->getConfiguration('ipwifi')) == false) {
                     log::add('xiaomihome', 'debug', 'Offline Wifi : ' . $eqLogic->getName());
                     return;
                 }
