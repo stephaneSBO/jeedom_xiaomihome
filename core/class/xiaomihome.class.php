@@ -32,10 +32,14 @@ class xiaomihome extends eqLogic {
     public static function cron5() {
         $eqLogics = eqLogic::byType('xiaomihome', true);
         foreach($eqLogics as $xiaomihome) {
-            if ($xiaomihome->getConfiguration('type') == 'wifi' || ($xiaomihome->getConfiguration('type') == 'aquara' && $xiaomihome->getConfiguration('model') == 'gateway')) {
+            if ($xiaomihome->getConfiguration('type') == 'wifi') {
                 log::add('xiaomihome', 'debug', 'Refresh de XiaomiWifi : ' . $xiaomihome->getName());
                 $refreshcmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),'refresh');
                 $refreshcmd->execCmd();
+            }
+            if ($xiaomihome->getConfiguration('type') == 'aquara' && $xiaomihome->getConfiguration('model') == 'gateway') {
+                log::add('xiaomihome', 'debug', 'Refresh de Aqara : ' . $xiaomihome->getName());
+                $xiaomihome->pingHost($xiaomihome->getConfiguration('gateway'));
             }
         }
     }
