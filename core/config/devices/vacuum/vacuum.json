@@ -9,6 +9,21 @@
 		},
         "commands": [
             {
+                "name": "Online",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "online",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
                 "name": "Statut",
                 "type": "info",
                 "subtype": "string",
@@ -206,7 +221,7 @@
                 "isVisible": 1,
                 "logicalId": "refresh"
             }
-            
+
         ]
     }
 }
