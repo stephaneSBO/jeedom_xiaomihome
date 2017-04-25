@@ -19,10 +19,10 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
 class xiaomihome extends eqLogic {
     public static function cron() {
-        $eqLogics = eqLogic::byType('xiaomihome');
+        $eqLogics = eqLogic::byType('xiaomihome', true);
         foreach ($eqLogics as $eqLogic) {
             if ($eqLogic->getConfiguration('type') == 'yeelight') {
-                log::add('xiaomihome', 'debug', 'Refresh de XiaomiWifi : ' . $eqLogic->getName());
+                log::add('xiaomihome', 'debug', 'Refresh de Yeelight : ' . $eqLogic->getName());
                 $refreshcmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'refresh');
                 $refreshcmd->execCmd();
             }
@@ -30,9 +30,9 @@ class xiaomihome extends eqLogic {
     }
 
     public static function cron5() {
-        $eqLogics = eqLogic::byType('xiaomihome');
+        $eqLogics = eqLogic::byType('xiaomihome', true);
         foreach($eqLogics as $xiaomihome) {
-            if ($xiaomihome->getIsEnable() == 1 && $xiaomihome->getConfiguration('type') == 'wifi') {
+            if ($xiaomihome->getConfiguration('type') == 'wifi' || ($xiaomihome->getConfiguration('type') == 'aquara' && $xiaomihome->getConfiguration('model') == 'gateway')) {
                 log::add('xiaomihome', 'debug', 'Refresh de XiaomiWifi : ' . $xiaomihome->getName());
                 $refreshcmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),'refresh');
                 $refreshcmd->execCmd();
@@ -516,6 +516,17 @@ class xiaomihome extends eqLogic {
             }
         }
     }
+
+    public function pingHost($ip) {
+        exec("sudo ping -c1 " . $ip, $output, $return_var);
+        if ($return_var != 0) {
+            $this->checkAndUpdateCmd('online', 0);
+            return false;
+        } else {
+            $this->checkAndUpdateCmd('online', 1);
+            return true;
+        }
+    }
 }
 
 class xiaomihomeCmd extends cmd {
@@ -526,6 +537,10 @@ class xiaomihomeCmd extends cmd {
             $eqLogic = $this->getEqLogic();
             log::add('xiaomihome', 'debug', 'execute : ' . $this->getType() . ' ' . $eqLogic->getConfiguration('type') . ' ' . $this->getLogicalId());
             if ($eqLogic->getConfiguration('type') == 'yeelight') {
+                if (!$eqLogic->pingHost($eqLogic->getConfiguration('gateway'))) {
+                    log::add('xiaomihome', 'debug', 'Offline Yeelight');
+                    return;
+                }
                 switch ($this->getSubType()) {
                     case 'slider':
                     $option = $_options['slider'];
@@ -557,12 +572,6 @@ class xiaomihomeCmd extends cmd {
                         $request ='turn off';
                     } else {
                         $request =$this->getConfiguration('request');
-                    }
-                    exec("sudo ping -c1 " . $eqLogic->getConfiguration('gateway'), $output, $return_var);
-                    if ($return_var != 0) {
-                        log::add('xiaomihome', 'debug', 'Lampe Yeelight non joignable ' . $eqLogic->getConfiguration('gateway'));
-                        $eqLogic->checkAndUpdateCmd('online', 0);
-                        return;
                     }
                     $value = json_encode(array('apikey' => jeedom::getApiKey('xiaomihome'), 'type' => 'yeelight','cmd' => 'send', 'dest' => $eqLogic->getConfiguration('gateway') , 'model' => $eqLogic->getConfiguration('model'), 'sid' => $eqLogic->getConfiguration('sid'), 'short_id' => $eqLogic->getConfiguration('short_id'),'command' => $request, 'option' => $option, 'id' => $eqLogic->getLogicalId()));
                     $socket = socket_create(AF_INET, SOCK_STREAM, 0);
@@ -639,14 +648,13 @@ class xiaomihomeCmd extends cmd {
                 }
                 $gateway = $eqLogic->getConfiguration('gateway');
                 $xiaomihome = $eqLogic->byLogicalId($gateway, 'xiaomihome');
+                if (!$xiaomihome->pingHost($gateway)) {
+                    log::add('xiaomihome', 'debug', 'Offline Aqara');
+                    return;
+                }
                 $password = $xiaomihome->getConfiguration('password','');
                 if ($password == '') {
                     log::add('xiaomihome', 'debug', 'Mot de passe manquant sur la gateway Aquara ' . $gateway);
-                    return;
-                }
-                exec("sudo ping -c1 " . $gateway, $output, $return_var);
-                if ($return_var != 0) {
-                    log::add('xiaomihome', 'debug', 'Gateway Aquara non joignable ' . $gateway);
                     return;
                 }
                 $token = $xiaomihome->getConfiguration('token');
@@ -659,6 +667,10 @@ class xiaomihomeCmd extends cmd {
                 socket_close($socket);
             }
             else {
+                if (!$eqLogic->pingHost($eqLogic->getConfiguration('ipwifi'))) {
+                    log::add('xiaomihome', 'debug', 'Offline Wifi');
+                    return;
+                }
                 if ($this->getLogicalId() == 'refresh') {
                     $value = json_encode(array('apikey' => jeedom::getApiKey('xiaomihome'), 'type' => 'wifi','cmd' => 'refresh', 'model' => $eqLogic->getConfiguration('model'), 'dest' => $eqLogic->getConfiguration('gateway') , 'token' => $eqLogic->getConfiguration('password') , 'devtype' => $eqLogic->getConfiguration('short_id'), 'serial' => $eqLogic->getConfiguration('sid')));
                     $socket = socket_create(AF_INET, SOCK_STREAM, 0);
