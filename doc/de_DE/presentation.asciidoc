@@ -8,7 +8,6 @@ Le plugin implémente 3 protocoles Xiaomi ce qui donne un éventail conséquent 
 
 La Xiaomi Aquara Home Gateway permet d'utiliser différents capteurs Zigbee Xiaomi.
 
-
 ==== Yeelight Wifi
 
 Le plugin permet également d'utiliser les lampes qui supportent le protocole Yeelight Wifi.

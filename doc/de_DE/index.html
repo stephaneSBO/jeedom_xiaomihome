@@ -491,17 +491,23 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_plugin_konfiguration">2.1. Plugin Konfiguration</h3>
 <div class="paragraph">
-<p>Das Plugin verfügt über eine Konfigurationsoption :</p>
+<p>Le plugin ne comporte pas de configuration générale.</p>
+</div>
+<div class="paragraph">
+<p>Le plugin utilise un service en python qui permet d&#8217;utiliser :</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Activer un cron pour les Yeelight : permet de s&#8217;assurer qu&#8217;elles restent réveillées (pas nécessaire pour tous les utilisateurs, mais chez certains elles se mettent en veille après quelques minutes)</p>
+<p>les capteurs Zigbee Xiaomi reliés à une gateway Wifi Aqara Lumi (création des équipements automatique)</p>
+</li>
+<li>
+<p>les ampoules/lampes Yeelight Wifi (le plugin dispose d&#8217;un bouton de scan qui créer automatiquement les ampoules découvertes)</p>
+</li>
+<li>
+<p>différents périphériques Xiaomi qui fonctionnnent en Wifi</p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p>Il y a un service qui une fois démarré récupère les informations des Aqara Gateway et également les annonces de présence des Yeelight</p>
 </div>
 </div>
 <div class="sect2">

@@ -1,10 +1,14 @@
 === Plugin Konfiguration
 
-Das Plugin verfügt über eine Konfigurationsoption :
+Le plugin ne comporte pas de configuration générale.
 
-  - Activer un cron pour les Yeelight : permet de s'assurer qu'elles restent réveillées (pas nécessaire pour tous les utilisateurs, mais chez certains elles se mettent en veille après quelques minutes)
+Le plugin utilise un service en python qui permet d'utiliser :
 
-Il y a un service qui une fois démarré récupère les informations des Aqara Gateway et également les annonces de présence des Yeelight
+  - les capteurs Zigbee Xiaomi reliés à une gateway Wifi Aqara Lumi (création des équipements automatique)
+
+  - les ampoules/lampes Yeelight Wifi (le plugin dispose d'un bouton de scan qui créer automatiquement les ampoules découvertes)
+
+  - différents périphériques Xiaomi qui fonctionnnent en Wifi
 
 === Création des équipements
 
