@@ -260,6 +260,9 @@ class xiaomihome extends eqLogic {
 
     public function postSave() {
         if ($this->getConfiguration('applyDevice') != $this->getConfiguration('model')) {
+			foreach ($this->getCmd() as $cmd) {
+				$cmd->remove();
+			}
             $this->applyModuleConfiguration($this->getConfiguration('model'));
         }
     }
@@ -293,16 +296,13 @@ class xiaomihome extends eqLogic {
 
     public function applyModuleConfiguration($model) {
         $this->setConfiguration('applyDevice', $model);
-        foreach ($this->getCmd() as $cmd) {
-            $cmd->remove();
-        }
 		$this->setConfiguration('model',$model);
         $this->save();
         //$this->import($device);
 		if ($this->getConfiguration('model') == '') {
 			return true;
 		}
-		$device = self::devicesParameters($this->getConfiguration('model'));
+		$device = self::devicesParameters($model);
 		if (!is_array($device)) {
 			return true;
 		}
