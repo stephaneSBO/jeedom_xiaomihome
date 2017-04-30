@@ -36,6 +36,9 @@ if (!is_array($result)) {
 if (isset($result['devices'])) {
 	foreach ($result['devices'] as $key => $datas) {
 		if ($key == 'aquara'){
+			if (!($datas['cmd'] == 'heartbeat' || $datas['cmd'] == 'report')) {
+				continue;
+			}
 			if (!isset($datas['sid'])) {
 				continue;
 			}
