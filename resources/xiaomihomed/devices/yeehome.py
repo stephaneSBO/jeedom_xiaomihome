@@ -13,16 +13,16 @@ import utils
 import threading
 
 def scan(timeout=2):
-	for x in range(3):
+	for x in range(4):
 		bulbs  = discover_bulbs(timeout)
 		logging.debug('Scan found ' + str(bulbs))
 		for bulb in bulbs:
 			globals.JEEDOM_COM.send_change_immediate({'devices':{'yeelight':bulb}})
-			time.sleep(0.1)
+			time.sleep(1)
 
 def execute_action(message):
 	logging.debug(str(message))
-	bulb = Bulb(message['dest'], 55443, 'smooth', 500, True)
+	bulb = Bulb(message['dest'], 55443, 'smooth', 500, True,type=message['model'])
 	command_list= message['command'].split(' ')
 	if command_list[0] == 'turn':
 		if command_list[1] == 'on':
@@ -82,7 +82,7 @@ def refresh(message):
 	data={}
 	result['ip']=message['dest']
 	data['id'] = message['id']
-	bulb = Bulb(message['dest'], 55443, 'smooth', 500, True)
+	bulb = Bulb(message['dest'], 55443, 'smooth', 500, True, type=message['model'])
 	result_brut = bulb.get_properties().items()
 	for key, value in result_brut:
 		data[key] = value

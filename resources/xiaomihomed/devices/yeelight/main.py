@@ -118,7 +118,7 @@ class BulbType(Enum):
 
 class Bulb(object):
     def __init__(self, ip, port=55443, effect="smooth",
-                 duration=300, auto_on=False):
+                 duration=300, auto_on=False, type = ''):
         """
         The main controller class of a physical YeeLight bulb.
 
@@ -149,6 +149,7 @@ class Bulb(object):
         self._last_properties = {}  # The last set of properties we've seen.
         self._music_mode = False    # Whether we're currently in music mode.
         self.__socket = None        # The socket we use to communicate.
+        self.type = type        # The socket we use to communicate.
 
     @property
     def _cmd_id(self):
@@ -264,10 +265,10 @@ class Bulb(object):
         }
 
         logging.debug("%s > %s", self, command)
-
         try:
             self._socket.send((json.dumps(command) + "\r\n").encode("utf8"))
-            # self._socket.send(("\r\n").encode("utf8"))
+            if self.type in ['desklamp']:
+                self._socket.send(("\r\n").encode("utf8"))
         except socket.error as ex:
             # Some error occurred, remove this socket in hopes that we can later
             # create a new one.
