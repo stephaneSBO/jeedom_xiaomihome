@@ -153,12 +153,12 @@ class xiaomihome extends eqLogic {
         $return = array();
         $return['log'] = 'xiaomihome';
         $return['state'] = 'nok';
-        $pid_file = jeedom::getTmpFolder('xiaomihome') . '/deamon.pid';
+        $pid_file = '/tmp/xiaomihomed.pid';
         if (file_exists($pid_file)) {
             if (@posix_getsid(trim(file_get_contents($pid_file)))) {
                 $return['state'] = 'ok';
             } else {
-                shell_exec(system::getCmdSudo() . 'rm -rf ' . $pid_file . ' 2>&1 > /dev/null');
+                shell_exec('sudo rm -rf ' . $pid_file . ' 2>&1 > /dev/null');
             }
         }
         $return['launchable'] = 'ok';
@@ -178,7 +178,7 @@ class xiaomihome extends eqLogic {
         $cmd .= ' --callback ' . network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/plugins/xiaomihome/core/php/jeeXiaomiHome.php';
         $cmd .= ' --apikey ' . jeedom::getApiKey('xiaomihome');
         $cmd .= ' --cycle ' . config::byKey('cycle', 'xiaomihome');
-        $cmd .= ' --pid ' . jeedom::getTmpFolder('xiaomihome') . '/deamon.pid';
+        $cmd .= ' --pid /tmp/xiaomihomed.pid';
         log::add('xiaomihome', 'info', 'Lancement démon xiaomihome : ' . $cmd);
         $result = exec($cmd . ' >> ' . log::getPathToLog('xiaomihome') . ' 2>&1 &');
         $i = 0;
@@ -199,7 +199,7 @@ class xiaomihome extends eqLogic {
     }
 
     public static function deamon_stop() {
-        $pid_file = jeedom::getTmpFolder('xiaomihome') . '/deamon.pid';
+        $pid_file = '/tmp/xiaomihomed.pid';
         if (file_exists($pid_file)) {
             $pid = intval(trim(file_get_contents($pid_file)));
             system::kill($pid);
@@ -463,10 +463,10 @@ class xiaomihome extends eqLogic {
                 $xiaomihome->checkAndUpdateCmd('rgb', $value);
             }
             else if ($key == 'voltage' && $model != 'plug' && $model != 'gateway') {
-                if ($value>=3000) {
+                if ($value>=3100) {
                     $battery = 100;
-                } else if ($value<3000 && $value>2800) {
-                    $battery = ($value - 2800) *0.5;
+                } else if ($value<3100 && $value>2800) {
+                    $battery = ($value - 2800) *0.33;
                 } else {
                     $battery = 1;
                 }
