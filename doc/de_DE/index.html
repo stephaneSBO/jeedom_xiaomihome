@@ -416,14 +416,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">Table des matières</div>
 <ul class="sectlevel1">
 <li><a href="#_beschreibung">1. Beschreibung</a>
-<ul class="sectlevel2">
-<li><a href="#_xiaomi_home_für_das_aquara_home_gateway_und_yeeligt_lampen">1.1. Xiaomi Home, für das Aquara Home-Gateway und Yeeligt Lampen</a>
 <ul class="sectlevel3">
-<li><a href="#_xiaomi_aquara_home_gateway">1.1.1. Xiaomi Aquara Home Gateway</a></li>
-<li><a href="#_yeelight_wifi">1.1.2. Yeelight Wifi</a></li>
-<li><a href="#_xiaomi_wifi">1.1.3. Xiaomi Wifi</a></li>
-</ul>
-</li>
+<li><a href="#_xiaomi_aquara_home_gateway">1.1. Xiaomi Aquara Home Gateway</a></li>
+<li><a href="#_yeelight_wifi">1.2. Yeelight Wifi</a></li>
+<li><a href="#_appliances_wifi">1.3. Appliances Wifi</a></li>
 </ul>
 </li>
 <li><a href="#_konfiguration">2. Konfiguration</a>
@@ -447,7 +443,30 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_configuration_des_équipements_wifi">2.5. Configuration des équipements Wifi</a></li>
 </ul>
 </li>
-<li><a href="#_faq">3. FAQ</a></li>
+<li><a href="#_aqara_capteurs_zigbee">3. Aqara : Capteurs Zigbee</a>
+<ul class="sectlevel2">
+<li><a href="#_création_des_équipements_2">3.1. Création des équipements</a></li>
+<li><a href="#_configuration_de_la_gateway_aqara_2">3.2. Configuration de la gateway Aqara</a></li>
+<li><a href="#_commandes_des_équipements_compatibles_3">3.3. Commandes des équipements compatibles</a></li>
+</ul>
+</li>
+<li><a href="#_yeelight_ampoules_et_lampes_wifi">4. Yeelight : ampoules et lampes wifi</a>
+<ul class="sectlevel2">
+<li><a href="#_création_des_équipements_3">4.1. Création des équipements</a></li>
+<li><a href="#_configuration_des_lampes_yeelight_2">4.2. Configuration des lampes Yeelight</a>
+<ul class="sectlevel3">
+<li><a href="#_commandes_des_équipements_compatibles_4">4.2.1. Commandes des équipements compatibles</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_appliances_wifi_2">5. Appliances Wifi</a>
+<ul class="sectlevel3">
+<li><a href="#_création_des_équipements_wifi_2">5.1. Création des équipements Wifi</a></li>
+<li><a href="#_configuration_des_équipements_wifi_2">5.2. Configuration des équipements Wifi</a></li>
+</ul>
+</li>
+<li><a href="#_faq">6. FAQ</a></li>
 </ul>
 </div>
 </div>
@@ -455,8 +474,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect1">
 <h2 id="_beschreibung">1. Beschreibung</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_xiaomi_home_für_das_aquara_home_gateway_und_yeeligt_lampen">1.1. Xiaomi Home, für das Aquara Home-Gateway und Yeeligt Lampen</h3>
 <div class="paragraph">
 <p>Une présentation complète du plugin est disponible ici : <a href="https://lunarok-domotique.com/plugins-jeedom/xiaomi-home/">Article de présentation</a></p>
 </div>
@@ -464,24 +481,23 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Le plugin implémente 3 protocoles Xiaomi ce qui donne un éventail conséquent de matériel supporté</p>
 </div>
 <div class="sect3">
-<h4 id="_xiaomi_aquara_home_gateway">1.1.1. Xiaomi Aquara Home Gateway</h4>
+<h4 id="_xiaomi_aquara_home_gateway">1.1. Xiaomi Aquara Home Gateway</h4>
 <div class="paragraph">
 <p>La Xiaomi Aquara Home Gateway permet d&#8217;utiliser différents capteurs Zigbee Xiaomi.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_yeelight_wifi">1.1.2. Yeelight Wifi</h4>
+<h4 id="_yeelight_wifi">1.2. Yeelight Wifi</h4>
 <div class="paragraph">
 <p>Le plugin permet également d&#8217;utiliser les lampes qui supportent le protocole Yeelight Wifi.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_xiaomi_wifi">1.1.3. Xiaomi Wifi</h4>
+<h4 id="_appliances_wifi">1.3. Appliances Wifi</h4>
 <div class="paragraph">
-<p>Il existe aussi un protocole Xiaomi commun à beaucoup de périphériques Wifi.</p>
+<p>Il existe aussi un protocole Xiaomi commun à beaucoup de périphériques Wifi. Ce protocole est implémenté dans le plugin et rend compatible les appliances l&#8217;utilisant (Vacuum, Prises, Purificateurs &#8230;&#8203;)</p>
 </div>
 <hr>
-</div>
 </div>
 </div>
 </div>
@@ -744,7 +760,270 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_faq">3. FAQ</h2>
+<h2 id="_aqara_capteurs_zigbee">3. Aqara : Capteurs Zigbee</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_création_des_équipements_2">3.1. Création des équipements</h3>
+<div class="paragraph">
+<p>Les équipements Aqara sont créés automatiquement</p>
+</div>
+<div class="paragraph">
+<p>Pour les capteurs Aqara, c&#8217;est à leur remontée d&#8217;information, donc la fréquence varie en fonction du modèle et ses caractéristiques.</p>
+</div>
+<div class="paragraph">
+<p>Pour les interrupteurs et boutons Aqara, il peut être nécessaire de les activer pour avoir la création des commandes (un clic par exemple)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration_de_la_gateway_aqara_2">3.2. Configuration de la gateway Aqara</h3>
+<div class="paragraph">
+<p>Une présentation complète de la gamme est disponible ici : <a href="https://lunarok-domotique.com/plugins-jeedom/xiaomi-home-jeedom/aqara-lumi-xiaomi-smart-home-security/">Article de présentation</a></p>
+</div>
+<div class="paragraph">
+<p>Il est par contre nécessaire de paramétrer la gateway pour activer l&#8217;API locale</p>
+</div>
+<div class="paragraph">
+<p>Pour cela, il faut ajouter la Gateway dans l&#8217;application Mi Home et être en China Mainland et Chinese (oui du coup des écrans peuvent contenir beaucoup de caractères illisibles à moins de maitriser le mandarin)</p>
+</div>
+<div class="paragraph">
+<p>Ensuite cliquer dessus pour la sélectionner, là cliquer sur les "&#8230;&#8203;" et enfin "about"</p>
+</div>
+<div class="paragraph">
+<p>Là vous avez un numéro de version, cliquez dessus de facon répéter jusqu&#8217;à un message (oui en chinois ca aide pas :)) et 2 nouvelles options apparaissent</p>
+</div>
+<div class="paragraph">
+<p>Choisissez la première option (nouvellement apparue) et activer le bouton switch pour qu&#8217;il passe en vert, voilà le mode local est actif et votre gateway est accessible du réseau</p>
+</div>
+<div class="paragraph">
+<p>Information importante : pour pouvoir envoyer des commandes (prise) vers la gateway, vous devez renseigner son mot de passe sur la page équipement. Ce mot de passe est visible sur la page où l&#8217;on active le mode développeur</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commandes_des_équipements_compatibles_3">3.3. Commandes des équipements compatibles</h3>
+<div class="paragraph">
+<p>Les équipements actuellement compatibles fournissent les informations :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Gateway : anneau RGB (avec couleur et intensité, pour éteindre il faut absolument mettre l&#8217;intensité à 0), capteur de luminosité, jouer les sons enregistrés (0 à 8, 10 à 13, 20+ correspondent aux sons par défaut dans Mihome, 10000 pour éteindre, 10001 et plus pour les sons personnalisés) <a href="https://lunarok-domotique.com/2017/03/mi-smart-gateway-domotique-jeedom/">Présentation</a></p>
+</li>
+<li>
+<p>Détecteur de mouvement : commande statut de type binaire activée sur mouvement</p>
+</li>
+<li>
+<p>Détecteur d&#8217;ouverture : commande statut de type binaire activée sur ouverture</p>
+</li>
+<li>
+<p>Capteur température/humidité : commande température, commande humidité</p>
+</li>
+<li>
+<p>Bouton Switch : commande statut avec pour valeurs click, double_click, long_click_press, long_click_release</p>
+</li>
+<li>
+<p>Prise : commande statut binaire avec on et off, état d&#8217;utilisation et consommation</p>
+</li>
+<li>
+<p>Interrupteur mural : commande statut pour chaque interrupteur (click, double_click) et si double une commande qui donne l&#8217;appui simultané</p>
+</li>
+<li>
+<p>Interrupteur encastré : commande statut binaire avec on et off pour chaque interrupteur</p>
+</li>
+<li>
+<p>Cube : commande statut avec pour valeur move, tap_twice, shake_air, alert, flip90, flip180, free_fall, rotate_right, rotate_left et une commande rotate avec la valeur en degré du mouvement <a href="https://lunarok-domotique.com/2017/03/aqara-xiaomi-magic-controller-utilisation-dans-jeedom/">Présentation</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Remontée des piles : l&#8217;API fournie désormais aussi l&#8217;état des piles des équipements. Ce qui est retourné c&#8217;est le voltage de la pile, avec une fiche technique de l&#8217;API indiquant qu&#8217;elle sera au max de 3.2V et logiquement à 2.8V la pile n&#8217;est plus utilisable. Dans les faits, ce sont des piles 3V, voici donc les informations fournies dans Jeedom :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Voltage (en commande non visible sur le dash par défaut)</p>
+</li>
+<li>
+<p>Batterie (en statut standard, mais aussi en commande non visible) : sa valeur est considérée à 100% si supérieure ou égale à 3V, puis décroit à 0% pour 2.8V</p>
+</li>
+<li>
+<p>Le type de pile est indiqué pour chaque équipement sur le récapitulatif</p>
+</li>
+</ul>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_yeelight_ampoules_et_lampes_wifi">4. Yeelight : ampoules et lampes wifi</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_création_des_équipements_3">4.1. Création des équipements</h3>
+<div class="paragraph">
+<p>Un bouton de scan permet de créer automatiquement toutes les lampes répondant au protocole Yeelight disponible sur le réseau (uniquement celles qui n&#8217;existent pas déjà dans Jeedom biensûr)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration_des_lampes_yeelight_2">4.2. Configuration des lampes Yeelight</h3>
+<div class="paragraph">
+<p>Une présentation complète de la gamme est disponible ici : <a href="https://lunarok-domotique.com/plugins-jeedom/xiaomi-home-jeedom/yeelight-xiaomi-wifi-lamp/">Article de présentation</a></p>
+</div>
+<div class="paragraph">
+<p>Dans l&#8217;application Yeelight vous devez activer l&#8217;option développeur également</p>
+</div>
+<div class="paragraph">
+<p>C&#8217;est un switch a activé dans les options de chaque ampoule/bandeau</p>
+</div>
+<div class="sect3">
+<h4 id="_commandes_des_équipements_compatibles_4">4.2.1. Commandes des équipements compatibles</h4>
+<div class="paragraph">
+<p>Les lampes compatibles proposent les commandes suivantes par défaut : on / off / toggle / luminosité / enchainement</p>
+</div>
+<div class="paragraph">
+<p>Certaines lampes ajoutent des commandes :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Yeelight Blanc : pas d&#8217;autres commandes</p>
+</li>
+<li>
+<p>Desklamp : pas d&#8217;autres commandes</p>
+</li>
+<li>
+<p>Yeelight RGB : couleur RGB, couleur de blanc, mode jour, mode nuit, couleurs HSV</p>
+</li>
+<li>
+<p>Bandeau RGB : couleur RGB, couleur de blanc, mode jour, mode nuit, couleurs HSV</p>
+</li>
+<li>
+<p>Yeelight Ceiling : couleur blanc, mode jour, mode nuit</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="_commande_enchainement_des_yeelight_2">Commande enchainement des Yeelight</h5>
+<div class="paragraph">
+<p>Pour les Yeelight, une commande spéciale est créée qui a vocation à être utilisée en scénario seulement car on doit envoyer un contenu précis à la commande.</p>
+</div>
+<div class="paragraph">
+<p>C&#8217;est une commande message qui doit avoir par exemple :</p>
+</div>
+<div class="paragraph">
+<p>3 recover rgb,255,0,0,500,100-wait,400-rgb,255,255,0,500,100</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>3 : c&#8217;est un chiffre représentant le nombre de fois que la suite d&#8217;effets doit être appliquée avant de s&#8217;arrêter (0 veut dire illimité)</p>
+</li>
+<li>
+<p>recover : une des 3 options possible (recover = retour à l&#8217;état avant effet, off = s&#8217;eteint ensuite, stay = reste au statut de fin de boucle)</p>
+</li>
+<li>
+<p>le troisième élément est la suite des états avec leur transition, il y en a 4 possible (attention à bien ne pas mettre d&#8217;espaces)</p>
+</li>
+<li>
+<p>hsv : pramètres (hue,saturation,duration=300,brightness=100)</p>
+</li>
+<li>
+<p>rgb : pramètres (red,green,blue,duration=300,brightness=100)</p>
+</li>
+<li>
+<p>temp : pramètres (degrees,duration=300,brightness=100)</p>
+</li>
+<li>
+<p>wait(duration=300)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Il faut bien entrer l&#8217;enchainement avec des - entre chaque effet. Et pour un enchainement il doit y avoir son nom et tous les paramètres séparés par des virgules</p>
+</div>
+<hr>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_appliances_wifi_2">5. Appliances Wifi</h2>
+<div class="sectionbody">
+<div class="sect3">
+<h4 id="_création_des_équipements_wifi_2">5.1. Création des équipements Wifi</h4>
+<div class="paragraph">
+<p>Pour les équipements Wifi supplémentaires, il faut faire un ajout manuel.</p>
+</div>
+<div class="paragraph">
+<p>Il faut renseigner pour tous les équipements supportés : adresse IP et sélectionner le type dans le ménu déroulant.</p>
+</div>
+<div class="paragraph">
+<p>Il vous faut également le token. Pour obtenir le token, il suffit de cliquer sur le bouton bleu "Récupérer les infos", dans le cas où le token récupéré est une suite de 0 seulement ou de f seulement, il faut alors le récupérer manuellement avec la procédure ci-dessous</p>
+</div>
+<div class="sect4">
+<h5 id="_récupérer_le_token_d_un_équipement_manuellement_2">Récupérer le token d&#8217;un équipement manuellement</h5>
+<div class="paragraph">
+<p>Pour le robot entre autre, il est nécessaire de récupérer le token manuellement avant son intégration dans Mi Home.</p>
+</div>
+<div class="paragraph">
+<p>Pour cela, on doit d&#8217;abord le reseter (appuyer sur le bouton reset à proximité des boutons on/home) afin qu&#8217;il initialise son point d&#8217;accès Wifi</p>
+</div>
+<div class="paragraph">
+<p>Avec un PC on se connecte à ce réseau Wifi (il contient robo, facile à trouver et n&#8217;a pas de mot de passe)</p>
+</div>
+<div class="paragraph">
+<p>De là, il y a un petit utilitaire à lancer qui va vous permettre de récupérer le token, voilà vous l&#8217;avez</p>
+</div>
+<div class="paragraph">
+<p>Là vous pouvez l&#8217;intégrer dans Mi Home pour configurer votre Wifi et l&#8217;ajouter dans le plugin avec son IP et le token</p>
+</div>
+<div class="paragraph">
+<p>Attention, tout reset le Robot change de token et donc il faut refaire la procédure pour récupérer le token</p>
+</div>
+<div class="paragraph">
+<p>La même procédure s&#8217;applique pour tout équipement qui ne fournirait pas son token automatiquement (Rice Cooker, Robot par exemple)</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration_des_équipements_wifi_2">5.2. Configuration des équipements Wifi</h3>
+<div class="paragraph">
+<p>Cette section traite des équipements Wifi additionnels, pas Yeelight ni la gateway Aqara</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Xiaomi Mi Robot Vacuum : statut, batterie, aspiration (force + slider, attention au delà de 77 vous dépasser le mode turbo), résumé, statut d&#8217;erreurs, démarrer, arrêter, pause, retour socle, "ou es-tu ?"</p>
+</li>
+<li>
+<p>Xiaomi Smart Mi Air Purifier : statut, qualité d&#8217;air, humidité, température, filtre, vitesse, buzzer (on/off), led (action dessus aussi), démarrer/arrêter (avec les différents modes disponibles)</p>
+</li>
+<li>
+<p>Xiaomi Smart Ultrasonic Humidifier : statut, mode, humidité, humidité cible (+slider de set), température, buzzer (statut + activation), led (statut + activation), démarrer/arrêter (avec les différents modes disponibles)</p>
+</li>
+<li>
+<p>Xiaomi Smart Air Quality Monitor PM2.5 Detector : qualité d&#8217;air, batterie, rafraichir</p>
+</li>
+<li>
+<p>Xiaomi Mi Power Strip Wifi : on, off, statut</p>
+</li>
+<li>
+<p>Xiaomi Mi Power Plug Wifi : on, off, statut</p>
+</li>
+<li>
+<p>Xiaomi Philips Eyecare Smart Lamp : statut, on/off, luminosité (+slider), eyecare (statut, scenes + différents modes disponibles)</p>
+</li>
+<li>
+<p>Xiaomi Mi Electric Rice Cooker : non implémenté en l&#8217;état</p>
+</li>
+</ul>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_faq">6. FAQ</h2>
 <div class="sectionbody">
 <div class="openblock panel">
 <div class="title">Quel type de gateway Xiaomi est supporté ?</div><div class="content">

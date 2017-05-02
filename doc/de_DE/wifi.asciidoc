@@ -1,0 +1,44 @@
+
+==== Création des équipements Wifi
+
+Pour les équipements Wifi supplémentaires, il faut faire un ajout manuel.
+
+Il faut renseigner pour tous les équipements supportés : adresse IP et sélectionner le type dans le ménu déroulant.
+
+Il vous faut également le token. Pour obtenir le token, il suffit de cliquer sur le bouton bleu "Récupérer les infos", dans le cas où le token récupéré est une suite de 0 seulement ou de f seulement, il faut alors le récupérer manuellement avec la procédure ci-dessous
+
+===== Récupérer le token d'un équipement manuellement
+
+Pour le robot entre autre, il est nécessaire de récupérer le token manuellement avant son intégration dans Mi Home.
+
+Pour cela, on doit d'abord le reseter (appuyer sur le bouton reset à proximité des boutons on/home) afin qu'il initialise son point d'accès Wifi
+
+Avec un PC on se connecte à ce réseau Wifi (il contient robo, facile à trouver et n'a pas de mot de passe)
+
+De là, il y a un petit utilitaire à lancer qui va vous permettre de récupérer le token, voilà vous l'avez
+
+Là vous pouvez l'intégrer dans Mi Home pour configurer votre Wifi et l'ajouter dans le plugin avec son IP et le token
+
+Attention, tout reset le Robot change de token et donc il faut refaire la procédure pour récupérer le token
+
+La même procédure s'applique pour tout équipement qui ne fournirait pas son token automatiquement (Rice Cooker, Robot par exemple)
+
+=== Configuration des équipements Wifi
+
+Cette section traite des équipements Wifi additionnels, pas Yeelight ni la gateway Aqara
+
+  - Xiaomi Mi Robot Vacuum : statut, batterie, aspiration (force + slider, attention au delà de 77 vous dépasser le mode turbo), résumé, statut d'erreurs, démarrer, arrêter, pause, retour socle, "ou es-tu ?"
+
+  - Xiaomi Smart Mi Air Purifier : statut, qualité d'air, humidité, température, filtre, vitesse, buzzer (on/off), led (action dessus aussi), démarrer/arrêter (avec les différents modes disponibles)
+
+  - Xiaomi Smart Ultrasonic Humidifier : statut, mode, humidité, humidité cible (+slider de set), température, buzzer (statut + activation), led (statut + activation), démarrer/arrêter (avec les différents modes disponibles)
+
+  - Xiaomi Smart Air Quality Monitor PM2.5 Detector : qualité d'air, batterie, rafraichir
+
+  - Xiaomi Mi Power Strip Wifi : on, off, statut
+
+  - Xiaomi Mi Power Plug Wifi : on, off, statut
+
+  - Xiaomi Philips Eyecare Smart Lamp : statut, on/off, luminosité (+slider), eyecare (statut, scenes + différents modes disponibles)
+
+  - Xiaomi Mi Electric Rice Cooker : non implémenté en l'état
