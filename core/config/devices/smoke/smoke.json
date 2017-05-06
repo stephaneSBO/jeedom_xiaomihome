@@ -5,7 +5,7 @@
 		"configuration" : {
 			"model" : "smoke",
             "type" : "aquara",
-			"battery_type" : "1x3V CR2450"
+			"battery_type" : "1x3V CR123A"
 		},
         "commands": [
 			{
