@@ -1,0 +1,77 @@
+{
+    "motion": {
+        "name": "Alarme Fumée",
+		"groupe" : "Aquara",
+		"configuration" : {
+			"model" : "smoke",
+            "type" : "aquara",
+			"battery_type" : "1x3V CR2450"
+		},
+        "commands": [
+			{
+                "name": "Alarme",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+					"generic_type": "SMOKE"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "alarm",
+				"template": {
+					"dashboard": "alert",
+					"mobile": "alert"
+				}
+            },
+            {
+                "name": "Densité fumée",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "density",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "battery",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Pile Voltage",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "V",
+                "logicalId": "voltage",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            }
+        ]
+    }
+}
