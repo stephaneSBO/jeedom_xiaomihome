@@ -2,14 +2,24 @@ Une présentation complète du plugin est disponible ici : https://lunarok-domot
 
 Le plugin implémente 3 protocoles Xiaomi ce qui donne un éventail conséquent de matériel supporté
 
-==== Xiaomi Aquara Home Gateway
+=== Xiaomi Aquara Home Gateway
 
 La Xiaomi Aquara Home Gateway permet d'utiliser différents capteurs Zigbee Xiaomi.
 
-==== Yeelight Wifi
+=== Yeelight Wifi
 
 Le plugin permet également d'utiliser les lampes qui supportent le protocole Yeelight Wifi.
 
-==== Appliances Wifi
+=== Appliances Wifi
 
 Il existe aussi un protocole Xiaomi commun à beaucoup de périphériques Wifi. Ce protocole est implémenté dans le plugin et rend compatible les appliances l'utilisant (Vacuum, Prises, Purificateurs ...)
+
+=== Bluetooth ?
+
+Les produits Xiaomi Bluetooth ne sont pas pris en charge par ce plugin. Néanmoins vous pouvez en retrouver une bonne partie dans le plugin BLEA (Bluetooth Advertisment), dont :
+
+  - bracelets Miband (au moins pour la présence sur le 2)
+
+  - lampe de chevet
+
+  - balance (1ère génération avec le poids seulement)
