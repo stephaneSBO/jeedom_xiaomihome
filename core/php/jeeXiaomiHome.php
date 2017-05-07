@@ -48,6 +48,17 @@ if (isset($result['devices'])) {
 			}
 			$xiaomihome=xiaomihome::byLogicalId($logical_id, 'xiaomihome');
 			if (!is_object($xiaomihome)) {
+				if ($datas['model'] == 'gateway') {
+					//test si gateway qui a changé d'ip
+					foreach (eqLogic::byType('xiaomihome') as $gateway) {
+							if ($gateway->getConfiguration('sid') == $datas['sid']) {
+									$gateway->setConfiguration('gateway',$datas['source']);
+									$gateway->setLogicalId($datas['source']);
+									$gateway->save();
+									return;
+								}
+						}
+				}
 				$xiaomihome= xiaomihome::createFromDef($datas,$key);
 				if (!is_object($xiaomihome)) {
 					log::add('xiaomihome', 'debug', __('Aucun équipement trouvé pour : ', __FILE__) . secureXSS($datas['sid']));
