@@ -416,10 +416,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">Table des matières</div>
 <ul class="sectlevel1">
 <li><a href="#_description">1. Description</a>
-<ul class="sectlevel3">
+<ul class="sectlevel2">
 <li><a href="#_xiaomi_aquara_home_gateway">1.1. Xiaomi Aquara Home Gateway</a></li>
 <li><a href="#_yeelight_wifi">1.2. Yeelight Wifi</a></li>
 <li><a href="#_appliances_wifi">1.3. Appliances Wifi</a></li>
+<li><a href="#_bluetooth">1.4. Bluetooth ?</a></li>
 </ul>
 </li>
 <li><a href="#_configuration">2. Configuration</a>
@@ -480,22 +481,41 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="paragraph">
 <p>Le plugin implémente 3 protocoles Xiaomi ce qui donne un éventail conséquent de matériel supporté</p>
 </div>
-<div class="sect3">
-<h4 id="_xiaomi_aquara_home_gateway">1.1. Xiaomi Aquara Home Gateway</h4>
+<div class="sect2">
+<h3 id="_xiaomi_aquara_home_gateway">1.1. Xiaomi Aquara Home Gateway</h3>
 <div class="paragraph">
 <p>La Xiaomi Aquara Home Gateway permet d&#8217;utiliser différents capteurs Zigbee Xiaomi.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_yeelight_wifi">1.2. Yeelight Wifi</h4>
+<div class="sect2">
+<h3 id="_yeelight_wifi">1.2. Yeelight Wifi</h3>
 <div class="paragraph">
 <p>Le plugin permet également d&#8217;utiliser les lampes qui supportent le protocole Yeelight Wifi.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_appliances_wifi">1.3. Appliances Wifi</h4>
+<div class="sect2">
+<h3 id="_appliances_wifi">1.3. Appliances Wifi</h3>
 <div class="paragraph">
 <p>Il existe aussi un protocole Xiaomi commun à beaucoup de périphériques Wifi. Ce protocole est implémenté dans le plugin et rend compatible les appliances l&#8217;utilisant (Vacuum, Prises, Purificateurs &#8230;&#8203;)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_bluetooth">1.4. Bluetooth ?</h3>
+<div class="paragraph">
+<p>Les produits Xiaomi Bluetooth ne sont pas pris en charge par ce plugin. Néanmoins vous pouvez en retrouver une bonne partie dans le plugin BLEA (Bluetooth Advertisment), dont :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>bracelets Miband (au moins pour la présence sur le 2)</p>
+</li>
+<li>
+<p>lampe de chevet</p>
+</li>
+<li>
+<p>balance (1ère génération avec le poids seulement)</p>
+</li>
+</ul>
 </div>
 <hr>
 </div>
@@ -831,6 +851,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li>
 <p>Cube : commande statut avec pour valeur move, tap_twice, shake_air, alert, flip90, flip180, free_fall, rotate_right, rotate_left et une commande rotate avec la valeur en degré du mouvement <a href="https://lunarok-domotique.com/2017/03/aqara-xiaomi-magic-controller-utilisation-dans-jeedom/">Présentation</a></p>
+</li>
+<li>
+<p>Détecteur de fumée : commande alarm (binaire), densité (numérique)</p>
 </li>
 </ul>
 </div>
