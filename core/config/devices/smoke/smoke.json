@@ -13,7 +13,8 @@
                 "type": "info",
                 "subtype": "binary",
                 "display": {
-					"generic_type": "SMOKE"
+					"generic_type": "SMOKE",
+			"invertBinary": 1
                 },
                 "isVisible": 1,
                 "isHistorized": 0,
