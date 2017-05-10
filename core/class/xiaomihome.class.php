@@ -476,6 +476,13 @@ class xiaomihome extends eqLogic {
                 $xiaomihome->batteryStatus($battery);
                 $xiaomihome->save();
             }
+	    else if ($key == 'density') {
+		if ($value > 1000) {
+			$value = 100;
+		} else {
+                $value = 100 - $value/10;
+		}
+            }
             else if ($key == 'voltage') {
                 $value = $value /1000;
             }
