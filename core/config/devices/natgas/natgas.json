@@ -1,11 +1,10 @@
 {
-    "smoke": {
-        "name": "Détecteur de Fumée",
+    "natgas": {
+        "name": "Détecteur de Gaz",
 		"groupe" : "Aquara",
 		"configuration" : {
-			"model" : "smoke",
-            "type" : "aquara",
-			"battery_type" : "1x3V CR123A"
+			"model" : "natgas",
+            "type" : "aquara"
 		},
         "commands": [
 			{
@@ -25,7 +24,7 @@
 				}
             },
             {
-                "name": "Densité fumée",
+                "name": "Densité gaz",
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
@@ -34,39 +33,6 @@
                 "isVisible": 0,
                 "isHistorized": 0,
                 "logicalId": "density",
-				"template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-            },
-            {
-                "name": "Visibilté Capteur Optique",
-                "type": "info",
-                "subtype": "numeric",
-                "display": {
-					"generic_type": "GENERIC"
-                },
-                "isVisible": 0,
-                "isHistorized": 0,
-		 "unite": "%",
-                "logicalId": "visibility",
-				"template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-            },
-			{
-                "name": "Batterie",
-                "type": "info",
-                "subtype": "numeric",
-                "display": {
-					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
-					"generic_type": "DONT"
-				},
-                "isVisible": 0,
-                "isHistorized": 0,
-                "unite": "%",
-                "logicalId": "battery",
 				"template": {
 					"dashboard": "line",
 					"mobile": "line"
