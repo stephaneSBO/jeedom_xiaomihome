@@ -4,7 +4,7 @@ echo "Début de l'installation"
 
 echo 0 > /tmp/xiaomihome_dep
 
-sudo apt-get -y install python-pip libffi-dev libssl-dev
+sudo apt-get -y install python-pip libffi-dev libssl-dev python-cryptography
 
 echo 60 > /tmp/xiaomihome_dep
 sudo pip install future --force-reinstall
