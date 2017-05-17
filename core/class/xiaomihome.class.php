@@ -227,7 +227,12 @@ class xiaomihome extends eqLogic {
     public static function dependancy_install() {
         log::add('xiaomihome','info','Installation des dépendances');
         $resource_path = realpath(dirname(__FILE__) . '/../../resources');
-        passthru('/bin/bash ' . $resource_path . '/install.sh > ' . log::getPathToLog('xiaomihome_dep') . ' 2>&1 &');
+        $dep_info = self::dependancy_info();
+        if ($dep_info['state'] != 'ok') {
+          passthru('/bin/bash ' . $resource_path . '/install.sh > ' . log::getPathToLog('xiaomihome_dep') . ' 2>&1 &');
+        } else {
+          passthru('/bin/bash ' . $resource_path . '/install_force.sh > ' . log::getPathToLog('xiaomihome_dep') . ' 2>&1 &');
+        }
     }
 
     public static function discover($_mode) {
@@ -476,7 +481,7 @@ class xiaomihome extends eqLogic {
                     $xiaomihome->batteryStatus($battery);
                     $xiaomihome->save();
                 }
-                
+
                 $value = $value /1000;
             }
             else if ($key == 'density') {
