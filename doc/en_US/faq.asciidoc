@@ -19,6 +19,18 @@ Si vous n'avez pas de commande équivalente créée dans Jeedom, c'est que l'API
 --
 
 [panel,primary]
+.Je n'arrive pas à controler mes capteurs Aqara (couleur et son gateway, prise ...) ?
+--
+Vous devez bien saisir la clef de la gateway visible dans Mi Home sur l'équipement gateway dans Jeedom
+--
+
+[panel,primary]
+.Mes commandes sur capteurs Aqara qui fonctionnaient ne fonctionnent plus ?
+--
+Vérifier si la clef à changer dans Mi Home, cela peut se produire après une montée de firmware par exemple
+--
+
+[panel,primary]
 .Combien de capteurs au maximum sur une Gateway Aquara ?
 --
 Les remontées utilisateurs indiquent 31 capteurs + la Gateway. Au delà il faut supprimer l'appairage d'un capteur pour en remettre un. Le plugin supporte plusieurs gateways.
