@@ -128,6 +128,10 @@ if (isset($result['devices'])) {
 			if (!$xiaomihome->getIsEnable()) {
 				continue;
 			}
+			if ($xiaomihome->getConfiguration('gateway') != $datas['ip']) {
+				$xiaomihome->setConfiguration('gateway',$datas['ip']);
+				$xiaomihome->save();
+			}
 			if (isset($datas['capabilities'])) {
 				$data = $datas['capabilities'];
 				$power = ($data['power'] == 'off')? 0:1;
