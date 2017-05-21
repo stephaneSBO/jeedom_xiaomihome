@@ -75,6 +75,10 @@ if (isset($result['devices'])) {
 			if (!$xiaomihome->getIsEnable()) {
 				continue;
 			}
+			if ($xiaomihome->getConfiguration('gateway') != $datas['source'] && $datas['model'] != 'gateway') {
+				$xiaomihome->setConfiguration('gateway',$datas['source']);
+				$xiaomihome->save();
+			}
 			if ($datas['sid'] !== null && $datas['model'] !== null) {
 				if ($datas['cmd'] == 'heartbeat' && $datas['model'] == 'gateway') {
 					$xiaomihome = xiaomihome::byLogicalId($datas['source'], 'xiaomihome');
