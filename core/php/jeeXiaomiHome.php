@@ -132,6 +132,14 @@ if (isset($result['devices'])) {
 				$xiaomihome->setConfiguration('gateway',$datas['ip']);
 				$xiaomihome->save();
 			}
+            if ($xiaomihome->getConfiguration('sid') != $datas['sid']) {
+				$xiaomihome->setConfiguration('sid',$datas['sid']);
+				$xiaomihome->save();
+			}
+            if ($xiaomihome->getConfiguration('short_id') != $datas['short_id']) {
+				$xiaomihome->setConfiguration('short_id',$datas['short_id']);
+				$xiaomihome->save();
+			}
 			if (isset($datas['capabilities'])) {
 				$data = $datas['capabilities'];
 				$power = ($data['power'] == 'off')? 0:1;
