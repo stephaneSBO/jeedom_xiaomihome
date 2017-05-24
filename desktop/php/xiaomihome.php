@@ -226,7 +226,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
 									<option value="">Aucun</option>
 									<?php
 									$groups = array();
-									
+
 									foreach (xiaomihome::devicesParameters() as $key => $info) {
 										if (isset($info['groupe'])) {
 											$info['key'] = $key;
@@ -264,7 +264,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
 									<span class="eqLogicAttr label label-default" data-l1key="configuration" data-l2key="type" id="typefield"></span>
 								</div>
 							</div>
-	
+
 							<div class="form-group"  id="idfield">
 								<label class="col-sm-3 control-label">{{Identifiant}}</label>
 								<div class="col-sm-3">
@@ -275,7 +275,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
 									<span class="eqLogicAttr label label-default" data-l1key="configuration" data-l2key="short_id"></span>
 								</div>
 							</div>
-	
+
 							<div class="form-group" id="modefield">
 								<label class="col-sm-3 control-label">{{Dernière Activité}}</label>
 								<div class="col-sm-3">
@@ -342,7 +342,7 @@ $( "#typefield" ).change(function(){
     }
     else if ($('#typefield').value() == 'yeelight') {
         $('#passfield').hide();
-		$('#ipfield').hide();
+		$('#ipfield').show();
 		$('.syncinfo').hide();
 		$('.globalRemark').hide();
     }

@@ -270,6 +270,11 @@ class xiaomihome extends eqLogic {
             }
             $this->applyModuleConfiguration($this->getConfiguration('model'));
         }
+        if ($this->getConfiguration('type') == 'yeelight'){
+            if ($this->getConfiguration('gateway') != $this->getConfiguration('ipwifi') && $this->getConfiguration('ipwifi') != ''){
+                $this->setConfiguration('gateway',$this->getConfiguration('ipwifi'));
+            }
+        }
     }
 
     public static function devicesParameters($_device = '') {
