@@ -261,6 +261,11 @@ class xiaomihome extends eqLogic {
         if ($this->getLogicalId() != $this->getConfiguration('ipwifi') && $this->getConfiguration('ipwifi') != ''){
             $this->setLogicalId($this->getConfiguration('ipwifi'));
         }
+        if ($this->getConfiguration('type') == 'yeelight'){
+            if ($this->getConfiguration('gateway') != $this->getConfiguration('ipwifi') && $this->getConfiguration('ipwifi') != ''){
+                $this->setConfiguration('gateway',$this->getConfiguration('ipwifi'));
+            }
+        }
     }
 
     public function postSave() {
@@ -269,12 +274,7 @@ class xiaomihome extends eqLogic {
                 $cmd->remove();
             }
             $this->applyModuleConfiguration($this->getConfiguration('model'));
-        }
-        if ($this->getConfiguration('type') == 'yeelight'){
-            if ($this->getConfiguration('gateway') != $this->getConfiguration('ipwifi') && $this->getConfiguration('ipwifi') != ''){
-                $this->setConfiguration('gateway',$this->getConfiguration('ipwifi'));
-            }
-        }
+        }    
     }
 
     public static function devicesParameters($_device = '') {
