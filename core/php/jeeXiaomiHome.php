@@ -109,6 +109,14 @@ if (isset($result['devices'])) {
 			$logical_id = $datas['capabilities']['id'];
 			$xiaomihome=xiaomihome::byLogicalId($logical_id, 'xiaomihome');
 			if (!is_object($xiaomihome)) {
+				foreach (eqLogic::byType('xiaomihome') as $yeelight) {
+						if ($yeelight->getConfiguration('sid') == $datas['sid']) {
+								$yeelight->setConfiguration('gateway',$datas['source']);
+								$yeelight->setLogicalId($datas['source']);
+								$yeelight->save();
+								return;
+							}
+					}
 				if (!isset($datas['capabilities']['model'])) {
 					continue;
 				}
