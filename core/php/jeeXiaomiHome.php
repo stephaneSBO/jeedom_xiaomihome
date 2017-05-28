@@ -143,7 +143,7 @@ if (isset($result['devices'])) {
 				$xiaomihome->setConfiguration('sid',$datas['capabilities']['id']);
 				$xiaomihome->save();
 			}
-			if ($xiaomihome->getConfiguration('short_id') != $datas['capabilities']['fw_ver']) {
+			if (isset($datas['capabilities']['fw_ver']) && $xiaomihome->getConfiguration('short_id') != $datas['capabilities']['fw_ver']) {
 				$xiaomihome->setConfiguration('short_id',$datas['capabilities']['fw_ver']);
 				$xiaomihome->save();
 			}
