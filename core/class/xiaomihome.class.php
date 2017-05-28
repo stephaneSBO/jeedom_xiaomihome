@@ -274,7 +274,7 @@ class xiaomihome extends eqLogic {
                 $cmd->remove();
             }
             $this->applyModuleConfiguration($this->getConfiguration('model'));
-        }    
+        }
     }
 
     public static function devicesParameters($_device = '') {
@@ -632,7 +632,8 @@ class xiaomihomeCmd extends cmd {
                     }
                     break;
                     case 'slider':
-                    $option = dechex($_options['slider']);
+                    $option = $_options['slider'];
+                    //$option = dechex($_options['slider']);
                     if ($this->getConfiguration('switch') == 'rgb') {
                         $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'rgb');
                         $couleur = str_replace('#','',$xiaomihomeCmd->execCmd());
