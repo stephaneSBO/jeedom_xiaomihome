@@ -51,13 +51,13 @@ if (isset($result['devices'])) {
 				if ($datas['model'] == 'gateway') {
 					//test si gateway qui a changé d'ip
 					foreach (eqLogic::byType('xiaomihome') as $gateway) {
-							if ($gateway->getConfiguration('sid') == $datas['sid']) {
-									$gateway->setConfiguration('gateway',$datas['source']);
-									$gateway->setLogicalId($datas['source']);
-									$gateway->save();
-									return;
-								}
+						if ($gateway->getConfiguration('sid') == $datas['sid']) {
+							$gateway->setConfiguration('gateway',$datas['source']);
+							$gateway->setLogicalId($datas['source']);
+							$gateway->save();
+							return;
 						}
+					}
 				}
 				$xiaomihome= xiaomihome::createFromDef($datas,$key);
 				if (!is_object($xiaomihome)) {
@@ -110,19 +110,18 @@ if (isset($result['devices'])) {
 			$xiaomihome=xiaomihome::byLogicalId($logical_id, 'xiaomihome');
 			if (!is_object($xiaomihome)) {
 				foreach (eqLogic::byType('xiaomihome') as $yeelight) {
-						if ($yeelight->getConfiguration('sid') == $datas['sid']) {
-								$yeelight->setConfiguration('gateway',$datas['source']);
-								$yeelight->setLogicalId($datas['source']);
-								$yeelight->save();
-								return;
-							}
+					if ($yeelight->getConfiguration('gateway') == $datas['ip']) {
+						$yeelight->setLogicalId($datas['capabilities']['id']);
+						$yeelight->save();
+						return;
 					}
+				}
 				if (!isset($datas['capabilities']['model'])) {
 					continue;
 				}
 				$xiaomihome= xiaomihome::createFromDef($datas,$key);
 				if (!is_object($xiaomihome)) {
-					log::add('xiaomihome', 'debug', __('Aucun équipement trouvé pour : ', __FILE__) . secureXSS($datas['sid']));
+					log::add('xiaomihome', 'debug', __('Aucun équipement trouvé pour : ', __FILE__) . secureXSS($datas['capabilities']['id']));
 					continue;
 				}
 				sleep(2);
@@ -140,12 +139,12 @@ if (isset($result['devices'])) {
 				$xiaomihome->setConfiguration('gateway',$datas['ip']);
 				$xiaomihome->save();
 			}
-            if ($xiaomihome->getConfiguration('sid') != $datas['sid']) {
-				$xiaomihome->setConfiguration('sid',$datas['sid']);
+			if ($xiaomihome->getConfiguration('sid') != $datas['capabilities']['id']) {
+				$xiaomihome->setConfiguration('sid',$datas['capabilities']['id']);
 				$xiaomihome->save();
 			}
-            if ($xiaomihome->getConfiguration('short_id') != $datas['short_id']) {
-				$xiaomihome->setConfiguration('short_id',$datas['short_id']);
+			if ($xiaomihome->getConfiguration('short_id') != $datas['capabilities']['fw_ver']) {
+				$xiaomihome->setConfiguration('short_id',$datas['capabilities']['fw_ver']);
 				$xiaomihome->save();
 			}
 			if (isset($datas['capabilities'])) {
