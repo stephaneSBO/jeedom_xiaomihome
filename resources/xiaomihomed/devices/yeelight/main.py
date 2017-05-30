@@ -239,7 +239,7 @@ class Bulb(object):
         requested_properties = [
             "power", "bright", "ct", "rgb", "hue", "sat",
             "color_mode", "flowing", "delayoff", "flow_params",
-            "music_on", "name", "fw_ver", "id"
+            "music_on", "name"
         ]
         response = self.send_command("get_prop", requested_properties)
         properties = response["result"]
