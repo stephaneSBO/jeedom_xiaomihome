@@ -106,12 +106,12 @@ if (isset($result['devices'])) {
 			if (!isset($datas['capabilities']['id'])) {
 				continue;
 			}
-			$logical_id = $datas['capabilities']['id'];
+			$logical_id = $datas['ip'];
 			$xiaomihome=xiaomihome::byLogicalId($logical_id, 'xiaomihome');
 			if (!is_object($xiaomihome)) {
 				foreach (eqLogic::byType('xiaomihome') as $yeelight) {
 					if ($yeelight->getConfiguration('gateway') == $datas['ip']) {
-						$yeelight->setLogicalId($datas['capabilities']['id']);
+						$yeelight->setLogicalId($datas['ip']);
 						$yeelight->save();
 						return;
 					}
@@ -134,18 +134,6 @@ if (isset($result['devices'])) {
 			}
 			if (!$xiaomihome->getIsEnable()) {
 				continue;
-			}
-			if ($xiaomihome->getConfiguration('gateway') != $datas['ip']) {
-				$xiaomihome->setConfiguration('gateway',$datas['ip']);
-				$xiaomihome->save();
-			}
-			if ($xiaomihome->getConfiguration('sid') != $datas['capabilities']['id']) {
-				$xiaomihome->setConfiguration('sid',$datas['capabilities']['id']);
-				$xiaomihome->save();
-			}
-			if (isset($datas['capabilities']['fw_ver']) && $xiaomihome->getConfiguration('short_id') != $datas['capabilities']['fw_ver']) {
-				$xiaomihome->setConfiguration('short_id',$datas['capabilities']['fw_ver']);
-				$xiaomihome->save();
 			}
 			if (isset($datas['capabilities'])) {
 				$data = $datas['capabilities'];
