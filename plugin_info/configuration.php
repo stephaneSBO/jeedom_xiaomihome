@@ -22,5 +22,10 @@ if (!isConnect()) {
   include_file('desktop', '404', 'php');
   die();
 }
-?>
 
+<label class="col-lg-2 control-label">{{Utilitaire de découverte des clefs}}</label>
+            <div class="col-lg-4">
+                <a class="btn btn-default" href="plugins/xiaomihome/ressources/scanxiaomi.zip"><i class="fa fa-cloud-download"></i> {{Télécharger pour installer sur un PC}}</a>
+            </div>
+</div>
+?>
