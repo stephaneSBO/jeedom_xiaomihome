@@ -15,9 +15,9 @@ Pour cela, on doit d'abord le reseter (appuyer sur le bouton reset à proximité
 
 Avec un PC on se connecte à ce réseau Wifi (il contient robo, facile à trouver et n'a pas de mot de passe)
 
-De là, il y a un petit utilitaire à lancer qui va vous permettre de récupérer le token, voilà vous l'avez
+De là, il y a un petit utilitaire à lancer qui va vous permettre de récupérer le token. L'utilitaire est téléchargeable sur la page de configuration. (Il faut dezipper le fichier et lancer le xiaomiwifi.exe)
 
-Là vous pouvez l'intégrer dans Mi Home pour configurer votre Wifi et l'ajouter dans le plugin avec son IP et le token
+Une fois le code récupéré en lancant la commande et noté, vous pouvez l'intégrer dans Mi Home pour configurer votre Wifi et l'ajouter dans le plugin avec son IP et le token
 
 Attention, tout reset le Robot change de token et donc il faut refaire la procédure pour récupérer le token
 
@@ -42,3 +42,5 @@ Cette section traite des équipements Wifi additionnels, pas Yeelight ni la gate
   - Xiaomi Philips Eyecare Smart Lamp : statut, on/off, luminosité (+slider), eyecare (statut, scenes + différents modes disponibles)
 
   - Xiaomi Mi Electric Rice Cooker : non implémenté en l'état
+
+  - Ventilateur : à venir
