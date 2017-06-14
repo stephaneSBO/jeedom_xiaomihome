@@ -9,6 +9,7 @@ import utils
 import threading
 import socket
 import time
+from random import randint
 from xiaomi.xiaomipacket import *
 
 def discover(message):
