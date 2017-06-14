@@ -45,26 +45,26 @@ def execute_action(message):
 	i = 0
 	while i<3:
 		try:
+			randid = randint(1, 65000)
 			device = message['model']
 			Packet  = XiaomiPacket()
 			Packet = GetSessionInfo(message['dest'],message['token'])
 			if message['param'] == '':
 				if device == 'vacuum' and str(message['method']) == 'app_charge':
-					logging.debug('{"id":1,"method":"app_stop"}')
-					Packet.setPlainData('{"id":1,"method":"app_stop"}')
+					logging.debug('{"id":'+str(randid)+',"method":"app_stop"}')
+					Packet.setPlainData('{"id":'+str(randid)+',"method":"app_stop"}')
 					SendRcv(Packet,message['dest'])
-				logging.debug('{"id":2,"method":"'+str(message['method'])+'"}')
-				Packet.setPlainData('{"id":2,"method":"'+str(message['method'])+'"}')
+				logging.debug('{"id":'+str(randid+1)+',"method":"'+str(message['method'])+'"}')
+				Packet.setPlainData('{"id":'+str(randid+1)+',"method":"'+str(message['method'])+'"}')
 			else:
-				logging.debug('{"id":1,"method":"'+str(message['method'])+'","params":'+str(message['param'])+'}')
-				Packet.setPlainData('{"id":1,"method":"'+str(message['method'])+'","params":'+str(message['param'])+'}')
+				logging.debug('{"id":'+str(randid)+',"method":"'+str(message['method'])+'","params":'+str(message['param'])+'}')
+				Packet.setPlainData('{"id":'+str(randid)+',"method":"'+str(message['method'])+'","params":'+str(message['param'])+'}')
 			SendRcv(Packet,message['dest'])
 			t = threading.Timer(2, refresh,args=(message,))
 			t.start()
 			break
 		except Exception, e:
-			if i == 2:
-				logging.debug(str(e))
+			logging.debug(str(e))
 		i = i+1
 	return
 
@@ -72,6 +72,7 @@ def refresh(message):
 	i = 0
 	while i<3:
 		try:
+			
 			device = message['model']
 			result={}
 			status ={}
@@ -81,6 +82,10 @@ def refresh(message):
 				Packet  = XiaomiPacket()
 				Packet = GetSessionInfo(message['dest'],message['token'])
 				for info in globals.DICT_REFRESH_WIFI[device]:
+					jsoninfo = json.loads(info)
+					randid = randint(1, 65000)
+					jsoninfo['id'] = randid
+					info = json.dumps(jsoninfo)
 					Packet.setPlainData(info)
 					logging.debug(info)
 					SendRcv(Packet,message['dest'])
