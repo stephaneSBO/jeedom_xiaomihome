@@ -27,6 +27,7 @@ DICT_REFRESH_WIFI ={'purifier' : ['{"id":1,"method":"get_prop","params":["aqi","
 					'philipseyecare' :['{"id":1,"method":"get_prop","params":["power","bright","notifystatus","ambstatus","ambvalue","eyecare","scene_num","bls","dvalue"]}'],\
 					'multisocket' :['{"id":1,"method":"get_prop","params":["power"]}'],\
 					'socket' :['{"id":1,"method":"get_prop","params":["power"]}'],\
+					'fan' :['{"id":1,"method":"get_prop","params":["temp_dec", "humidity", "angle", "speed", "poweroff_time", "power", "ac_power", "battery", "angle_enable", "speed_level", "natural_level", "child_lock", "buzzer", "led_b"]}'],\
 	}
 
 DICT_STATE_WIFI ={'vacuum' : {
