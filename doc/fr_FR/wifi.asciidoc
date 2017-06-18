@@ -11,7 +11,9 @@ Il vous faut également le token. Pour obtenir le token, il suffit de cliquer su
 
 Pour le robot entre autre, il est nécessaire de récupérer le token manuellement avant son intégration dans Mi Home.
 
-Pour cela, on doit d'abord le reseter (appuyer sur le bouton reset à proximité des boutons on/home) afin qu'il initialise son point d'accès Wifi
+Deux méthodes existent, la première avec l'outil Mi Toolkit (https://github.com/ultrara1n/MiToolkit) qui va récupérer tous les token dans votre application Mi Home. Cela nécessite un Android avec le mode Debug USB activable.
+
+Si vous ne pouvez vous en servir il y a la deuxième méthode, pour cela on doit d'abord le reseter (appuyer sur le bouton reset à proximité des boutons on/home) afin qu'il initialise son point d'accès Wifi
 
 Avec un PC on se connecte à ce réseau Wifi (il contient robo, facile à trouver et n'a pas de mot de passe)
 
@@ -43,4 +45,4 @@ Cette section traite des équipements Wifi additionnels, pas Yeelight ni la gate
 
   - Xiaomi Mi Electric Rice Cooker : non implémenté en l'état
 
-  - Ventilateur : à venir
+  - Ventilateur : statut, température, humidité, buzzer (statut + activation), led (statut + activation), démarrer/arrêter (avec les différents modes disponibles), info vitesse et vitesse naturelle, rotation (et les commandes pour la paramétrer, tourner)
