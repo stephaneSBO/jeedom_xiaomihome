@@ -28,7 +28,7 @@
                 "type": "info",
                 "subtype": "string",
                 "display": {
-					"generic_type": "DONT"
+					"generic_type": "ENERGY_STATE"
                 },
                 "isVisible": 1,
                 "isHistorized": 0,
@@ -43,7 +43,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-					"generic_type": "DONT"
+					"generic_type": "HUMIDITY"
                 },
                 "isVisible": 1,
                 "isHistorized": 0,
@@ -59,7 +59,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-					"generic_type": "DONT"
+					"generic_type": "TEMPERATURE"
                 },
                 "isVisible": 1,
                 "isHistorized": 0,
@@ -211,7 +211,8 @@
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-play\"><\/i>"
+					"icon": "<i class=\"fa fa-play\"><\/i>",
+					"generic_type": "ENERGY_ON"
                 },
                 "configuration" : {
         			"request" : "set_power",
@@ -225,7 +226,8 @@
                 "type": "action",
                 "subtype": "other",
                 "display": {
-					"icon": "<i class=\"fa fa-stop\"><\/i>"
+					"icon": "<i class=\"fa fa-stop\"><\/i>",
+					"generic_type": "ENERGY_OFF"
                 },
                 "configuration" : {
         			"request" : "set_power",
@@ -330,7 +332,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-					"generic_type": "DONT"
+					"generic_type": "BATTERY"
                 },
                 "isVisible": 0,
                 "isHistorized": 0,
