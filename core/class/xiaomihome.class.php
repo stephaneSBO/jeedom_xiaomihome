@@ -257,6 +257,14 @@ class xiaomihome extends eqLogic {
         }
     }
 
+    public function getImage() {
+        if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $this->getConfiguration('model') . '/' . $this->getConfiguration('model') . '.png')) {
+            return 'plugins/xiaomihome/core/config/devices/' . $this->getConfiguration('model') . '/' . $this->getConfiguration('model') . '.png';
+        } else {
+            return 'plugins/xiaomihome/plugin_info/xiaomihome_icon.png';
+        }
+    }
+
     public function preSave() {
         if ($this->getLogicalId() != $this->getConfiguration('ipwifi') && $this->getConfiguration('ipwifi') != ''){
             $this->setLogicalId($this->getConfiguration('ipwifi'));
