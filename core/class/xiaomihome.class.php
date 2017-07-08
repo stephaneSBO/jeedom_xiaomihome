@@ -211,9 +211,9 @@ class xiaomihome extends eqLogic {
     public static function dependancy_info() {
         $return = array();
         $return['log'] = 'xiaomihome_dep';
-        $cmd = "pip list | grep pycrypto";
+        $cmd = "pip list --format=legacy | grep pycrypto";
         exec($cmd, $output, $return_var);
-        $cmd = "pip list | grep future";
+        $cmd = "pip list --format=legacy | grep future";
         exec($cmd, $output2, $return_var);
         $return['state'] = 'nok';
         if (array_key_exists(0,$output) && array_key_exists(0,$output2)) {
