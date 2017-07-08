@@ -225,14 +225,14 @@ class xiaomihome extends eqLogic {
     }
 
     public static function dependancy_install() {
-        log::add('xiaomihome','info','Installation des dépendances');
-        $resource_path = realpath(dirname(__FILE__) . '/../../resources');
         $dep_info = self::dependancy_info();
         if ($dep_info['state'] != 'ok') {
-          passthru('/bin/bash ' . $resource_path . '/install.sh > ' . log::getPathToLog('xiaomihome_dep') . ' 2>&1 &');
+          $resource_path = realpath(dirname(__FILE__) . '/../../resources') . '/install.sh';
         } else {
-          passthru('/bin/bash ' . $resource_path . '/install_force.sh > ' . log::getPathToLog('xiaomihome_dep') . ' 2>&1 &');
+          $resource_path = realpath(dirname(__FILE__) . '/../../resources') . '/install_force.sh';
         }
+        log::add('xiaomihome','info','Installation des dépendances : ' . $resource_path);
+        passthru('/bin/bash ' . $resource_path . ' > ' . log::getPathToLog('xiaomihome_dep') . ' 2>&1 &');
     }
 
     public static function discover($_mode) {
