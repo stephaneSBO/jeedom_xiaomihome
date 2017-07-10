@@ -6,6 +6,15 @@ echo 0 > /tmp/xiaomihome_dep
 
 sudo apt-get -y install python-pip libffi-dev libssl-dev python-cryptography
 
+echo 30 > /tmp/xiaomihome_dep
+sudo pip install pyudev --upgrade --ignore-installed
+
+echo 40 > /tmp/xiaomihome_dep
+sudo pip install requests --upgrade --ignore-installed
+
+echo 50 > /tmp/xiaomihome_dep
+sudo pip install pyserial --upgrade --ignore-installed
+
 echo 60 > /tmp/xiaomihome_dep
 sudo pip install future --upgrade --ignore-installed
 
