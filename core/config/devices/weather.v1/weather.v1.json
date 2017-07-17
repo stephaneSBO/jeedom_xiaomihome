@@ -52,7 +52,7 @@
       				},
                       "isVisible": 1,
                       "isHistorized": 0,
-                      "unite": "kPa",
+                      "unite": "hPa",
                       "logicalId": "pressure",
       				"template": {
       					"dashboard": "line",

@@ -460,7 +460,7 @@ class xiaomihome extends eqLogic {
     public static function receiveAquaraData($id, $model, $key, $value) {
         $xiaomihome = self::byLogicalId($id, 'xiaomihome');
         if (is_object($xiaomihome)) {
-            if ($key == 'humidity' || $key == 'temperature') {
+            if ($key == 'humidity' || $key == 'temperature' || $key == 'pressure') {
                 $value = $value / 100;
             }
             else if ($key == 'rotate') {
