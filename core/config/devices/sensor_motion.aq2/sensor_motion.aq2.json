@@ -1,5 +1,5 @@
 {
-    "motion": {
+    "sensor_motion.aq2": {
         "name": "Détetecteur Mouvement",
 		"groupe" : "Aquara",
 		"configuration" : {

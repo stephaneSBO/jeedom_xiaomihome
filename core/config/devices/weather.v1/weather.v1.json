@@ -1,5 +1,5 @@
 {
-    "sensor_ht": {
+    "weather.v1": {
         "name": "Capteur Température Hygrométrie",
 		"groupe" : "Aquara",
 		"configuration" : {
