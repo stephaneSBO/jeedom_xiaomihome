@@ -521,14 +521,14 @@ class xiaomihome extends eqLogic {
             }
             else if ($key == 'status') {
                 if ($model == 'motion') {
-                    if ($value == 'motion') {
+                    if ($value == 'motion' || $value == 'sensor_motion.aq2') {
                         $xiaomihome->checkAndUpdateCmd('no_motion', 0);
                         $value = 1;
                     } else {
                         $value = 0;
                     }
                 }
-                else if ($model == 'magnet') {
+                else if ($model == 'magnet' || $model == 'sensor_magnet.aq2') {
                     if ($value == 'open') {
                         $value = 1;
                     } else {
@@ -540,12 +540,13 @@ class xiaomihome extends eqLogic {
                     $value = ($value == 'on') ? 1 : 0;
                 }
             }
-            $xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
+            $xiaomihome->checkAndUpdateCmd($key, $value);
+            /*$xiaomihomeCmd = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),$key);
             if (is_object($xiaomihomeCmd)) {
                 $xiaomihomeCmd->setConfiguration('value',$value);
                 $xiaomihomeCmd->save();
                 $xiaomihomeCmd->event($value);
-            }
+            }*/
         }
     }
 
