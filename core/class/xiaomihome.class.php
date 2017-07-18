@@ -154,12 +154,12 @@ class xiaomihome extends eqLogic {
         $return = array();
         $return['log'] = 'xiaomihome';
         $return['state'] = 'nok';
-        $pid_file = '/tmp/xiaomihomed.pid';
+        $pid_file = jeedom::getTmpFolder('xiaomihome') . '/deamon.pid';
         if (file_exists($pid_file)) {
             if (@posix_getsid(trim(file_get_contents($pid_file)))) {
                 $return['state'] = 'ok';
             } else {
-                shell_exec('sudo rm -rf ' . $pid_file . ' 2>&1 > /dev/null');
+                shell_exec(system::getCmdSudo() . 'rm -rf ' . $pid_file . ' 2>&1 > /dev/null');
             }
         }
         $return['launchable'] = 'ok';
@@ -179,7 +179,7 @@ class xiaomihome extends eqLogic {
         $cmd .= ' --callback ' . network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/plugins/xiaomihome/core/php/jeeXiaomiHome.php';
         $cmd .= ' --apikey ' . jeedom::getApiKey('xiaomihome');
         $cmd .= ' --cycle ' . config::byKey('cycle', 'xiaomihome');
-        $cmd .= ' --pid /tmp/xiaomihomed.pid';
+        $cmd .= ' --pid ' . jeedom::getTmpFolder('xiaomihome') . '/deamon.pid';
         log::add('xiaomihome', 'info', 'Lancement démon xiaomihome : ' . $cmd);
         $result = exec($cmd . ' >> ' . log::getPathToLog('xiaomihome') . ' 2>&1 &');
         $i = 0;
@@ -200,7 +200,7 @@ class xiaomihome extends eqLogic {
     }
 
     public static function deamon_stop() {
-        $pid_file = '/tmp/xiaomihomed.pid';
+        $pid_file = jeedom::getTmpFolder('xiaomihome') . '/deamon.pid';
         if (file_exists($pid_file)) {
             $pid = intval(trim(file_get_contents($pid_file)));
             system::kill($pid);
@@ -211,7 +211,7 @@ class xiaomihome extends eqLogic {
 
     public static function dependancy_info() {
         $return = array();
-        $return['log'] = 'xiaomihome_dep';
+        $return['progress_file'] = jeedom::getTmpFolder('xiaomihome') . '/dependance';
         $cmd = "pip list | grep pycrypto";
         exec($cmd, $output, $return_var);
         $cmd = "pip list | grep future";
@@ -227,13 +227,12 @@ class xiaomihome extends eqLogic {
 
     public static function dependancy_install() {
         $dep_info = self::dependancy_info();
+        log::remove(__CLASS__ . '_update');
         if ($dep_info['state'] != 'ok') {
-          $resource_path = realpath(dirname(__FILE__) . '/../../resources') . '/install.sh';
+          return array('script' => dirname(__FILE__) . '/../../resources/install_#stype#.sh ' . jeedom::getTmpFolder('xiaomihome') . '/dependance', 'log' => log::getPathToLog(__CLASS__ . '_update'));
         } else {
-          $resource_path = realpath(dirname(__FILE__) . '/../../resources') . '/install_force.sh';
+          return array('script' => dirname(__FILE__) . '/../../resources/install_force_#stype#.sh ' . jeedom::getTmpFolder('xiaomihome') . '/dependance', 'log' => log::getPathToLog(__CLASS__ . '_update'));
         }
-        log::add('xiaomihome','info','Installation des dépendances : ' . $resource_path);
-        passthru('/bin/bash ' . $resource_path . ' > ' . log::getPathToLog('xiaomihome_dep') . ' 2>&1 &');
     }
 
     public static function discover($_mode) {
