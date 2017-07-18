@@ -1,6 +1,6 @@
 {
     "weather.v1": {
-        "name": "Capteur Température Hygrométrie",
+        "name": "Capteur Température Hygrométrie 2",
 		"groupe" : "Aquara",
 		"configuration" : {
 			"model" : "weather.v1",

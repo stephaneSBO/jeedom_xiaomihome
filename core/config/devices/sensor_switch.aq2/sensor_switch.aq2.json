@@ -1,6 +1,6 @@
 {
     "sensor_switch.aq2": {
-        "name": "Bouton clic",
+        "name": "Bouton clic 2",
 		"groupe" : "Aquara",
 		"configuration" : {
 			"model" : "sensor_switch.aq2",

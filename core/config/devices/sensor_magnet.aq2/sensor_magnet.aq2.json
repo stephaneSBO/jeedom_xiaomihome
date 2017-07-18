@@ -1,6 +1,6 @@
 {
     "sensor_magnet.aq2": {
-        "name": "Détecteur Ouverture",
+        "name": "Détecteur Ouverture 2",
 		"groupe" : "Aquara",
 		"configuration" : {
 			"model" : "sensor_magnet.aq2",
