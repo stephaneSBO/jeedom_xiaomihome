@@ -79,6 +79,7 @@ class xiaomihome extends eqLogic {
                 }
                 $device = self::devicesParameters($_def['model']);
                 if (!is_array($device) || count($device) == 0) {
+                    log::add('xiaomihome', 'debug', 'Impossible d\'ajouter l\'équipement : ' . print_r($_def, true));
                     return true;
                 }
                 $xiaomihome = new xiaomihome();
