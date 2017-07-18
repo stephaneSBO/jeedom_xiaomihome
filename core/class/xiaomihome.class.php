@@ -78,7 +78,7 @@ class xiaomihome extends eqLogic {
                     }
                 }
                 $device = self::devicesParameters($_def['model']);
-                if (!is_array($device)) {
+                if (!is_array($device) || count($device) == 0) {
                     return true;
                 }
                 $xiaomihome = new xiaomihome();
