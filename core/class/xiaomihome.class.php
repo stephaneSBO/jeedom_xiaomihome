@@ -81,10 +81,6 @@ class xiaomihome extends eqLogic {
                 if (!is_array($device)) {
                     return true;
                 }
-                if (!isset($device['model'])) {
-                  log::add('xiaomihome', 'debug', 'Modèle non reconnu dans les définitions : ' . $_def['model']);
-                    return true;
-                }
                 $xiaomihome = new xiaomihome();
                 $xiaomihome->setEqType_name('xiaomihome');
                 $xiaomihome->setLogicalId($logical_id);
