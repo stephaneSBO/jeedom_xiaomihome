@@ -16,30 +16,34 @@ def discover(message):
 	device = message['model']
 	result={}
 	default={}
-	try:
-		Packet = XiaomiPacket()
-		Packet = GetSessionInfo(message['dest'],message['token'])
-		k = utils.key_iv(Packet.token)
-	except:
-		default['ip']=message['dest'];
-		default['notfound'] =1;
-		globals.JEEDOM_COM.send_change_immediate({'devices':{'wifi':default}})
-		logging.debug('Did not find the device try again')
-	if Packet.devicetype.encode('hex') != 'ffff':
-		logging.debug('Found the device : ' + message['dest'])
-		default['model']=device
-		default['ip']=message['dest']
-		default['serial']=Packet.serial.encode('hex')
-		default['devtype']=Packet.devicetype.encode('hex')
-		default['token']=Packet.token.encode('hex')
-		default['found']=1
-		result[message['dest']]=default
-		globals.JEEDOM_COM.send_change_immediate({'devices':{'wifi':result[message['dest']]}})
-	else:
-		default['ip']=message['dest'];
-		default['notfound'] =1;
-		globals.JEEDOM_COM.send_change_immediate({'devices':{'wifi':default}})
-		logging.debug('Did not find the device try again')
+	i = 0
+	while i<3:
+		try:
+			Packet = XiaomiPacket()
+			Packet = GetSessionInfo(message['dest'],message['token'])
+			k = utils.key_iv(Packet.token)
+		except:
+			default['ip']=message['dest'];
+			default['notfound'] =1;
+			globals.JEEDOM_COM.send_change_immediate({'devices':{'wifi':default}})
+			logging.debug('Did not find the device try again')
+		if Packet.devicetype.encode('hex') != 'ffff':
+			logging.debug('Found the device : ' + message['dest'])
+			default['model']=device
+			default['ip']=message['dest']
+			default['serial']=Packet.serial.encode('hex')
+			default['devtype']=Packet.devicetype.encode('hex')
+			default['token']=Packet.token.encode('hex')
+			default['found']=1
+			result[message['dest']]=default
+			globals.JEEDOM_COM.send_change_immediate({'devices':{'wifi':result[message['dest']]}})
+			break
+		else:
+			default['ip']=message['dest'];
+			default['notfound'] =1;
+			globals.JEEDOM_COM.send_change_immediate({'devices':{'wifi':default}})
+			logging.debug('Did not find the device try again')
+		i = i+1
 	return
 
 def execute_action(message):
