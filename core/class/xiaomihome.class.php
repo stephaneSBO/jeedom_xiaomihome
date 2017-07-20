@@ -551,7 +551,7 @@ class xiaomihome extends eqLogic {
     }
 
     public function pingHost ($host, $timeout = 1) {
-        exec("ping -c1 " . $host, $output, $return_var);
+        exec(system::getCmdSudo() . "ping -c1 " . $host, $output, $return_var);
         if ($return_var == 0) {
             $result = true;
             $this->checkAndUpdateCmd('online', 1);
