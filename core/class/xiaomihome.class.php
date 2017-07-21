@@ -228,10 +228,11 @@ class xiaomihome extends eqLogic {
     public static function dependancy_install() {
         $dep_info = self::dependancy_info();
         log::remove(__CLASS__ . '_update');
+        log::remove(__CLASS__ . '_dep');
         if ($dep_info['state'] != 'ok') {
-          return array('script' => dirname(__FILE__) . '/../../resources/install_#stype#.sh ' . jeedom::getTmpFolder('xiaomihome') . '/dependance', 'log' => log::getPathToLog(__CLASS__ . '_update'));
+          return array('script' => dirname(__FILE__) . '/../../resources/install_#stype#.sh ' . jeedom::getTmpFolder('xiaomihome') . '/dependance', 'log' => log::getPathToLog(__CLASS__ . '_dep'));
         } else {
-          return array('script' => dirname(__FILE__) . '/../../resources/install_force_#stype#.sh ' . jeedom::getTmpFolder('xiaomihome') . '/dependance', 'log' => log::getPathToLog(__CLASS__ . '_update'));
+          return array('script' => dirname(__FILE__) . '/../../resources/install_force_#stype#.sh ' . jeedom::getTmpFolder('xiaomihome') . '/dependance', 'log' => log::getPathToLog(__CLASS__ . '_dep'));
         }
     }
 
