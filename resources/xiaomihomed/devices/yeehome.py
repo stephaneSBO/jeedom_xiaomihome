@@ -6,6 +6,7 @@ from yeelight.flow import (
 		TemperatureTransition,
 		SleepTransition
 )
+from yeelight import enums
 import logging
 import globals
 import time
