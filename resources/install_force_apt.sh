@@ -31,6 +31,9 @@ sudo pip install pycrypto --upgrade --ignore-installed
 echo 80 > ${PROGRESS_FILE}
 sudo pip install construct --upgrade --ignore-installed
 
+echo 90 > ${PROGRESS_FILE}
+sudo pip install enum-compat
+
 echo 100 > ${PROGRESS_FILE}
 
 echo "********************************************************"
