@@ -48,6 +48,12 @@ if [ $(pip list | grep construct | wc -l) -eq 0 ]; then
     sudo pip install construct
 fi
 
+echo 80 > ${PROGRESS_FILE}
+if [ $(pip list | grep enum-compat | wc -l) -eq 0 ]; then
+    echo "Installation du module enum-compat pour python"
+    sudo pip install enum-compat
+fi
+
 echo 100 > /${PROGRESS_FILE}
 echo "********************************************************"
 echo "*             Installation terminée                    *"
