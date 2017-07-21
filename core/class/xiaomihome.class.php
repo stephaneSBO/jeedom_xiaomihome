@@ -183,7 +183,7 @@ class xiaomihome extends eqLogic {
         log::add('xiaomihome', 'info', 'Lancement démon xiaomihome : ' . $cmd);
         $result = exec($cmd . ' >> ' . log::getPathToLog('xiaomihome') . ' 2>&1 &');
         $i = 0;
-        while ($i < 5) {
+        while ($i < 30) {
             $deamon_info = self::deamon_info();
             if ($deamon_info['state'] == 'ok') {
                 break;
@@ -191,7 +191,7 @@ class xiaomihome extends eqLogic {
             sleep(1);
             $i++;
         }
-        if ($i >= 5) {
+        if ($i >= 30) {
             log::add('xiaomihome', 'error', 'Impossible de lancer le démon xiaomihomed, vérifiez le log', 'unableStartDeamon');
             return false;
         }
