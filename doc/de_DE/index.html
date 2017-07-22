@@ -995,8 +995,31 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Pour le robot entre autre, il est nécessaire de récupérer le token manuellement avant son intégration dans Mi Home.</p>
 </div>
 <div class="paragraph">
-<p>Deux méthodes existent, la première avec l&#8217;outil Mi Toolkit (<a href="https://github.com/ultrara1n/MiToolkit" class="bare">https://github.com/ultrara1n/MiToolkit</a>) qui va récupérer tous les token dans votre application Mi Home. Cela nécessite un Android avec le mode Debug USB activable.</p>
+<p>Trois méthodes existent, la première avec l&#8217;outil Mi Toolkit (<a href="https://github.com/ultrara1n/MiToolkit" class="bare">https://github.com/ultrara1n/MiToolkit</a>) qui va récupérer tous les token dans votre application Mi Home. Cela nécessite un Android avec le mode Debug USB activable.</p>
 </div>
+<div class="sect5">
+<h6 id="_mitoolkit">MiToolkit</h6>
+<div class="paragraph">
+<p>Pour le télécharger : <a href="https://github.com/ultrara1n/MiToolkit/releases" class="bare">https://github.com/ultrara1n/MiToolkit/releases</a></p>
+</div>
+<div class="paragraph">
+<p>Activer ADB sur votre téléphone (dans les options développeur)</p>
+</div>
+<div class="paragraph">
+<p>Lancer l&#8217;exe MiToolkit en admin</p>
+</div>
+<div class="paragraph">
+<p>Choisir "Verbindung prufen"</p>
+</div>
+<div class="paragraph">
+<p>Choisir "Token auslesen", le laisser faire la sauvegarde sur le PC et ne pas mettre de mot de passe</p>
+</div>
+<div class="paragraph">
+<p>Une pop-up apparait avec les token</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_scanner">Scanner</h6>
 <div class="paragraph">
 <p>Si vous ne pouvez vous en servir il y a la deuxième méthode, pour cela on doit d&#8217;abord le reseter (appuyer sur le bouton reset à proximité des boutons on/home) afin qu&#8217;il initialise son point d&#8217;accès Wifi</p>
 </div>
@@ -1014,6 +1037,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="paragraph">
 <p>La même procédure s&#8217;applique pour tout équipement qui ne fournirait pas son token automatiquement (Rice Cooker, Robot par exemple)</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_asqlitemanager">aSQLiteManager</h6>
+<div class="paragraph">
+<p>Via un aSQLiteManager, on peut ouvrir la base de Mi Home, attention téléphone rooté peut être nécessaire (merci Gouzou pour la technique)</p>
+</div>
+<div class="paragraph">
+<p>Les tokens sont dans la table devicerecord dans /data/data/com.xiaomi.smarthome./databases/miio2.db</p>
+</div>
 </div>
 </div>
 </div>

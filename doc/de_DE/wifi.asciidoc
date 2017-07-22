@@ -11,7 +11,23 @@ Il vous faut également le token. Pour obtenir le token, il suffit de cliquer su
 
 Pour le robot entre autre, il est nécessaire de récupérer le token manuellement avant son intégration dans Mi Home.
 
-Deux méthodes existent, la première avec l'outil Mi Toolkit (https://github.com/ultrara1n/MiToolkit) qui va récupérer tous les token dans votre application Mi Home. Cela nécessite un Android avec le mode Debug USB activable.
+Trois méthodes existent, la première avec l'outil Mi Toolkit (https://github.com/ultrara1n/MiToolkit) qui va récupérer tous les token dans votre application Mi Home. Cela nécessite un Android avec le mode Debug USB activable.
+
+====== MiToolkit
+
+Pour le télécharger : https://github.com/ultrara1n/MiToolkit/releases
+
+Activer ADB sur votre téléphone (dans les options développeur)
+
+Lancer l'exe MiToolkit en admin
+
+Choisir "Verbindung prufen"
+
+Choisir "Token auslesen", le laisser faire la sauvegarde sur le PC et ne pas mettre de mot de passe
+
+Une pop-up apparait avec les token
+
+====== Scanner
 
 Si vous ne pouvez vous en servir il y a la deuxième méthode, pour cela on doit d'abord le reseter (appuyer sur le bouton reset à proximité des boutons on/home) afin qu'il initialise son point d'accès Wifi
 
@@ -24,6 +40,12 @@ Une fois le code récupéré en lancant la commande et noté, vous pouvez l'int�
 Attention, tout reset le Robot change de token et donc il faut refaire la procédure pour récupérer le token
 
 La même procédure s'applique pour tout équipement qui ne fournirait pas son token automatiquement (Rice Cooker, Robot par exemple)
+
+====== aSQLiteManager
+
+Via un aSQLiteManager, on peut ouvrir la base de Mi Home, attention téléphone rooté peut être nécessaire (merci Gouzou pour la technique)
+
+Les tokens sont dans la table devicerecord dans /data/data/com.xiaomi.smarthome./databases/miio2.db
 
 === Configuration des équipements Wifi
 
