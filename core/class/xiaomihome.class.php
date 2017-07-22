@@ -650,7 +650,7 @@ class xiaomihomeCmd extends cmd {
                         $couleur = str_replace('#','',$xiaomihomeCmd->execCmd());
                         $bright = str_pad($option, 2, "0", STR_PAD_LEFT);
                         $eqLogic->checkAndUpdateCmd('brightness', $_options['slider']);
-                        $rgbcomplet = $bright . $couleur;
+                        $rgbcomplet = dechex($bright) . $couleur;
                         $option = hexdec($rgbcomplet);
                     }
                     if ($this->getConfiguration('switch') == 'vol') {
