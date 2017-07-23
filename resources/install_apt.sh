@@ -13,6 +13,12 @@ echo 10 > ${PROGRESS_FILE}
 echo "Installation des dépendances apt"
 sudo apt-get -y install python-dev python-pip libffi-dev libssl-dev python-cryptography
 
+echo 20 > ${PROGRESS_FILE}
+if [ $(pip list | grep construct | wc -l) -eq 0 ]; then
+    echo "Installation du module construct pour python"
+    sudo pip install construct
+fi
+
 echo 30 > ${PROGRESS_FILE}
 if [ $(pip list | grep pyudev | wc -l) -eq 0 ]; then
     echo "Installation du module pyudev pour python"
@@ -42,10 +48,11 @@ if [ $(pip list | grep pycrypto | wc -l) -eq 0 ]; then
     echo "Installation du module pycrypto pour python"
     sudo pip install pycrypto
 fi
+
 echo 80 > ${PROGRESS_FILE}
-if [ $(pip list | grep construct | wc -l) -eq 0 ]; then
-    echo "Installation du module construct pour python"
-    sudo pip install construct
+if [ $(pip list | grep enum34 | wc -l) -eq 0 ]; then
+    echo "Installation du module enum34 pour python"
+    sudo pip install enum34
 fi
 
 echo 90 > ${PROGRESS_FILE}
