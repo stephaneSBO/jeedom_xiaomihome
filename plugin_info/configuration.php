@@ -24,24 +24,3 @@ if (!isConnect()) {
 }
 ?>
 
-
-<form class="form-horizontal">
-  <div class="form-group">
-    <fieldset>
-
-      <form class="form-horizontal">
-        <div class="form-group">
-          <fieldset>
-
-            <div class="form-group">
-              <label class="col-lg-4 control-label">{{Utilitaire de découverte des clefs}}</label>
-              <div class="col-lg-4">
-                <a class="btn btn-default noOnePageLoad" href="plugins/xiaomihome/resources/scanxiaomi.zip"><i class="fa fa-cloud-download"></i> {{Télécharger pour installer sur un PC}}</a>
-              </div>
-            </div>
-
-
-          </div>
-        </fieldset>
-      </div>
-    </form>
