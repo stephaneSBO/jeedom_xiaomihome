@@ -13,6 +13,9 @@ echo 10 > ${PROGRESS_FILE}
 
 sudo apt-get -y install python-dev python-pip libffi-dev libssl-dev python-cryptography
 
+echo 20 > ${PROGRESS_FILE}
+sudo pip install construct --upgrade --ignore-installed
+
 echo 30 > ${PROGRESS_FILE}
 sudo pip install pyudev --upgrade --ignore-installed
 
@@ -29,10 +32,10 @@ echo 70 > ${PROGRESS_FILE}
 sudo pip install pycrypto --upgrade --ignore-installed
 
 echo 80 > ${PROGRESS_FILE}
-sudo pip install construct --upgrade --ignore-installed
+sudo pip install enum34 --upgrade --ignore-installed
 
 echo 90 > ${PROGRESS_FILE}
-sudo pip install enum-compat
+sudo pip install enum-compat --upgrade --ignore-installed
 
 echo 100 > ${PROGRESS_FILE}
 
