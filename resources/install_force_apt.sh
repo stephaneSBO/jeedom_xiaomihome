@@ -11,7 +11,7 @@ echo "********************************************************"
 sudo apt-get update
 echo 10 > ${PROGRESS_FILE}
 
-sudo apt-get -y install python-pip libffi-dev libssl-dev python-cryptography
+sudo apt-get -y install python-dev python-pip libffi-dev libssl-dev python-cryptography
 
 echo 30 > ${PROGRESS_FILE}
 sudo pip install pyudev --upgrade --ignore-installed
