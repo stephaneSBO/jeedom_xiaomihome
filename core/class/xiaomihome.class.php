@@ -522,7 +522,7 @@ class xiaomihome extends eqLogic {
                 $value = ($value == 'on') ? 1 : 0;
             }
             else if ($key == 'status') {
-                if ($model == 'motion' || $value == 'sensor_motion.aq2') {
+                if ($model == 'motion' || $model == 'sensor_motion.aq2') {
                     if ($value == 'motion') {
                         $xiaomihome->checkAndUpdateCmd('no_motion', 0);
                         $value = 1;
