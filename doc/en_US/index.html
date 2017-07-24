@@ -997,6 +997,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="paragraph">
 <p>Trois méthodes existent, la première avec l&#8217;outil Mi Toolkit (<a href="https://github.com/ultrara1n/MiToolkit" class="bare">https://github.com/ultrara1n/MiToolkit</a>) qui va récupérer tous les token dans votre application Mi Home. Cela nécessite un Android avec le mode Debug USB activable.</p>
 </div>
+<div class="paragraph">
+<p>Les deux autres sont basées sur une récupération de la base Mi Home, une pour Android, une pour iPhone.</p>
+</div>
 <div class="sect5">
 <h6 id="_mitoolkit">MiToolkit</h6>
 <div class="paragraph">
@@ -1019,33 +1022,36 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect5">
-<h6 id="_scanner">Scanner</h6>
-<div class="paragraph">
-<p>Si vous ne pouvez vous en servir il y a la deuxième méthode, pour cela on doit d&#8217;abord le reseter (appuyer sur le bouton reset à proximité des boutons on/home) afin qu&#8217;il initialise son point d&#8217;accès Wifi</p>
-</div>
-<div class="paragraph">
-<p>Avec un PC on se connecte à ce réseau Wifi (il contient robo, facile à trouver et n&#8217;a pas de mot de passe)</p>
-</div>
-<div class="paragraph">
-<p>De là, il y a un petit utilitaire à lancer qui va vous permettre de récupérer le token. L&#8217;utilitaire est téléchargeable sur la page de configuration. (Il faut dezipper le fichier et lancer le xiaomiwifi.exe)</p>
-</div>
-<div class="paragraph">
-<p>Une fois le code récupéré en lancant la commande et noté, vous pouvez l&#8217;intégrer dans Mi Home pour configurer votre Wifi et l&#8217;ajouter dans le plugin avec son IP et le token</p>
-</div>
-<div class="paragraph">
-<p>Attention, tout reset le Robot change de token et donc il faut refaire la procédure pour récupérer le token</p>
-</div>
-<div class="paragraph">
-<p>La même procédure s&#8217;applique pour tout équipement qui ne fournirait pas son token automatiquement (Rice Cooker, Robot par exemple)</p>
-</div>
-</div>
-<div class="sect5">
 <h6 id="_asqlitemanager">aSQLiteManager</h6>
 <div class="paragraph">
 <p>Via un aSQLiteManager, on peut ouvrir la base de Mi Home, attention téléphone rooté peut être nécessaire (merci Gouzou pour la technique)</p>
 </div>
 <div class="paragraph">
 <p>Les tokens sont dans la table devicerecord dans /data/data/com.xiaomi.smarthome./databases/miio2.db</p>
+</div>
+<div class="paragraph">
+<p>Ce fichier si il est transférable sur PC devrait pouvoir être édité avec d&#8217;autres logiciels aussi.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_iphone">iPhone</h6>
+<div class="paragraph">
+<p>Merci pierre_ pour cette technique</p>
+</div>
+<div class="paragraph">
+<p>Faire une sauvegarde de l&#8217;iPhone avec iTunes</p>
+</div>
+<div class="paragraph">
+<p>Ouvrir la sauvegarde avec iPhoneBackup Viewer : <a href="http://www.imactools.com/iphonebackupviewer/" class="bare">http://www.imactools.com/iphonebackupviewer/</a> (si votre backup est crypté, il faudra passer par a version payante)</p>
+</div>
+<div class="paragraph">
+<p>Dans Raw Data/com.xiaomi.mihome il y a plusieurs fichiers .sqllite, il faut extraire votreuserid_mihome.sqlite</p>
+</div>
+<div class="paragraph">
+<p>Ouvrir le fichier sqlite avec un viewer sqlite, jexemple DB Browser <a href="http://sqlitebrowser.org" class="bare">http://sqlitebrowser.org</a></p>
+</div>
+<div class="paragraph">
+<p>Cliquer sur "Ouvrir une base de données" puis " Parcourir les données" et enfin choisir la table ZDEVICE. Tout à droite il doit y avoir une colonne ZTOKEN avec tous les tokens de vos device Xiaomi</p>
 </div>
 </div>
 </div>
