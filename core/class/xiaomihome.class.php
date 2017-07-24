@@ -694,14 +694,13 @@ class xiaomihomeCmd extends cmd {
                     log::add('xiaomihome', 'debug', 'Mot de passe manquant sur la gateway Aquara ' . $gateway);
                     return;
                 }
-                $token = $xiaomihome->getConfiguration('token');
                 if ($this->getLogicalId() == 'mid-scenar') {
                     $volume = intval($_options['message']);
                 } else {
                     $vol = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),'vol');
                     $volume = $vol->execCmd();
                 }
-                $value = json_encode(array('apikey' => jeedom::getApiKey('xiaomihome'), 'type' => 'aquara','cmd' => 'send', 'dest' => $gateway , 'password' => $password , 'token' => $token, 'model' => $eqLogic->getConfiguration('model'), 'sid' => $eqLogic->getConfiguration('sid'), 'short_id' => $eqLogic->getConfiguration('short_id'),'switch' => $this->getConfiguration('switch'), 'request' => $option, 'vol'=> $volume ));
+                $value = json_encode(array('apikey' => jeedom::getApiKey('xiaomihome'), 'type' => 'aquara','cmd' => 'send', 'dest' => $gateway , 'password' => $password , 'model' => $eqLogic->getConfiguration('model'), 'sid' => $eqLogic->getConfiguration('sid'), 'short_id' => $eqLogic->getConfiguration('short_id'),'switch' => $this->getConfiguration('switch'), 'request' => $option, 'vol'=> $volume ));
                 $socket = socket_create(AF_INET, SOCK_STREAM, 0);
                 socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'xiaomihome'));
                 socket_write($socket, $value, strlen($value));

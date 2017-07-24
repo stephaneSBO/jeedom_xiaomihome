@@ -80,11 +80,6 @@ if (isset($result['devices'])) {
 				$xiaomihome->save();
 			}
 			if ($datas['sid'] !== null && $datas['model'] !== null) {
-				if ($datas['cmd'] == 'heartbeat' && $datas['model'] == 'gateway') {
-					$xiaomihome = xiaomihome::byLogicalId($datas['source'], 'xiaomihome');
-					$xiaomihome->setConfiguration('token',$datas['token']);
-					$xiaomihome->save();
-				}
 				if (isset($datas['data'])) {
 					$data = $datas['data'];
 					foreach ($data as $key => $value) {
