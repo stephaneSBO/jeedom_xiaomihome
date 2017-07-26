@@ -49,3 +49,9 @@ Les Yeelight Wifi doivent toutes être paramétrées avec le mode développeur p
 Pour ceci, il vous faut installer l'application Yeelight (et non pas seulement Mi Home), renseigner votre login /mot de passe, aller dans chaque équipement, accéder aux settings via les ' ... ' et activer le 'Developer Mode'.
 Note : Il n'est pas nécessaire de changer la langue de l'application.
 --
+
+[panel,primary]
+.Je n'arrive pas à controler une appliance, le robot par exemple ?
+--
+Vérifier que vous avez bien obtenu le token, pour les appliances qui ne le fournissent pas, des tutos sont présents dans la doc.
+--
