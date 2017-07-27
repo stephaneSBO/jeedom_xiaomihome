@@ -111,7 +111,7 @@ class XiaomiConnector:
 def execute_action(data):
     logging.debug("executing " + str(data))
     aes = AES.new(data['password'], AES.MODE_CBC, str(globals.IV_AQUARA))
-    ciphertext = aes.encrypt(globals.CONNECTOR.last_tokens[data["sid"]])
+    ciphertext = aes.encrypt(globals.CONNECTOR.last_tokens[data["sidG"]])
     write_key = binascii.hexlify(ciphertext)
     if data['switch'] == 'mid' :
         command = {data['switch']:int(data['request']),"vol" : data['vol'], "key":write_key}

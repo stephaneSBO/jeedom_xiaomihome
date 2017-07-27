@@ -700,7 +700,7 @@ class xiaomihomeCmd extends cmd {
                     $vol = xiaomihomeCmd::byEqLogicIdAndLogicalId($xiaomihome->getId(),'vol');
                     $volume = $vol->execCmd();
                 }
-                $value = json_encode(array('apikey' => jeedom::getApiKey('xiaomihome'), 'type' => 'aquara','cmd' => 'send', 'dest' => $gateway , 'password' => $password , 'model' => $eqLogic->getConfiguration('model'), 'sid' => $eqLogic->getConfiguration('sid'), 'short_id' => $eqLogic->getConfiguration('short_id'),'switch' => $this->getConfiguration('switch'), 'request' => $option, 'vol'=> $volume ));
+                $value = json_encode(array('apikey' => jeedom::getApiKey('xiaomihome'), 'type' => 'aquara','cmd' => 'send', 'dest' => $gateway , 'password' => $password , 'model' => $eqLogic->getConfiguration('model'),'sidG' => $xiaomihome->getConfiguration('sid'), 'sid' => $eqLogic->getConfiguration('sid'), 'short_id' => $eqLogic->getConfiguration('short_id'),'switch' => $this->getConfiguration('switch'), 'request' => $option, 'vol'=> $volume ));
                 $socket = socket_create(AF_INET, SOCK_STREAM, 0);
                 socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'xiaomihome'));
                 socket_write($socket, $value, strlen($value));
