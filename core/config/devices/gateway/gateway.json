@@ -4,7 +4,7 @@
 		"groupe" : "Aquara",
 		"configuration" : {
 			"model" : "gateway",
-            "type" : "aquara"
+            		"type" : "aquara"
 		},
         "commands": [
             {
@@ -20,7 +20,7 @@
                 "template": {
 					"dashboard": "line",
 					"mobile": "line"
-				}
+		}
             },
 			{
                 "name": "Capteur Luminosité",
@@ -28,15 +28,15 @@
                 "subtype": "numeric",
                 "display": {
 					"icon": "<i class=\"fa fa-sun-o\"><\/i>",
-					"generic_type": "GENERIC"
-				},
+					"generic_type": "BRIGHTNESS"
+		},
                 "isVisible": 1,
                 "isHistorized": 0,
                 "logicalId": "illumination",
-				"template": {
+		"template": {
 					"dashboard": "line",
 					"mobile": "line"
-				}
+		}
             },
             {
                 "name": "IP Gateway",
@@ -69,8 +69,8 @@
                 },
                 "configuration" : {
         			"switch" : "rgb",
-                    "request" : "rgb"
-        		},
+                   		"request" : "rgb"
+        	},
                 "value": "Couleur Anneau",
                 "isVisible": 1,
                 "logicalId": "rgb-set"
@@ -84,7 +84,8 @@
                 },
                 "configuration" : {
         			"switch" : "rgb"
-        		},
+        	},
+		"value": "Luminosité Anneau",
                 "isVisible": 1,
                 "logicalId": "on"
             },
@@ -97,7 +98,8 @@
                 },
                 "configuration" : {
         			"switch" : "rgb"
-        		},
+        	},
+		"value": "Luminosité Anneau",
                 "isVisible": 1,
                 "logicalId": "off"
             },
@@ -110,8 +112,8 @@
                 },
                 "configuration" : {
         			"switch" : "mid",
-                    "request": 10000
-        		},
+                    		"request": 10000
+        	},
                 "isVisible": 1,
                 "logicalId": "mid-stop"
             },
@@ -132,15 +134,14 @@
                 "subtype": "slider",
                 "display": {
 					"generic_type": "LIGHT_SLIDER",
-
-				"forceReturnLineBefore": 1
+					"forceReturnLineBefore": 1
                 },
                 "configuration" : {
         			"switch" : "rgb",
-                    "request" : "brightness",
-                    "minValue" : 0,
-                    "maxValue" : 100
-        		},
+                    		"request" : "brightness",
+                    		"minValue" : 0,
+                    		"maxValue" : 100
+        	},
                 "value": "Luminosité Anneau",
                 "isVisible": 1,
                 "logicalId": "brightness-set"
@@ -165,10 +166,10 @@
                 },
                 "configuration" : {
         			"switch" : "vol",
-                    "request" : "vol",
-                    "minValue" : 0,
-                    "maxValue" : 100
-        		},
+                    		"request" : "vol",
+                    		"minValue" : 0,
+                    		"maxValue" : 100
+        	},
                 "isVisible": 1,
                 "logicalId": "vol-set"
             },
