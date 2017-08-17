@@ -487,7 +487,7 @@ class xiaomihome extends eqLogic {
                     if ($value>=3100) {
                         $battery = 100;
                     } else if ($value<3100 && $value>2800) {
-                        $battery = ($value - 2800) *0.33;
+                        $battery = ceil(($value - 2800) *0.33);
                     } else {
                         $battery = 1;
                     }
