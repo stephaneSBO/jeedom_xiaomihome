@@ -49,7 +49,7 @@ def push_data_from_aquara(model, sid, cmd,short_id,token, data, type,source):
 	data_to_send['source'] =source
 	data_to_send['token'] =token
 	data_to_send['data'] = data
-	globals.JEEDOM_COM.add_changes('devices::'+type,data_to_send )
+	globals.JEEDOM_COM.add_changes('devices::'+type+'_'+sid,data_to_send )
 
 cb_aquara = lambda m, s, c, i, token, d, t ,src: push_data_from_aquara(m, s, c,i,token, d,t,src)
 
@@ -130,7 +130,7 @@ globals.sockethost = '127.0.0.1'
 globals.pidfile = '/tmp/xiaomihomed.pid'
 globals.apikey = ''
 globals.callback = ''
-globals.cycle = 0.3;
+globals.cycle = 0.05;
 
 parser = argparse.ArgumentParser(description='Xiaomihomed Daemon for Jeedom plugin')
 parser.add_argument("--device", help="Device", type=str)

@@ -88,5 +88,5 @@ def refresh(message):
 	for key, value in result_brut:
 		data[key] = value
 	result['capabilities'] = data
-	globals.JEEDOM_COM.add_changes('devices::yeelight',result)
+	globals.JEEDOM_COM.add_changes('devices::yeelight_'+message['id'],result)
 	return

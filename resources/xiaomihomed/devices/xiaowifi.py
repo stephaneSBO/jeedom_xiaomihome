@@ -113,7 +113,7 @@ def refresh(message):
 							logging.debug(json.loads('{'+real_result+'}'))
 							result[dict_params['method']] =json.loads('{'+real_result+'}')
 			result = utils.clean_result(device,result)
-			globals.JEEDOM_COM.add_changes('devices::wifi',result)
+			globals.JEEDOM_COM.add_changes('devices::wifi_'+message['dest'],result)
 			break
 		except Exception, e:
 			if i == 2:

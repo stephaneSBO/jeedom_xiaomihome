@@ -35,6 +35,8 @@ if (!is_array($result)) {
 
 if (isset($result['devices'])) {
 	foreach ($result['devices'] as $key => $datas) {
+		$explode = explode('_',$key);
+		$key = $explode[0];
 		if ($key == 'aquara'){
 			if (!($datas['cmd'] == 'heartbeat' || $datas['cmd'] == 'report')) {
 				continue;
