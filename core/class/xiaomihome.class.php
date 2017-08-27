@@ -30,6 +30,10 @@ class xiaomihome extends eqLogic {
     }
 
     public static function cron5() {
+        $deamon_info = self::deamon_info();
+        if ($deamon_info['state'] != 'ok') {
+            return;
+        }
         $eqLogics = eqLogic::byType('xiaomihome', true);
         foreach($eqLogics as $xiaomihome) {
             if ($xiaomihome->getConfiguration('type') == 'wifi') {
@@ -563,6 +567,18 @@ class xiaomihome extends eqLogic {
         }
         return $result;
     }
+    
+    public function sendDaemon ($value) {
+        $deamon_info = self::deamon_info();
+        if ($deamon_info['state'] != 'ok') {
+            return;
+        }
+        $socket = socket_create(AF_INET, SOCK_STREAM, 0);
+        socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'xiaomihome'));
+        socket_write($socket, $value, strlen($value));
+        socket_close($socket);
+    }
+    
 }
 
 class xiaomihomeCmd extends cmd {
@@ -610,16 +626,10 @@ class xiaomihomeCmd extends cmd {
                         $request =$this->getConfiguration('request');
                     }
                     $value = json_encode(array('apikey' => jeedom::getApiKey('xiaomihome'), 'type' => 'yeelight','cmd' => 'send', 'dest' => $eqLogic->getConfiguration('gateway') , 'model' => $eqLogic->getConfiguration('model'), 'sid' => $eqLogic->getConfiguration('sid'), 'short_id' => $eqLogic->getConfiguration('short_id'),'command' => $request, 'option' => $option, 'id' => $eqLogic->getLogicalId()));
-                    $socket = socket_create(AF_INET, SOCK_STREAM, 0);
-                    socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'xiaomihome'));
-                    socket_write($socket, $value, strlen($value));
-                    socket_close($socket);
+                    xiaomihome::sendDaemon($value);
                 } else {
                     $value = json_encode(array('apikey' => jeedom::getApiKey('xiaomihome'), 'type' => 'yeelight','cmd' => 'refresh', 'model' => $eqLogic->getConfiguration('model'), 'dest' => $eqLogic->getConfiguration('gateway') , 'token' => $eqLogic->getConfiguration('password') , 'devtype' => $eqLogic->getConfiguration('short_id'), 'serial' => $eqLogic->getConfiguration('sid'), 'id' => $eqLogic->getLogicalId()));
-                    $socket = socket_create(AF_INET, SOCK_STREAM, 0);
-                    socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'xiaomihome'));
-                    socket_write($socket, $value, strlen($value));
-                    socket_close($socket);
+                    xiaomihome::sendDaemon($value);
                     return;
                 }
             } elseif ($eqLogic->getConfiguration('type') == 'aquara'){
@@ -701,10 +711,7 @@ class xiaomihomeCmd extends cmd {
                     $volume = $vol->execCmd();
                 }
                 $value = json_encode(array('apikey' => jeedom::getApiKey('xiaomihome'), 'type' => 'aquara','cmd' => 'send', 'dest' => $gateway , 'password' => $password , 'model' => $eqLogic->getConfiguration('model'),'sidG' => $xiaomihome->getConfiguration('sid'), 'sid' => $eqLogic->getConfiguration('sid'), 'short_id' => $eqLogic->getConfiguration('short_id'),'switch' => $this->getConfiguration('switch'), 'request' => $option, 'vol'=> $volume ));
-                $socket = socket_create(AF_INET, SOCK_STREAM, 0);
-                socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'xiaomihome'));
-                socket_write($socket, $value, strlen($value));
-                socket_close($socket);
+               xiaomihome::sendDaemon($value);
             }
             else {
                 if ($eqLogic->pingHost($eqLogic->getConfiguration('ipwifi')) == false) {
@@ -713,10 +720,7 @@ class xiaomihomeCmd extends cmd {
                 }
                 if ($this->getLogicalId() == 'refresh') {
                     $value = json_encode(array('apikey' => jeedom::getApiKey('xiaomihome'), 'type' => 'wifi','cmd' => 'refresh', 'model' => $eqLogic->getConfiguration('model'), 'dest' => $eqLogic->getConfiguration('gateway') , 'token' => $eqLogic->getConfiguration('password') , 'devtype' => $eqLogic->getConfiguration('short_id'), 'serial' => $eqLogic->getConfiguration('sid')));
-                    $socket = socket_create(AF_INET, SOCK_STREAM, 0);
-                    socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'xiaomihome'));
-                    socket_write($socket, $value, strlen($value));
-                    socket_close($socket);
+                    xiaomihome::sendDaemon($value);
                     return;
                 }
                 $params = $this->getConfiguration('params');
@@ -738,10 +742,7 @@ class xiaomihomeCmd extends cmd {
                     $option = '';
                 }
                 $value = json_encode(array('apikey' => jeedom::getApiKey('xiaomihome'), 'type' => 'wifi','cmd' => 'send', 'model' => $eqLogic->getConfiguration('model'), 'dest' => $eqLogic->getConfiguration('gateway') , 'token' => $eqLogic->getConfiguration('password') , 'devtype' => $eqLogic->getConfiguration('short_id'), 'serial' => $eqLogic->getConfiguration('sid'), 'method' => $this->getConfiguration('request'),'param' => $params));
-                $socket = socket_create(AF_INET, SOCK_STREAM, 0);
-                socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'xiaomihome'));
-                socket_write($socket, $value, strlen($value));
-                socket_close($socket);
+                xiaomihome::sendDaemon($value);
             }
         }
     }
