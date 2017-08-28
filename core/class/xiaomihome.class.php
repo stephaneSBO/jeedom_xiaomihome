@@ -542,6 +542,9 @@ class xiaomihome extends eqLogic {
                         $xiaomihome->checkAndUpdateCmd('no_close', 0);
                     }
                 }
+                else if ($model == 'sensor_wleak.aq1') {
+                    $value = ($value == 'leak') ? 1 : 0;
+                }
                 else if ($model == 'plug') {
                     $value = ($value == 'on') ? 1 : 0;
                 }
@@ -567,7 +570,7 @@ class xiaomihome extends eqLogic {
         }
         return $result;
     }
-    
+
     public function sendDaemon ($value) {
         $deamon_info = self::deamon_info();
         if ($deamon_info['state'] != 'ok') {
@@ -578,7 +581,7 @@ class xiaomihome extends eqLogic {
         socket_write($socket, $value, strlen($value));
         socket_close($socket);
     }
-    
+
 }
 
 class xiaomihomeCmd extends cmd {
