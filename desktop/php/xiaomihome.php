@@ -344,7 +344,7 @@ $( "#typefield" ).change(function(){
   else if ($('#typefield').value() == 'yeelight') {
     $('#passfield').hide();
     $('#idfield').hide();
-    $('#ipfield').show();
+    $('#ipfield').hide();
     $('.syncinfo').hide();
     $('.globalRemark').hide();
   }
