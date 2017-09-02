@@ -56,7 +56,7 @@
                 "subtype": "other",
                 "display": {
 					"icon": "<i class=\"fa fa-lightbulb-o\"><\/i>",
-					"generic_type": "LIGHT_ON",
+					"generic_type": "LIGHT_ON"
                 },
                 "configuration" : {
         			"request" : "turn on"
@@ -71,7 +71,7 @@
                 "subtype": "other",
                 "display": {
 					"icon": "<i class=\"fa fa-power-off\"><\/i>",
-					"generic_type": "LIGHT_OFF",
+					"generic_type": "LIGHT_OFF"
                 },
                 "configuration" : {
         			"request" : "turn off"
