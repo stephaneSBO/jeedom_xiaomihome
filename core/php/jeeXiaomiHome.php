@@ -147,6 +147,7 @@ if (isset($result['devices'])) {
 					$xiaomihome->checkAndUpdateCmd('temperature', $data['ct']);
 				}
 				$xiaomihome->setConfiguration('ipwifi', $datas['ip']);
+				$xiaomihome->setConfiguration('gateway', $datas['ip']);
 				$xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
 				$xiaomihome->save();
 			}
