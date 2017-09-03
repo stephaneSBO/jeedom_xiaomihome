@@ -147,6 +147,7 @@ class xiaomihome extends eqLogic {
             $xiaomihome->setConfiguration('model',$_def['capabilities']['model']);
             $xiaomihome->setConfiguration('short_id',$_def['capabilities']['fw_ver']);
             $xiaomihome->setConfiguration('gateway',$_def['ip']);
+            $xiaomihome->setConfiguration('ipwifi', $_def['ip']);
             $xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
             $xiaomihome->setConfiguration('applyDevice','');
             $xiaomihome->save();
