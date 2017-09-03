@@ -146,6 +146,7 @@ if (isset($result['devices'])) {
 				if ($xiaomihome->getConfiguration('model') != 'mono') {
 					$xiaomihome->checkAndUpdateCmd('temperature', $data['ct']);
 				}
+				$xiaomihome->setConfiguration('ipwifi', $datas['ip']);
 				$xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
 				$xiaomihome->save();
 			}
