@@ -13,7 +13,7 @@
                 "type": "info",
                 "subtype": "binary",
                 "display": {
-					"generic_type": "DONT",
+					"generic_type": "FLOOD",
 			"invertBinary": 1
                 },
                 "isVisible": 1,
