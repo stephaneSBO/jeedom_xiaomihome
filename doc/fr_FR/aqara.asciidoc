@@ -46,7 +46,9 @@ Les équipements actuellement compatibles fournissent les informations :
 
   - Détecteur de fumée : commande alarm (binaire), densité (numérique), visibilité (numérique %)
 
-  - Détecteur de fumée : commande alarm (binaire), densité (numérique)
+  - Détecteur de gaz : commande alarm (binaire), densité (numérique)
+  
+  - Détecteur d'eau : commande statut (binaire)
 
   - Moteur pour rideau : commande statut (string), position (string) et les commandes actions associées
 
