@@ -168,7 +168,7 @@ if (isset($result['devices'])) {
 				$xiaomihome->setStatus('lastCommunication',date('Y-m-d H:i:s'));
 				$xiaomihome->setIsEnable(1);
 				$xiaomihome->setIsVisible(1);
-				if ($datas['model']!='vacuum'){
+				if (!in_array($datas['model'], array('vacuum','philipsceiling'))){
 					$xiaomihome->setConfiguration('password',$datas['token']);
 				}
 				$xiaomihome->save();
