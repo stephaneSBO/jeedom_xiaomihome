@@ -103,6 +103,9 @@ def refresh(message):
 						for param in dict_params['params']:
 							if param == 'temp_dec':
 								status[param] = results[i]/10.0
+							elif param == 'current':
+								status[param] = results[i]
+								status['powercalc'] = results[i]*220.0
 							else:
 								status[param] = results[i]
 							i = i+1

@@ -22,6 +22,22 @@
 					"mobile": "line"
 				}
             },
+			{
+                "name": "Température",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+				"unite" : "°",
+                "logicalId": "status::temperature",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
             {
                 "name": "Allumer",
                 "type": "action",

@@ -22,6 +22,54 @@
 					"mobile": "line"
 				}
             },
+			{
+                "name": "Température",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+				"unite" : "°",
+                "logicalId": "status::temperature",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Courant",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+				"unite" : "A",
+                "logicalId": "status::current",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Puissance",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+				"unite" : "W",
+                "logicalId": "status::powercalc",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
             {
                 "name": "Allumer",
                 "type": "action",
