@@ -279,7 +279,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
                 <div class="form-group" id="modefield">
                   <label class="col-sm-3 control-label">{{Dernière Activité}}</label>
                   <div class="col-sm-3">
-                    <span class="eqLogicAttr label label-default" data-l1key="configuration" data-l2key="lastCommunication"></span>
+                    <span class="eqLogicAttr label label-default" data-l1key="status" data-l2key="lastCommunication"></span>
                   </div>
                 </div>
                 <center>

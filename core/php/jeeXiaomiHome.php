@@ -95,7 +95,7 @@ if (isset($result['devices'])) {
 						}
 					}
 				}
-				$xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
+				$xiaomihome->setStatus('lastCommunication',date('Y-m-d H:i:s'));
 				$xiaomihome->save();
 			}
 		}
@@ -148,7 +148,7 @@ if (isset($result['devices'])) {
 				}
 				$xiaomihome->setConfiguration('ipwifi', $datas['ip']);
 				$xiaomihome->setConfiguration('gateway', $datas['ip']);
-				$xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
+				$xiaomihome->setStatus('lastCommunication',date('Y-m-d H:i:s'));
 				$xiaomihome->save();
 			}
 		}
@@ -165,7 +165,7 @@ if (isset($result['devices'])) {
 				$xiaomihome->setConfiguration('gateway',$datas['ip']);
 				$xiaomihome->setConfiguration('sid',$datas['serial']);
 				$xiaomihome->setConfiguration('short_id',$datas['devtype']);
-				$xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
+				$xiaomihome->setStatus('lastCommunication',date('Y-m-d H:i:s'));
 				$xiaomihome->setIsEnable(1);
 				$xiaomihome->setIsVisible(1);
 				if ($datas['model']!='vacuum'){
@@ -215,7 +215,7 @@ if (isset($result['devices'])) {
 				if (strpos($logicalId,'battery') !== false) {
 					$xiaomihome->batteryStatus($value);
 				}
-				$xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
+				$xiaomihome->setStatus('lastCommunication',date('Y-m-d H:i:s'));
 				$xiaomihome->save();
 			}
 		}

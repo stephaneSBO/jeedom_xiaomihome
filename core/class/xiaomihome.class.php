@@ -106,7 +106,7 @@ class xiaomihome extends eqLogic {
             }
             $xiaomihome->setConfiguration('short_id',$_def['short_id']);
             $xiaomihome->setConfiguration('gateway',$_def['source']);
-            $xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
+            $xiaomihome->setStatus('lastCommunication',date('Y-m-d H:i:s'));
             $xiaomihome->setConfiguration('applyDevice','');
             $xiaomihome->save();
         } elseif ($_type == 'yeelight') {
@@ -148,7 +148,7 @@ class xiaomihome extends eqLogic {
             $xiaomihome->setConfiguration('short_id',$_def['capabilities']['fw_ver']);
             $xiaomihome->setConfiguration('gateway',$_def['ip']);
             $xiaomihome->setConfiguration('ipwifi', $_def['ip']);
-            $xiaomihome->setConfiguration('lastCommunication',date('Y-m-d H:i:s'));
+            $xiaomihome->setStatus('lastCommunication',date('Y-m-d H:i:s'));
             $xiaomihome->setConfiguration('applyDevice','');
             $xiaomihome->save();
         }
