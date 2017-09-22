@@ -62,7 +62,7 @@ class XiaomiConnector:
             if "token" in payload:
                 token = payload["token"]
             if cmd in ["heartbeat", "report", "read_ack"]:
-                if self.data_callback is not None:
+                if self.data_callback is not None and 'model' in payload:
                     self.data_callback(payload["model"],
                                        payload["sid"],
                                        payload["cmd"],
@@ -71,7 +71,8 @@ class XiaomiConnector:
                                        json.loads(payload["data"]),'aquara', addr[0])
 
             if cmd == "read_ack" and payload["sid"] not in self.nodes:
-                self.nodes[payload["sid"]] = dict(model=payload["model"])
+                if 'model' in payload:
+                    self.nodes[payload["sid"]] = dict(model=payload["model"])
 
             if cmd == "heartbeat" and payload["sid"] not in self.nodes:
                 self.request_sids(payload["sid"])
