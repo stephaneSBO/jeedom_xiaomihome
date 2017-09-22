@@ -40,10 +40,16 @@ def execute_action(message):
 	elif command_list[0] == 'brightness':
 		bulb.set_brightness(int(message['option']))
 	elif command_list[0] == 'temperature':
-		if len(command_list)>1:
-			bulb.set_color_temp(int(command_list[1]))
+		if message['model'] == 'desklamp':
+			if len(command_list)>1:
+				bulb.set_color_temp_desk(int(command_list[1]), int(message['sup']))
+			else:
+				bulb.set_color_temp_desk(int(message['option']), int(message['sup']))
 		else:
-			bulb.set_color_temp(int(message['option']))
+			if len(command_list)>1:
+				bulb.set_color_temp(int(command_list[1]))
+			else:
+				bulb.set_color_temp(int(message['option']))
 	elif command_list[0] == 'flow':
 		flow_params = message['option'].split(' ')
 		translist = flow_params[2].split('-')

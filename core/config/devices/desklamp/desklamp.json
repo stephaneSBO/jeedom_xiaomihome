@@ -181,6 +181,37 @@
 					"mobile": "light"
 				}
             },
+            {
+                "name": "Température de blanc",
+                "type": "action",
+                "subtype": "slider",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "configuration" : {
+        			"request" : "temperature",
+                    "minValue" : 2700,
+                    "maxValue" : 6500
+        		},
+                "value": "Température de blanc info",
+                "isVisible": 1,
+                "logicalId": "temperatureAct"
+            },
+            {
+                "name": "Température de blanc info",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "temperature",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
 			{
                 "name": "Rafraichir",
                 "type": "action",

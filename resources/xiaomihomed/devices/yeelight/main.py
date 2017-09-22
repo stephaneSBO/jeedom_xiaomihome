@@ -172,7 +172,7 @@ class Bulb(object):
 
     def ensure_on(self):
         """Turn the bulb on if it is off."""
-        if self._music_mode is True or self.auto_on is False:
+        if self._music_mode is True or self.auto_on is False or self.type == 'desklamp':
             return
 
         self.get_properties()
@@ -407,6 +407,17 @@ class Bulb(object):
 
         brightness = int(max(1, min(100, brightness)))
         return "set_bright", [brightness]
+    
+    @_command
+    def set_color_temp_desk(self, degrees, brightness, **kwargs):
+        """
+        Set the scene HACK for color temperature on desk lamp.
+
+        """
+        self.ensure_on()
+        brightness = int(max(1, min(100, brightness)))
+        degrees = max(2700, min(6500, degrees))
+        return "set_scene", ["ct",degrees,brightness]
 
     @_command
     def turn_on(self, **kwargs):
