@@ -77,7 +77,16 @@ $eqLogics = eqLogic::byType('xiaomihome');
         $status = 1;
         $opacity = ($eqLogicGateway->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
         echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogicGateway->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
-        echo "<center>";
+        $online = $eqLogicGateway->getCmd('info','online');
+		if (is_object($online)){
+			$onlinevalue= $online->execCmd();
+		} else {
+			$onlinevalue = '';
+		}
+		if ($onlinevalue !== '' && $onlinevalue == 0){
+			echo '<i class="fa fa-times" style="float:right" title="Offline"></i>';
+		}
+		echo "<center>";
         if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogicGateway->getConfiguration('model') . '/' . $eqLogicGateway->getConfiguration('model') . '.png')) {
             echo '<img src="plugins/xiaomihome/core/config/devices/' . $eqLogicGateway->getConfiguration('model') . '/' . $eqLogicGateway->getConfiguration('model') . '.png' . '" height="105" width="95" />';
         } else {
@@ -90,7 +99,10 @@ $eqLogics = eqLogic::byType('xiaomihome');
             if ($eqLogic->getConfiguration('type') == 'aquara' && $eqLogic->getConfiguration('model') != 'gateway' && $eqLogic->getConfiguration('gateway') == $eqLogicGateway->getConfiguration('gateway')) {
                 $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
                 echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
-                echo "<center>";
+                if ($onlinevalue !== '' && $onlinevalue == 0){
+					echo '<i class="fa fa-times" style="float:right" title="Offline"></i>';
+				}
+				echo "<center>";
                 if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png')) {
                     echo '<img src="plugins/xiaomihome/core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png' . '" height="105" width="95" />';
                 } else {
@@ -118,7 +130,16 @@ $eqLogics = eqLogic::byType('xiaomihome');
         $status = 1;
         $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
         echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
-        echo "<center>";
+        $online = $eqLogic->getCmd('info','online');
+		if (is_object($online)){
+			$onlinevalue= $online->execCmd();
+		} else {
+			$onlinevalue = '';
+		}
+		if ($onlinevalue !== '' && $onlinevalue == 0){
+			echo '<i class="fa fa-times" style="float:right" title="Offline"></i>';
+		}
+		echo "<center>";
         if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png')) {
           echo '<img src="plugins/xiaomihome/core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png' . '" height="105" width="95" />';
         } else {
@@ -144,7 +165,16 @@ $eqLogics = eqLogic::byType('xiaomihome');
         $status = 1;
         $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
         echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
-        echo "<center>";
+        $online = $eqLogic->getCmd('info','online');
+		if (is_object($online)){
+			$onlinevalue= $online->execCmd();
+		} else {
+			$onlinevalue = '';
+		}
+		if ($onlinevalue !== '' && $onlinevalue == 0){
+			echo '<i class="fa fa-times" style="float:right" title="Offline"></i>';
+		}
+		echo "<center>";
         echo '<img src="plugins/xiaomihome/core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png' . '" height="105" width="95" />';                echo "</center>";
         echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
         echo '</div>';
