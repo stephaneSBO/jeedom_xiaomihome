@@ -70,27 +70,42 @@ $eqLogics = eqLogic::byType('xiaomihome');
     <legend><i class="fa fa-home"></i>  {{Mes Aqara}}</legend>
     <?php
     $status = 0;
-    foreach ($eqLogics as $eqLogic) {
-      if ($eqLogic->getConfiguration('type') == 'aquara') {
-        if ($status == 0) {echo '<div class="eqLogicThumbnailContainer">';}
+    foreach ($eqLogics as $eqLogicGateway) {
+      if ($eqLogicGateway->getConfiguration('type') == 'aquara' && $eqLogicGateway->getConfiguration('model') == 'gateway') {
+        echo '<legend>' . $eqLogicGateway->getHumanName(true) . '</legend>';
+        echo '<div class="eqLogicThumbnailContainer">';
         $status = 1;
-        $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
-        echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
+        $opacity = ($eqLogicGateway->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
+        echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogicGateway->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
         echo "<center>";
-        if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png')) {
-          echo '<img src="plugins/xiaomihome/core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png' . '" height="105" width="95" />';
+        if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogicGateway->getConfiguration('model') . '/' . $eqLogicGateway->getConfiguration('model') . '.png')) {
+            echo '<img src="plugins/xiaomihome/core/config/devices/' . $eqLogicGateway->getConfiguration('model') . '/' . $eqLogicGateway->getConfiguration('model') . '.png' . '" height="105" width="95" />';
         } else {
-          echo '<img src="' . $plugin->getPathImgIcon() . '" height="105" width="95" />';
+            echo '<img src="' . $plugin->getPathImgIcon() . '" height="105" width="95" />';
         }
         echo "</center>";
-        echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
+        echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogicGateway->getHumanName(true, true) . '</center></span>';
+        echo '</div>';
+        foreach ($eqLogics as $eqLogic) {
+            if ($eqLogic->getConfiguration('type') == 'aquara' && $eqLogic->getConfiguration('model') != 'gateway' && $eqLogic->getConfiguration('gateway') == $eqLogicGateway->getConfiguration('gateway')) {
+                $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
+                echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
+                echo "<center>";
+                if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png')) {
+                    echo '<img src="plugins/xiaomihome/core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png' . '" height="105" width="95" />';
+                } else {
+                    echo '<img src="' . $plugin->getPathImgIcon() . '" height="105" width="95" />';
+                }
+                echo "</center>";
+                echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
+                echo '</div>';
+            }
+        }
         echo '</div>';
       }
     }
-    if ($status == 1) {
-      echo '</div>';
-    } else {
-      echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucun aquara détecté, démarrer un node pour ajout}}</span></center>";
+    if ($status == 0) {
+        echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucun aquara détecté, démarrer un node pour ajout}}</span></center>";
     }
     ?>
 
@@ -149,7 +164,7 @@ $eqLogics = eqLogic::byType('xiaomihome');
     <a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
     <a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fa fa-cogs"></i> {{Configuration avancée}}</a>
     <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation"><a href="#" class="eqLogicAction" aria-controls="home" role="tab" data-toggle="tab" data-action="returnToThumbnailDisplay"><i class="fa fa-arrow-circle-left"></i></a></li>
+      <li role="presentation"><a class="eqLogicAction" aria-controls="home" role="tab" data-toggle="tab" data-action="returnToThumbnailDisplay"><i class="fa fa-arrow-circle-left"></i></a></li>
       <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Equipement}}</a></li>
       <li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
     </ul>
