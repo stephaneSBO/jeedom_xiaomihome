@@ -1,7 +1,7 @@
 <?php
 
 if (!isConnect('admin')) {
-  throw new Exception('{{401 - Accès non autorisé}}');
+  throw new Exception('{{401-Accès non autorisé}}');
 }
 $plugin = plugin::byId('xiaomihome');
 sendVarToJS('eqType', 'xiaomihome');
