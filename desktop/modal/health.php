@@ -29,7 +29,8 @@ $eqLogics = xiaomihome::byType('xiaomihome');
 			<th>{{Module}}</th>
 			<th>{{ID}}</th>
 			<th>{{Modèle}}</th>
-			<th>{{Identfiant}}</th>
+			<th>{{Identifiant}}</th>
+			<th>{{Online}}</th>
 			<th>{{Statut}}</th>
 			<th>{{Batterie}}</th>
 			<th>{{Dernière communication}}</th>
@@ -48,6 +49,19 @@ foreach ($eqLogics as $eqLogic) {
 	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getId() . '</span></td>';
 	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getConfiguration('model') . '</span></td>';
 	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getConfiguration('sid') . '</span></td>';
+	$online = $eqLogic->getCmd('info','online');
+	if (is_object($online)){
+		$onlinevalue= $online->execCmd();
+	} else {
+		$onlinevalue = '';
+	}
+	$onlineecho = '<span class="label label-success" style="font-size : 1em; cursor : default;">{{NA}}</span>';
+	if ($onlinevalue == 1){
+		$onlineecho = '<span class="label label-success" style="font-size : 1em; cursor : default;">{{OK}}</span>';
+	} else if ($onlinevalue !== '' && $onlinevalue == 0){
+		$onlineecho = '<span class="label label-danger" style="font-size : 1em; cursor : default;">{{KO}}</span>';
+	}
+	echo '<td>' . $onlineecho . '</td>';
 	$status = '<span class="label label-success" style="font-size : 1em; cursor : default;">{{OK}}</span>';
 	if ($eqLogic->getStatus('state') == 'nok') {
 		$status = '<span class="label label-danger" style="font-size : 1em; cursor : default;">{{NOK}}</span>';
