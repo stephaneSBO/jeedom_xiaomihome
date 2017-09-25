@@ -1,3 +1,24 @@
+=== Version du 25 septembre
+
+Ajout de matériels :
+
+  - capteur d'eau
+
+  - interrupteurs encastrés avec neutre (simple ou double)
+  
+  - lampe Philips plafonnier
+  
+  
+Ajout d'un regroupement des capteurs Aqara par gateway
+
+Ajout de l'information si l'équipement est offline sur la page globalement équipement
+
+Ajout d'informations sur equipement Wifi :
+
+  - temp sur la prise
+  
+  - puissance et temp sur la multiprise
+
 === Version vom 20. April
 
 Daemon Neugestaltung in Python

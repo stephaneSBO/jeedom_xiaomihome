@@ -63,11 +63,13 @@ Cette section traite des équipements Wifi additionnels, pas Yeelight ni la gate
 
   - Xiaomi Smart Air Quality Monitor PM2.5 Detector : qualité d'air, batterie, rafraichir
 
-  - Xiaomi Mi Power Strip Wifi : on, off, statut
+  - Xiaomi Mi Power Strip Wifi : on, off, statut, temp, puissance
 
-  - Xiaomi Mi Power Plug Wifi : on, off, statut
+  - Xiaomi Mi Power Plug Wifi : on, off, statut, temp
 
   - Xiaomi Philips Eyecare Smart Lamp : statut, on/off, luminosité (+slider), eyecare (statut, scenes + différents modes disponibles)
+  
+  - Xiaomi Philips Ceiling : statut, on/off, luminosité (+slider), couleur de blanc (info+cmd), Auto CCT (statut+cmd), scenes (statut + activation scenes)
 
   - Xiaomi Mi Electric Rice Cooker : non implémenté en l'état
 
