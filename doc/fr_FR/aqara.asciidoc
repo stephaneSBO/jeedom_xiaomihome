@@ -40,7 +40,7 @@ Les équipements actuellement compatibles fournissent les informations :
 
   - Interrupteur mural : commande statut pour chaque interrupteur (click, double_click) et si double une commande qui donne l'appui simultané
 
-  - Interrupteur encastré : commande statut binaire avec on et off pour chaque interrupteur
+  - Interrupteur encastré (y compris celui avec neutre) : commande statut binaire avec on et off pour chaque interrupteur
 
   - Cube : commande statut avec pour valeur move, tap_twice, shake_air, alert, flip90, flip180, free_fall, rotate_right, rotate_left et une commande rotate avec la valeur en degré du mouvement https://lunarok-domotique.com/2017/03/aqara-xiaomi-magic-controller-utilisation-dans-jeedom/[Présentation]
 
