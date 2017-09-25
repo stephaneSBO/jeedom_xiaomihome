@@ -20,3 +20,7 @@ include::wifi.asciidoc[]
 '''
 == FAQ
 include::faq.asciidoc[]
+
+'''
+== Changelog
+include::changelog.asciidoc[]
