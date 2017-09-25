@@ -68,6 +68,8 @@ Cette section traite des équipements Wifi additionnels, pas Yeelight ni la gate
   - Xiaomi Mi Power Plug Wifi : on, off, statut
 
   - Xiaomi Philips Eyecare Smart Lamp : statut, on/off, luminosité (+slider), eyecare (statut, scenes + différents modes disponibles)
+  
+  - Xiaomi Philips Ceiling : statut, on/off, luminosité (+slider), couleur de blanc (info+cmd), Auto CCT (statut+cmd), scenes (statut + activation scenes)
 
   - Xiaomi Mi Electric Rice Cooker : non implémenté en l'état
 
