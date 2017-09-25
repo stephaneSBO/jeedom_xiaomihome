@@ -18,7 +18,7 @@ Certaines lampes ajoutent des commandes :
 
   - Yeelight Blanc : pas d'autres commandes
 
-  - Desklamp : pas d'autres commandes
+  - Desklamp : couleur de blanc
 
   - Yeelight RGB : couleur RGB, couleur de blanc, mode jour, mode nuit, couleurs HSV
 
