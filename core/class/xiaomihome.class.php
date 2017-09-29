@@ -546,7 +546,7 @@ class xiaomihome extends eqLogic {
                 else if ($model == 'sensor_wleak.aq1') {
                     $value = ($value == 'leak') ? 1 : 0;
                 }
-                else if ($model == 'plug') {
+                else if ($model == 'plug' || $model == '86plug') {
                     $value = ($value == 'on') ? 1 : 0;
                 }
             }
