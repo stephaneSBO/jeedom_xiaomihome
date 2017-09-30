@@ -36,7 +36,7 @@ Les équipements actuellement compatibles fournissent les informations :
 
   - Bouton Switch : commande statut avec pour valeurs click, double_click, long_click_press, long_click_release
 
-  - Prise : commande statut binaire avec on et off, état d'utilisation et consommation
+  - Prise et prise murale : commande statut binaire avec on et off, état d'utilisation et consommation
 
   - Interrupteur mural : commande statut pour chaque interrupteur (click, double_click) et si double une commande qui donne l'appui simultané
 

@@ -1,5 +1,9 @@
 === Version du 25 septembre
 
+Ajout de la prise murale Zigbee
+
+=== Version du 25 septembre
+
 Ajout de matériels :
 
   - capteur d'eau
