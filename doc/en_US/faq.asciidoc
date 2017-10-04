@@ -15,7 +15,7 @@ Il faut également bien utilisé Mi Home en anglais et sur China Mainland si on 
 [panel,primary]
 .Une information de mes capteurs ne remonte pas ?
 --
-Si vous n'avez pas de commande équivalente créée dans Jeedom, c'est que l'API n'expose pas cette information. Il faut attendre peut être une mise à jour du firmware (exemple les piles ou la charge de la prise)
+Si vous n'avez pas de commande équivalente créée dans Jeedom, ca peut être que l'API n'expose pas cette information. Il faut attendre peut être une mise à jour du firmware
 --
 
 [panel,primary]
