@@ -6,6 +6,11 @@ if (!isConnect('admin')) {
 $plugin = plugin::byId('xiaomihome');
 sendVarToJS('eqType', 'xiaomihome');
 $eqLogics = eqLogic::byType('xiaomihome');
+$eqLogicsBlea = array();
+if (class_exists('blea')){
+	$eqLogicsBlea = eqLogic::byType('blea');
+}
+$listArrayBlea = array('miband1','miband1s','miband2','mibandcolor','miflora','miscale','yeelight_bed');
 ?>
 
 <div class="row row-overflow">
@@ -16,21 +21,28 @@ $eqLogics = eqLogic::byType('xiaomihome');
 
         <li class="filter" style="margin-bottom: 5px;"><input class="filter form-control input-sm" placeholder="{{Rechercher}}" style="width: 100%"/></li>
         <?php
+		echo '<legend>Aqara</legend>';
         foreach ($eqLogics as $eqLogic) {
           if ($eqLogic->getConfiguration('type') == 'aquara') {
             echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
           }
         }
-        echo '<hr>';
+		echo '<legend>Yeelight</legend>';
         foreach ($eqLogics as $eqLogic) {
           if ($eqLogic->getConfiguration('type') == 'yeelight') {
             echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
           }
         }
-        echo '<hr>';
+		echo '<legend>Wifi</legend>';
         foreach ($eqLogics as $eqLogic) {
           if ($eqLogic->getConfiguration('type') != 'aquara' && $eqLogic->getConfiguration('type') != 'yeelight') {
             echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
+          }
+        }
+		echo '<legend>Bluetooth</legend>';
+		foreach ($eqLogicsBlea as $eqLogic) {
+          if (in_array($eqLogic->getConfiguration('device'),$listArrayBlea)){
+            echo '<li title="Juste un listing : à configurer via Blea"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
           }
         }
         ?>
@@ -184,6 +196,36 @@ $eqLogics = eqLogic::byType('xiaomihome');
       echo '</div>';
     } else {
       echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucun Xiaomi Wifi, ajoutez en un}}</span></center>";
+    }
+    ?>
+	
+	<legend><i class="fa fa-bluetooth"></i>  {{Mes Xiaomi Bluetooth}}</legend>
+    <?php
+    $status = 0;
+    foreach ($eqLogicsBlea as $eqLogic) {
+      if (in_array($eqLogic->getConfiguration('device'),$listArrayBlea)) {
+		if ($status == 0) {echo '<div class="eqLogicThumbnailContainer">';}
+        $status = 1;
+        $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
+		echo '<div class="eqLogicDisplayCard" title="Juste un listing : à configurer via Blea" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
+		echo "<center>";
+		$alternateImg = $eqLogic->getConfiguration('iconModel');
+		if (file_exists(dirname(__FILE__) . '/../../../blea/core/config/devices/' . $alternateImg . '.jpg')) {
+			echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $alternateImg . '.jpg" height="105" width="95" />';
+		} elseif (file_exists(dirname(__FILE__) . '/../../../blea/core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg')) {
+			echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg" height="105" width="95" />';
+		} else {
+			echo '<img src="plugins/blea/core/plugin_info/blea.png" height="105" width="95" />';
+		}
+		echo "</center>";
+		echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
+		echo '</div>';
+      }
+    }
+    if ($status == 1) {
+      echo '</div>';
+    } else {
+      echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>{{Aucun Xiaomi Bluetooth, ajoutez en un via Blea}}</span></center>";
     }
     ?>
 
