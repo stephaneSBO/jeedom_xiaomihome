@@ -1,4 +1,10 @@
-=== Version du 25 septembre
+=== Version du 07 octobre
+
+Design page des équipements
+
+Ajout visibilité des équipements BLEA Xiaomi depuis la page équipement
+
+=== Version du 30 septembre
 
 Ajout de la prise murale Zigbee
 
