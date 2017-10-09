@@ -375,7 +375,7 @@ $listArrayBlea = array('miband1','miband1s','miband2','mibandcolor','miflora','m
                 </center>
               </fieldset>
             </form>
-            <div class="alert alert-info globalRemark" style="display:none">{{Veuillez renseigner l'ip puis sauver. Ensuite il vous suffit de cliquer sur Récupérer les infos. Si le device est trouvé les identifiants et le token seront trouvés. L'aspirateur est une exception dans son cas il faut récupérer le token avant. Veuillez vous référer à la doc. Pour la gateway il suffit juste de la récupérer dans les options développeurs de Mi Home}}</div>
+            <div class="alert alert-info globalRemark" style="display:none">{{Veuillez renseigner l'ip puis sauver. Ensuite il vous suffit de cliquer sur Récupérer les infos. Si le device est trouvé les identifiants et le token seront trouvés. Certains devices (aspirateur, plafonnier xiaomi, cuiseur à riz petit format ...) sont une exception dans ce cas il faut récupérer le token avant. Veuillez vous référer à la doc. Pour la gateway il suffit juste de la récupérer dans les options développeurs de Mi Home}}</div>
           </div>
         </div>
       </div>
