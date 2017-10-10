@@ -27,7 +27,13 @@ Vous devez bien saisir la clef de la gateway visible dans Mi Home sur l'équipem
 [panel,primary]
 .Mes commandes sur capteurs Aqara qui fonctionnaient ne fonctionnent plus ?
 --
-Vérifier si la clef à changer dans Mi Home, cela peut se produire après une montée de firmware par exemple
+Vérifier
+si la clef à changer dans Mi Home, cela peut se produire après une montée de firmware par exemple
+--
+[panel,primary]
+.Jeedom ne parvient pas à découvrir la gateway et les capteurs ?
+--
+Vérifier que votre routeur laisse bien passer les paquets broadcast du réseau Wifi vers l'ethernet par exemple
 --
 
 [panel,primary]
