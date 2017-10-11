@@ -572,7 +572,7 @@ class xiaomihome extends eqLogic {
         return $result;
     }
 
-    public function sendDaemon ($value) {
+    public static function sendDaemon ($value) {
         $deamon_info = self::deamon_info();
         if ($deamon_info['state'] != 'ok') {
             return;
