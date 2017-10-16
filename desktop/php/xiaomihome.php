@@ -21,25 +21,25 @@ $listArrayBlea = array('miband1','miband1s','miband2','mibandcolor','miflora','m
 
         <li class="filter" style="margin-bottom: 5px;"><input class="filter form-control input-sm" placeholder="{{Rechercher}}" style="width: 100%"/></li>
         <?php
-		echo '<legend>Aqara</legend>';
+		echo '<legend><i class="fa fa-home"></i>  Aqara</legend>';
         foreach ($eqLogics as $eqLogic) {
           if ($eqLogic->getConfiguration('type') == 'aquara') {
             echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
           }
         }
-		echo '<legend>Yeelight</legend>';
+		echo '<legend><i class="icon jeedom2-bright4"></i> Yeelight</legend>';
         foreach ($eqLogics as $eqLogic) {
           if ($eqLogic->getConfiguration('type') == 'yeelight') {
             echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
           }
         }
-		echo '<legend>Wifi</legend>';
+		echo '<legend><i class="fa fa-wifi"></i>  Wifi</legend>';
         foreach ($eqLogics as $eqLogic) {
           if ($eqLogic->getConfiguration('type') != 'aquara' && $eqLogic->getConfiguration('type') != 'yeelight') {
             echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
           }
         }
-		echo '<legend>Bluetooth</legend>';
+		echo '<legend><i class="fa fa-bluetooth"></i>  Bluetooth</legend>';
 		foreach ($eqLogicsBlea as $eqLogic) {
           if (in_array($eqLogic->getConfiguration('device'),$listArrayBlea)){
             echo '<li title="Juste un listing : à configurer via Blea"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
