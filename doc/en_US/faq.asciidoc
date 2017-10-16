@@ -30,10 +30,18 @@ Vous devez bien saisir la clef de la gateway visible dans Mi Home sur l'équipem
 Vérifier
 si la clef à changer dans Mi Home, cela peut se produire après une montée de firmware par exemple
 --
+
 [panel,primary]
 .Jeedom ne parvient pas à découvrir la gateway et les capteurs ?
 --
 Vérifier que votre routeur laisse bien passer les paquets broadcast du réseau Wifi vers l'ethernet par exemple
+--
+
+
+[panel,primary]
+.Jeedom ne parvient pas à utiliser ma gateway créer manuellement ?
+--
+Il ne faut pas créer les gateway/capteurs à la main, ils sont automatiquement découverts, si ce n'est pas le cas il y a autre chose et il faut trouver la raison
 --
 
 [panel,primary]
