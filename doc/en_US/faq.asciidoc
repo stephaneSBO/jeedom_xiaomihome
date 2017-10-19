@@ -1,11 +1,11 @@
 [panel,primary]
 . What type of Xiaomi gateway is supported?
 --
-La "Aquara" pour le Zigbee qu'il faut bien paramétrer en mode développeur pour y accéder localement, pour cela il faut un firmware au moins en 1.4
+La "Aqara" avec anneau led pour le Zigbee qu'il faut bien paramétrer en mode développeur pour y accéder localement, pour cela il faut un firmware au moins en 1.4
 --
 
 [panel,primary]
-.Je n'arrive pas à passer ma gateway Aquara en mode local ?
+.Je n'arrive pas à passer ma gateway Aqara en mode local ?
 --
 Sur iOS il semble que ce soit assez capricieux, vous pouvez utiliser un Android en VM
 
