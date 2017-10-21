@@ -40,7 +40,7 @@ if (class_exists('blea')){
         }
 		echo '<legend><i class="fa fa-bluetooth"></i>  Bluetooth</legend>';
 		foreach ($eqLogicsBlea as $eqLogic) {
-          if ($eqLogic->getConfiguration('xiaomi',0) == 1)){
+          if ($eqLogic->getConfiguration('xiaomi',0) == 1){
             echo '<li title="Juste un listing : à configurer via Blea"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
           }
         }
@@ -202,7 +202,7 @@ if (class_exists('blea')){
     <?php
     $status = 0;
     foreach ($eqLogicsBlea as $eqLogic) {
-      if ($eqLogic->getConfiguration('xiaomi',0) == 1)){
+      if ($eqLogic->getConfiguration('xiaomi',0) == 1){
 		if ($status == 0) {echo '<div class="eqLogicThumbnailContainer">';}
         $status = 1;
         $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
