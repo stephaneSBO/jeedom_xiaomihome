@@ -10,7 +10,6 @@ $eqLogicsBlea = array();
 if (class_exists('blea')){
 	$eqLogicsBlea = eqLogic::byType('blea');
 }
-$listArrayBlea = array('miband1','miband1s','miband2','mibandcolor','miflora','miscale','yeelight_bed');
 ?>
 
 <div class="row row-overflow">
@@ -41,7 +40,7 @@ $listArrayBlea = array('miband1','miband1s','miband2','mibandcolor','miflora','m
         }
 		echo '<legend><i class="fa fa-bluetooth"></i>  Bluetooth</legend>';
 		foreach ($eqLogicsBlea as $eqLogic) {
-          if (in_array($eqLogic->getConfiguration('device'),$listArrayBlea)){
+          if ($eqLogic->getConfiguration('xiaomi',0) == 1)){
             echo '<li title="Juste un listing : à configurer via Blea"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
           }
         }
@@ -203,7 +202,7 @@ $listArrayBlea = array('miband1','miband1s','miband2','mibandcolor','miflora','m
     <?php
     $status = 0;
     foreach ($eqLogicsBlea as $eqLogic) {
-      if (in_array($eqLogic->getConfiguration('device'),$listArrayBlea)) {
+      if ($eqLogic->getConfiguration('xiaomi',0) == 1)){
 		if ($status == 0) {echo '<div class="eqLogicThumbnailContainer">';}
         $status = 1;
         $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
