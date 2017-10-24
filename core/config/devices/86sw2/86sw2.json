@@ -53,6 +53,9 @@
                 },
                 "isVisible": 1,
                 "isHistorized": 0,
+                "configuration" : {
+                    "repeatEventManagement" : "always"
+        		},
                 "logicalId": "dual_channel",
 				"template": {
 					"dashboard": "line",
