@@ -96,6 +96,7 @@
         			"request" : "set_power",
 					"params" : "[\"on\"]"
         		},
+		    "value": "Status",
                 "isVisible": 1,
                 "logicalId": "on"
             },
@@ -110,6 +111,7 @@
         			"request" : "set_power",
 					"params" : "[\"off\"]"
         		},
+		    "value": "Status",
                 "isVisible": 1,
                 "logicalId": "off"
             },
