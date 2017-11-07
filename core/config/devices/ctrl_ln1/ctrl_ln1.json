@@ -33,6 +33,7 @@
         			"switch" : "channel_0",
                     "request" : "off"
         		},
+		    "value": "Status",
                 "isVisible": 1,
                 "logicalId": "channel_0-off"
             },
@@ -47,6 +48,7 @@
         			"switch" : "channel_0",
                     "request" : "on"
         		},
+		    "value": "Status",
                 "isVisible": 1,
                 "logicalId": "channel_0-on"
             }
