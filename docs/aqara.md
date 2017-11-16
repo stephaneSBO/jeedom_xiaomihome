@@ -36,7 +36,7 @@ Les équipements actuellement compatibles fournissent les informations :
 
 * Capteur température/humidité : commande température, commande humidité
 
-* Bouton Switch : commande statut avec pour valeurs click, double_click, long_click_press, long_click_release
+* Bouton Switch : commande click avec pour valeurs click, double_click, long_click_press, long_click_release
 
 * Prise et prise murale : commande statut binaire avec on et off, état d'utilisation et consommation
 
