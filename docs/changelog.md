@@ -2,6 +2,12 @@
 
 Important : en cas de mise à jour disponible pour laquelle il n'y a pas d'info dans cette section, c'est qu'elle n'intègre aucune nouveautés majeures. Cela peut être un ajout de doc, une correction de doc, des traductions ou bien de la correction de bugs mineurs
 
+## Version du 21 novembre 2017
+
+Ajout de l'ampoule Philips
+
+Ajout de la lampe de chevet Yeelight Wifi
+
 ## Version du 15 novembre 2017
 
 Modification de la documentation
