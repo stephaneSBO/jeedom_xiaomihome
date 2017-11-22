@@ -26,6 +26,8 @@ Certaines lampes ajoutent des commandes :
 
 * Bandeau RGB : couleur RGB, couleur de blanc, mode jour, mode nuit, couleurs HSV
 
+* Lampe de Chevet (socle doré) : couleur RGB, couleur de blanc, mode jour, mode nuit, couleurs HSV
+
 * Yeelight Ceiling : couleur blanc, mode jour, mode nuit
 
 ### Commande enchainement des Yeelight

@@ -12,13 +12,13 @@ Il vous faut également le token. Pour obtenir le token, il suffit de cliquer su
 
 Pour le robot entre autre, il est nécessaire de récupérer le token manuellement avant son intégration dans Mi Home.
 
-Trois méthodes existent, la première avec l'outil [Mi Toolkit] (https://github.com/ultrara1n/MiToolkit) qui va récupérer tous les token dans votre application Mi Home. Cela nécessite un Android avec le mode Debug USB activable.
+Trois méthodes existent, la première avec l'outil [Mi Toolkit](https://github.com/ultrara1n/MiToolkit) qui va récupérer tous les token dans votre application Mi Home. Cela nécessite un Android avec le mode Debug USB activable.
 
 Les deux autres sont basées sur une récupération de la base Mi Home, une pour Android, une pour iPhone.
 
 #### MiToolkit
 
-Pour le télécharger : https://github.com/ultrara1n/MiToolkit/releases
+Pour le télécharger : [https://github.com/ultrara1n/MiToolkit/releases](https://github.com/ultrara1n/MiToolkit/releases)
 
 Activer ADB sur votre téléphone (dans les options développeur)
 
@@ -44,7 +44,7 @@ Merci pierre_ pour cette technique
 
 Faire une sauvegarde de l'iPhone avec iTunes
 
-Ouvrir la sauvegarde avec iPhoneBackup Viewer : http://www.imactools.com/iphonebackupviewer/ (si votre backup est crypté, il faudra passer par a version payante)
+Ouvrir la sauvegarde avec [iPhoneBackup Viewer](http://www.imactools.com/iphonebackupviewer/) (si votre backup est crypté, il faudra passer par a version payante)
 
 Dans Raw Data/com.xiaomi.mihome il y a plusieurs fichiers .sqllite, il faut extraire votreuserid_mihome.sqlite
 
@@ -71,6 +71,8 @@ Cette section traite des équipements Wifi additionnels, pas Yeelight ni la gate
 * Xiaomi Philips Eyecare Smart Lamp : statut, on/off, luminosité (+slider), eyecare (statut, scenes + différents modes disponibles)
 
 * Xiaomi Philips Ceiling : statut, on/off, luminosité (+slider), couleur de blanc (info+cmd), Auto CCT (statut+cmd), scenes (statut + activation scenes)
+
+* Xiaomi Philips E27 : statut, on/off, luminosité (+slider), couleur de blanc (info+cmd), Auto CCT (statut+cmd), scenes (statut + activation scenes)
 
 * Xiaomi Mi Electric Rice Cooker : non implémenté en l'état
 
