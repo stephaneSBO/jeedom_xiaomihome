@@ -8,7 +8,6 @@
     <meta name="theme-color" content="#157878">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-    <script type="text/javascript" src="/assets/js/toc.js">
   </head>
   <body>
     <section class="page-header">
@@ -18,7 +17,6 @@
     </section>
 
     <section class="main-content">
-      <div id="toc"></div>
       {{ content }}
 
       <footer class="site-footer">
@@ -26,10 +24,5 @@
       </footer>
     </section>
 
-      <script type="text/javascript">
-        $(document).ready(function() {
-    $('#toc').toc();
-});
-      </script>
   </body>
 </html>
