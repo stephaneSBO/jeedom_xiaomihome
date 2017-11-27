@@ -24,11 +24,13 @@ Activer ADB sur votre téléphone (dans les options développeur)
 
 Lancer l'exe MiToolkit en admin
 
-Choisir "Verbindung prufen"
+Passer l'application en anglais via le menu avec le drapeau allemand. L'application se ferme, il faut la relancer
 
-Choisir "Token auslesen", le laisser faire la sauvegarde sur le PC et ne pas mettre de mot de passe
+Choisir "Extract Token"
 
-Une pop-up apparait avec les token
+Choisir "Extract Token", le laisser faire la sauvegarde sur le PC et ne pas mettre de mot de passe
+
+Les token apparaissent dans la fenêtre
 
 #### aSQLiteManager
 
