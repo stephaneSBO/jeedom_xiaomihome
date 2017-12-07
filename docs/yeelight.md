@@ -8,7 +8,7 @@ Un bouton de scan permet de créer automatiquement toutes les lampes répondant 
 
 Une présentation complète de la gamme est disponible ici : [Article de présentation](https://lunarok-domotique.com/plugins-jeedom/xiaomi-home-jeedom/yeelight-xiaomi-wifi-lamp/)
 
-Dans l'application Yeelight vous devez activer l'option développeur également
+Dans l'application Yeelight vous devez activer l'option de contrôle sur réseau local
 
 C'est un switch a activé dans les options de chaque ampoule/bandeau
 
