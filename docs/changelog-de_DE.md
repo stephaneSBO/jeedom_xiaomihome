@@ -45,8 +45,8 @@ Ajout d'informations sur equipement Wifi :
 
 ## Version du 20 avril 2017
 
-Refonte du daemon en python
+Daemon Neugestaltung in Python
 
-Utilisation du daemon pour le statut et commandes Yeelight
+Verwendung des Daemon für Yeelight Status und Befehle
 
-Ajout de nouveaux périphériques Wifi Xiaomi
+Neues Gerät hinzugefügt, Wifi Xiaomi
